@@ -43,7 +43,7 @@ namespace KariyerAnalytics.Data
 
         public ICollection<T> Search<T>() where T : class
         {
-            var request = (new SearchDescriptor<T>()).Aggregations(agg => agg
+            var request = (new SearchDescriptor<T>()).Size(0).Aggregations(agg => agg
                 .Terms("urls", e => e.Field("uRL")
                 .Aggregations(agg2 => agg2.Average("avgs", e2 => e2.Field("responseTime"))))
                 );
@@ -55,8 +55,15 @@ namespace KariyerAnalytics.Data
 
             //ResolveAverageResponseTimeAggregationBucket(new AggregationsHelper(response.Aggregations));
 
-            var result = response.Aggs.Terms("urls");
-            var maxAge = result.Buckets;
+
+            var result = response.Aggs.Terms("urls").Buckets;
+            var outout = (from KeyedBucket b in result
+            {
+                var x = b.Average("avgs");
+                var z = x.Value;
+
+            }
+            
             return null;
         }
         
