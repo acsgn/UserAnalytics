@@ -44,6 +44,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -63,9 +66,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -92,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -101,8 +103,25 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
+      <Project>{1f3e6821-ec7f-4c81-b0c1-dca9cad57fc8}</Project>
+      <Name>KariyerAnalytics.Business.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
+      <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
+      <Name>KariyerAnalytics.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Client.Entities\KariyerAnalytics.Client.Entities.csproj">
+      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
+      <Name>KariyerAnalytics.Client.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
+      <Project>{C67E743F-5CED-4728-B150-AE83B864ED36}</Project>
+      <Name>KariyerAnalytics.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
