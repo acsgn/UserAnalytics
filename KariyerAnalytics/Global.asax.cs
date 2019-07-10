@@ -13,7 +13,7 @@ namespace KariyerAnalytics
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            //new LogEngine().Start();
+            new LogEngine().Start();
         }
     }
 }

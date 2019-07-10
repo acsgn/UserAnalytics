@@ -41,7 +41,7 @@ namespace KariyerAnalytics.Data
             _ElasticClient.Index(document, i => i.Index(indexName).Type<T>());
         }
 
-        public IEnumerable<T> Search<T>() where T : class
+        public ICollection<T> Search<T>() where T : class
         {
             var request = (new SearchDescriptor<T>()).Aggregations(agg => agg
                 .Terms("urls", e => e.Field("uRL")
@@ -52,16 +52,14 @@ namespace KariyerAnalytics.Data
 
             var response = _ElasticClient.Search<T>(request);
             //var response = await _ElasticClient.SearchAsync<T>(searchRequest);
-            
+
             //ResolveAverageResponseTimeAggregationBucket(new AggregationsHelper(response.Aggregations));
 
-
+            var result = response.Aggs.Terms("urls");
+            var maxAge = result.Buckets;
             return null;
         }
-
         
-
-
 
         Task<IEnumerable<T>> IElasticsearchContext.Search<T>(ISearchRequest searchRequest)
         {

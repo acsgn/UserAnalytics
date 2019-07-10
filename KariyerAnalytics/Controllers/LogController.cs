@@ -28,8 +28,8 @@ namespace KariyerAnalytics.Controllers
             //                    ResponseTime = l.ResponseTime
             //                };
 
-            //var engine = new LogEngine();
-            //engine.Search();
+            var engine = new LogEngine();
+            engine.Search();
 
             return logs;
         }
@@ -38,19 +38,19 @@ namespace KariyerAnalytics.Controllers
         [HttpPost]
         public void Create(LogInformation info)
         {
-            //var engine = new LogEngine();
-            //engine.Add(info);
-            var log = new Log
-            {
-                Company = info.CompanyName,
-                User = info.Username,
-                URL = info.URL,
-                Endpoint = info.Endpoint,
-                IP = HttpContext.Current.Request.UserHostAddress,
-                Date = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds,
-                ResponseTime = info.ResponseTime
-            };
-            logs.Add(log);
+            var engine = new LogEngine();
+            engine.Add(info);
+            //var log = new Log
+            //{
+            //    Company = info.CompanyName,
+            //    User = info.Username,
+            //    URL = info.URL,
+            //    Endpoint = info.Endpoint,
+            //    IP = HttpContext.Current.Request.UserHostAddress,
+            //    Date = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds,
+            //    ResponseTime = info.ResponseTime
+            //};
+            //logs.Add(log);
 
         }
 
