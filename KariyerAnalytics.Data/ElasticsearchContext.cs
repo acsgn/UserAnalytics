@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace KariyerAnalytics.Data
             _ElasticClient.Index(document, i => i.Index(indexName).Type<T>());
         }
 
-        public ICollection<T> Search<T>() where T : class
+        public IEnumerable<KeyValuePair<string, double>> Search<T>() where T : class
         {
             var request = (new SearchDescriptor<T>()).Size(0).Aggregations(agg => agg
                 .Terms("urls", e => e.Field("uRL")
@@ -57,14 +58,18 @@ namespace KariyerAnalytics.Data
 
 
             var result = response.Aggs.Terms("urls").Buckets;
-            var outout = (from KeyedBucket b in result
+            List<KeyValuePair<string, double>> output = new List<KeyValuePair<string, double>>();
+            foreach (KeyedBucket b in result)
             {
-                var x = b.Average("avgs");
-                var z = x.Value;
-
+                string key= b.Key;
+                double value = 0;
+                var d2 = b.Average("avgs").Value;
+                if (d2.HasValue)
+                { value = (double)d2; }
+                KeyValuePair<string, double> pair = new KeyValuePair<string, double>(key,value);
+                output.Add(pair);
             }
-            
-            return null;
+            return output;
         }
         
 

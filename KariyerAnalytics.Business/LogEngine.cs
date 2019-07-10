@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Data;
@@ -28,10 +29,10 @@ namespace KariyerAnalytics.Business
             var rep = new EFRepository();
             rep.Add(IndexName, log);
         }
-        public void Search()
+        public IEnumerable<KeyValuePair<string, double>> Search()
         {
             var rep = new EFRepository();
-            rep.Search<Log>();
+            return rep.Search<Log>();
         }
     }
 }

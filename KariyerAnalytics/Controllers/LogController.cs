@@ -15,7 +15,7 @@ namespace KariyerAnalytics.Controllers
 
 
         [HttpGet]
-        public IEnumerable<Log> GetAll()
+        public IEnumerable<KeyValuePair<string, double>> GetAll()
         {
             //    var logsdto = from l in logs
             //                select new LogDTO()
@@ -29,9 +29,7 @@ namespace KariyerAnalytics.Controllers
             //                };
 
             var engine = new LogEngine();
-            engine.Search();
-
-            return logs;
+            return engine.Search();
         }
 
 

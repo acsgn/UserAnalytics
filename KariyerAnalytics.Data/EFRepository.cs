@@ -18,9 +18,9 @@ namespace KariyerAnalytics.Data
             _ElasticsearchContext.Index(indexname, entity);
         }
 
-        public void Search<T>() where T : class
+        public IEnumerable<KeyValuePair<string, double>> Search<T>() where T : class
         {
-            _ElasticsearchContext.Search<T>();
+            return _ElasticsearchContext.Search<T>();
         }
 
         Task<IEnumerable<T>> IRepository.Search<T>()
