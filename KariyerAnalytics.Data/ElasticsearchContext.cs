@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.IO;
 using Nest;
 
 namespace KariyerAnalytics.Data
@@ -23,7 +21,7 @@ namespace KariyerAnalytics.Data
 
 
             var createIndexResult = _ElasticClient.CreateIndex(
-                indexName, createIndexDescriptor => createIndexDescriptor
+                indexName, indexDescriptor => indexDescriptor
                     .Mappings(mappingsDescriptor => mappingsDescriptor
                         .Map<T>(m => m.AutoMap())
                     )
@@ -43,29 +41,18 @@ namespace KariyerAnalytics.Data
 
         public AggregationsHelper Search<T>(ISearchRequest searchRequest) where T : class
         {
-            //var request = (new SearchDescriptor<T>()).Size(0).Aggregations(agg => agg
-            //    .Terms("urls", e => e.Field("uRL")
-            //    .Aggregations(agg2 => agg2.Average("avgs", e2 => e2.Field("responseTime"))))
-            //    );
+            var json = GetQueryJSonFromRequest(searchRequest, _ElasticClient);
+            var searchResponse = _ElasticClient.Search<T>(searchRequest);
+            return searchResponse.Aggs;
+        }
 
-            var response = _ElasticClient.Search<T>(q => q.Size(1).Sort(s => s.Descending("responseTime")));
-
-            return response.Aggs;
-
-            //var result = response.Aggs.Terms("urls").Buckets;
-            //List<KeyValuePair<string, double>> output = new List<KeyValuePair<string, double>>();
-            //foreach (KeyedBucket b in result)
-            //{
-            //    string key= b.Key;
-            //    double value = 0;
-            //    var d2 = b.Average("avgs").Value;
-            //    if (d2.HasValue)
-            //    { value = (double)d2; }
-            //    KeyValuePair<string, double> pair = new KeyValuePair<string, double>(key,value);
-            //    output.Add(pair);
-            //}
-            //return output;
-
+        public static string GetQueryJSonFromRequest(ISearchRequest request, ElasticClient elasticClient)
+        {
+            using (var stream = new MemoryStream())
+            {
+                elasticClient.Serializer.Serialize(request, stream);
+                return System.Text.Encoding.UTF8.GetString(stream.ToArray());
+            }
         }
 
     }

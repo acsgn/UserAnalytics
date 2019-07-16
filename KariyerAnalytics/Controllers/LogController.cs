@@ -10,10 +10,13 @@ namespace KariyerAnalytics.Controllers
     {
 
         [HttpGet]
-        public void GetBestAndWorstTime()
+        public void GetBestAndWorstResponseTime()
         {
             var engine = new LogEngine();
-            engine.GetBestAndWorstTime();
+            engine.GetBestAndWorstResponseTime();
+            engine.GetCompanies();
+            engine.GetUsersofCompany("Kariyer");
+            engine.GetActionbyUserandCompany("Kariyer", "Ali");
         }
 
 

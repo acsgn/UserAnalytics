@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Data;
-using KariyerAnalytics.Data.Entities;
 
 namespace KariyerAnalytics.Business
 {
@@ -32,21 +31,82 @@ namespace KariyerAnalytics.Business
             rep.Add(_IndexName, log);
         }
 
-        public MinMaxResponse GetBestAndWorstTime()
+        public void GetBestAndWorstResponseTime()
         {
             var rep = new EFRepository();
-            var maxrequest = new Nest.SearchDescriptor<Log>().Size(1).Aggregations(agg => agg
-                .Max("max", e2 => e2.Field("responsetime"))
-                );
-            var maxresult = rep.Search<Log>(maxrequest).Max("max").Value;
-            var minrequest = new Nest.SearchDescriptor<Log>().Size(0).Aggregations(agg => agg
-                .Min("min", e2 => e2.Field("responsetime"))
-                );
-            var minresult = rep.Search<Log>(minrequest).Min("min");
 
-            return new MinMaxResponse
-            {
-            };
+            var bestRequest = new Nest.SearchDescriptor<Log>()
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Terms("actions", s => s
+                        .Field(f => f.URL)
+                        .Aggregations(nestedAggs => nestedAggs
+                            .Average("average-response-time", nestedS => nestedS.Field(f => f.ResponseTime))))
+                    .MinBucket("best-response-time", s => s.BucketsPath("actions>average-response-time")));
+            var bestResult = rep.Search<Log>(bestRequest);
+
+            var worstRequest = new Nest.SearchDescriptor<Log>()
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Terms("actions", s => s
+                        .Field(f => f.URL)
+                        .Aggregations(nestedAggs => nestedAggs
+                            .Average("average-response-time", nestedS => nestedS.Field(f => f.ResponseTime))))
+                    .MaxBucket("worst-response-time", s => s.BucketsPath("actions>average-response-time")));
+            var worstResult = rep.Search<Log>(worstRequest);
+
+            
+        }
+
+        public void GetCompanies()
+        {
+            var rep = new EFRepository();
+
+            var companiesRequest = new Nest.SearchDescriptor<Log>()
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Terms("companies", s => s
+                        .Field(f => f.CompanyName)));
+            var companiesResult = rep.Search<Log>(companiesRequest);
+        }
+
+        public void GetUsersofCompany(string companyName)
+        {
+            var rep = new EFRepository();
+
+            var usersRequest = new Nest.SearchDescriptor<Log>()
+                .Query(q => q
+                    .MatchPhrase(s => s
+                        .Field(f => f.CompanyName)
+                        .Query(companyName)))
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Terms("users", s => s
+                        .Field(f => f.Username)));
+            rep.Search<Log>(usersRequest);
+        }
+
+        public void GetActionbyUserandCompany(string companyName, string username)
+        {
+            var rep = new EFRepository();
+
+            var actionsRequest = new Nest.SearchDescriptor<Log>()
+                .Query(q => q
+                    .Bool(b => b
+                        .Must(
+                            mu => mu
+                            .MatchPhrase(s => s
+                                .Field(f => f.CompanyName)
+                                .Query(companyName)),
+                            mu => mu
+                            .MatchPhrase(s => s
+                                .Field(f => f.Username)
+                                .Query(username)))))
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Terms("actions", s => s
+                        .Field(f => f.URL)));
+            rep.Search<Log>(actionsRequest);
         }
 
     }
