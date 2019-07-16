@@ -16,7 +16,7 @@ namespace KariyerAnalytics.Data
             _ElasticsearchContext.Index(indexname, entity);
         }
 
-        public AggregationsHelper Search<T>(ISearchRequest searchRequest) where T : class
+        public ISearchResponse<T> Search<T>(ISearchRequest searchRequest) where T : class
         {
             return _ElasticsearchContext.Search<T>(searchRequest);
         }

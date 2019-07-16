@@ -39,11 +39,11 @@ namespace KariyerAnalytics.Data
             _ElasticClient.Index(document, i => i.Index(indexName).Type<T>());
         }
 
-        public AggregationsHelper Search<T>(ISearchRequest searchRequest) where T : class
+        public ISearchResponse<T> Search<T>(ISearchRequest searchRequest) where T : class
         {
             var json = GetQueryJSonFromRequest(searchRequest, _ElasticClient);
             var searchResponse = _ElasticClient.Search<T>(searchRequest);
-            return searchResponse.Aggs;
+            return searchResponse;
         }
 
         public static string GetQueryJSonFromRequest(ISearchRequest request, ElasticClient elasticClient)

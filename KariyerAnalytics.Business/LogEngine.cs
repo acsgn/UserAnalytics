@@ -45,11 +45,12 @@ namespace KariyerAnalytics.Business
                             .Average("average-response-time", nestedS => nestedS.Field(f => f.ResponseTime))))
                     .MinBucket("best-response-time", s => s.BucketsPath("actions>average-response-time")));
             var bestResult = rep.Search<Log>(bestRequest);
+            var bucket = bestResult.Aggs.MaxBucket("best-response-time");
 
             return new ResponseMetric()
             {
-                Actions = bestResult.MinBucket("best-response-time").Keys,
-                Time = (double) bestResult.MinBucket("best-response-time").Value
+                Actions = bucket.Keys,
+                Time = (double)bucket.Value
             };
         }
 
@@ -66,14 +67,50 @@ namespace KariyerAnalytics.Business
                             .Average("average-response-time", nestedS => nestedS.Field(f => f.ResponseTime))))
                     .MaxBucket("worst-response-time", s => s.BucketsPath("actions>average-response-time")));
             var worstResult = rep.Search<Log>(worstRequest);
+            var bucket = worstResult.Aggs.MaxBucket("worst-response-time");
 
             return new ResponseMetric(){
-                Actions = worstResult.MaxBucket("worst-response-time").Keys,
-                Time = (double) worstResult.MaxBucket("worst-response-time").Value
+                Actions = bucket.Keys,
+                Time = (double) bucket.Value
             };
         }
 
-            public string[] GetCompanies()
+        public string[] GetEndpoints()
+        {
+            var rep = new EFRepository();
+
+            var endpointsRequest = new Nest.SearchDescriptor<Log>()
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Terms("endpoints", s => s
+                        .Field(f => f.Endpoint)));
+            var endpointsResult = rep.Search<Log>(endpointsRequest);
+
+            var endpointList = (from b in endpointsResult.Aggs.Terms("endpoints").Buckets select b.Key).ToArray();
+
+            return endpointList;
+        }
+
+        public int[] GetResponseTimes(string endpoint)
+        {
+            var rep = new EFRepository();
+
+            var responseTimeRequest = new Nest.SearchDescriptor<Log>()
+                .Query(q => q
+                    .MatchPhrase(s => s
+                        .Field(f => f.Endpoint)
+                        .Query(endpoint)))
+                .Sort(s => s
+                    .Ascending(f => f.Timestamp))
+                .Fields(f => f.Field(fi => fi.ResponseTime));
+            var responseTimeResult = rep.Search<Log>(responseTimeRequest);
+
+            var responseTimeList = (from b in responseTimeResult.Fields select b.ValueOf<Log, int>(p => p.ResponseTime)).ToArray();
+
+            return responseTimeList;
+        }
+
+        public string[] GetCompanies()
         {
             var rep = new EFRepository();
 
@@ -84,7 +121,7 @@ namespace KariyerAnalytics.Business
                         .Field(f => f.CompanyName)));
             var companiesResult = rep.Search<Log>(companiesRequest);
 
-            var companyList = (from b in companiesResult.Terms("companies").Buckets select b.Key).ToArray();
+            var companyList = (from b in companiesResult.Aggs.Terms("companies").Buckets select b.Key).ToArray();
 
             return companyList;
         }
@@ -104,7 +141,7 @@ namespace KariyerAnalytics.Business
                         .Field(f => f.Username)));
             var usersResult = rep.Search<Log>(usersRequest);
 
-            var userList = (from b in usersResult.Terms("users").Buckets select b.Key).ToArray();
+            var userList = (from b in usersResult.Aggs.Terms("users").Buckets select b.Key).ToArray();
 
             return userList;
         }
@@ -131,7 +168,7 @@ namespace KariyerAnalytics.Business
                         .Field(f => f.Endpoint)));
             var actionsResult = rep.Search<Log>(actionsRequest);
 
-            var actionsList = (from b in actionsResult.Terms("actions").Buckets select b.Key).ToArray();
+            var actionsList = (from b in actionsResult.Aggs.Terms("actions").Buckets select b.Key).ToArray();
 
             return actionsList;
         }

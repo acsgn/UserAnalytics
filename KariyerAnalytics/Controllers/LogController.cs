@@ -51,6 +51,20 @@ namespace KariyerAnalytics.Controllers
                 return engine.GetActionbyUserandCompany(detailRequest.Company, detailRequest.Username);
             }
         }
-        
+
+        [HttpGet]
+        public string[] GetEndpoints()
+        {
+            var engine = new LogEngine();
+            return engine.GetEndpoints();
+        }
+
+        [HttpPost]
+        public int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
+        {
+            var engine = new LogEngine();
+            return engine.GetResponseTimes(responseTimeRequest.Endpoint);
+        }
+
     }
 }
