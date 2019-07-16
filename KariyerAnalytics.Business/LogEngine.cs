@@ -22,6 +22,7 @@ namespace KariyerAnalytics.Business
                 CompanyName = info.CompanyName,
                 Username = info.Username,
                 URL = info.URL,
+                Endpoint = info.Endpoint,
                 Timestamp = info.Timestamp,
                 IP = info.IP,
                 ResponseTime = info.ResponseTime
