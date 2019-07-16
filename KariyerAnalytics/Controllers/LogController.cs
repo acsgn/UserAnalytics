@@ -8,18 +8,6 @@ namespace KariyerAnalytics.Controllers
 {
     public class LogController : ApiController
     {
-
-        [HttpGet]
-        public void GetBestAndWorstResponseTime()
-        {
-            var engine = new LogEngine();
-            engine.GetBestAndWorstResponseTime();
-            engine.GetCompanies();
-            engine.GetUsersofCompany("Kariyer");
-            engine.GetActionbyUserandCompany("Kariyer", "Ali");
-        }
-
-
         [HttpPost]
         public void Create(LogInformation info)
         {
@@ -29,5 +17,40 @@ namespace KariyerAnalytics.Controllers
             engine.Add(info);
         }
 
+        [HttpGet]
+        public ResponseMetric GetBestResponseTime()
+        {
+            var engine = new LogEngine();
+            return engine.GetBestResponseTime();
+        }
+
+        [HttpGet]
+        public ResponseMetric GetWorstResponseTime()
+        {
+            var engine = new LogEngine();
+            return engine.GetWorstResponseTime();
+        }
+
+        [HttpGet]
+        public string[] GetCompanies()
+        {
+            var engine = new LogEngine();
+            return engine.GetCompanies();
+        }
+
+        [HttpPost]
+        public string[] GetDetailsofCompany(DetailRequest detailRequest)
+        {
+            var engine = new LogEngine();
+            if (detailRequest.Username == null)
+            {
+                return engine.GetUsersofCompany(detailRequest.Company);
+            }
+            else
+            {
+                return engine.GetActionbyUserandCompany(detailRequest.Company, detailRequest.Username);
+            }
+        }
+        
     }
 }
