@@ -4,11 +4,11 @@ using Nest;
 
 namespace KariyerAnalytics.Data
 {
-    sealed class DefaultConnectionSettings
+    sealed class ElasticsearchConnectionSettings
     {
         private static ConnectionSettings connectionSettings;
 
-        public static ConnectionSettings GetConnectionSettings()
+        public static ConnectionSettings GetDefaultConnectionSettings()
         {
             if (connectionSettings == null)
             {

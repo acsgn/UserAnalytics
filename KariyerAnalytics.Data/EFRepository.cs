@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Nest;
 
 namespace KariyerAnalytics.Data
 {
@@ -18,14 +16,9 @@ namespace KariyerAnalytics.Data
             _ElasticsearchContext.Index(indexname, entity);
         }
 
-        public IEnumerable<KeyValuePair<string, double>> Search<T>() where T : class
+        public AggregationsHelper Search<T>(ISearchRequest searchRequest) where T : class
         {
-            return _ElasticsearchContext.Search<T>();
-        }
-
-        Task<IEnumerable<T>> IRepository.Search<T>()
-        {
-            throw new NotImplementedException();
+            return _ElasticsearchContext.Search<T>(searchRequest);
         }
     }
 }

@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elasticsearch.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elasticsearch.Net.2.4.7\lib\net45\Elasticsearch.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Nest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\NEST.2.4.7\lib\net45\Nest.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,10 +62,17 @@
       <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
       <Name>KariyerAnalytics.Client.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Data.Entities\KariyerAnalytics.Data.Entities.csproj">
+      <Project>{F07B6ABE-5843-4908-A78E-919A01B2F2D4}</Project>
+      <Name>KariyerAnalytics.Data.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
       <Project>{C67E743F-5CED-4728-B150-AE83B864ED36}</Project>
       <Name>KariyerAnalytics.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

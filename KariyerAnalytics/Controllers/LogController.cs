@@ -3,53 +3,27 @@ using System.Web.Http;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Business;
 using KariyerAnalytics.Business.Entities;
-using System.Collections.Generic;
-using System;
 
 namespace KariyerAnalytics.Controllers
 {
     public class LogController : ApiController
     {
 
-        private static List<Log> logs = new List<Log>();
-
-
         [HttpGet]
-        public IEnumerable<KeyValuePair<string, double>> GetAll()
+        public void GetBestAndWorstTime()
         {
-            //    var logsdto = from l in logs
-            //                select new LogDTO()
-            //                {
-            //                    Company = l.Company,
-            //                    User = l.User,
-            //                    URL = l.URL,
-            //                    Date = l.Date,
-            //                    IP = l.IP,
-            //                    ResponseTime = l.ResponseTime
-            //                };
-
             var engine = new LogEngine();
-            return engine.Search();
+            engine.GetBestAndWorstTime();
         }
 
 
         [HttpPost]
         public void Create(LogInformation info)
         {
+            info.IP = HttpContext.Current.Request.UserHostAddress;
+            info.Timestamp = HttpContext.Current.Timestamp;
             var engine = new LogEngine();
             engine.Add(info);
-            //var log = new Log
-            //{
-            //    Company = info.CompanyName,
-            //    User = info.Username,
-            //    URL = info.URL,
-            //    Endpoint = info.Endpoint,
-            //    IP = HttpContext.Current.Request.UserHostAddress,
-            //    Date = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds,
-            //    ResponseTime = info.ResponseTime
-            //};
-            //logs.Add(log);
-
         }
 
     }

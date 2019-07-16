@@ -3,36 +3,50 @@ using System.Collections.Generic;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Data;
+using KariyerAnalytics.Data.Entities;
 
 namespace KariyerAnalytics.Business
 {
     public class LogEngine
     {
-        private readonly static string IndexName = "logs";
+        private readonly static string _IndexName = "logs";
         public void Start()
         {
             var context = new ElasticsearchContext();
-            context.CreateIndex<Log>(IndexName);
+            context.CreateIndex<Log>(_IndexName);
         }
         public void Add(LogInformation info)
         {
             var log = new Log()
             {
-                Company = info.CompanyName,
-                User = info.Username,
+                CompanyName = info.CompanyName,
+                Username = info.Username,
                 URL = info.URL,
-                Date = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds,
-                //IP = info.IP,
+                Timestamp = info.Timestamp,
+                IP = info.IP,
                 ResponseTime = info.ResponseTime
             };
 
             var rep = new EFRepository();
-            rep.Add(IndexName, log);
+            rep.Add(_IndexName, log);
         }
-        public IEnumerable<KeyValuePair<string, double>> Search()
+
+        public MinMaxResponse GetBestAndWorstTime()
         {
             var rep = new EFRepository();
-            return rep.Search<Log>();
+            var maxrequest = new Nest.SearchDescriptor<Log>().Size(1).Aggregations(agg => agg
+                .Max("max", e2 => e2.Field("responsetime"))
+                );
+            var maxresult = rep.Search<Log>(maxrequest).Max("max").Value;
+            var minrequest = new Nest.SearchDescriptor<Log>().Size(0).Aggregations(agg => agg
+                .Min("min", e2 => e2.Field("responsetime"))
+                );
+            var minresult = rep.Search<Log>(minrequest).Min("min");
+
+            return new MinMaxResponse
+            {
+            };
         }
+
     }
 }
