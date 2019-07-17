@@ -51,10 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregationBuilder.cs" />
     <Compile Include="ElasticsearchConnectionSettings.cs" />
     <Compile Include="ElasticsearchContext.cs" />
-    <Compile Include="IAggregationBuilder.cs" />
     <Compile Include="IElasticsearchContext.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="EFRepository.cs" />

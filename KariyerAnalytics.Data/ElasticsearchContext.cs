@@ -34,9 +34,9 @@ namespace KariyerAnalytics.Data
             }
         }
 
-        public void Index<T>(string indexName, T document) where T : class
+        public async void Index<T>(string indexName, T document) where T : class
         {
-            _ElasticClient.Index(document, i => i.Index(indexName).Type<T>());
+            await _ElasticClient.IndexAsync(document, i => i.Index(indexName).Type<T>());
         }
 
         public ISearchResponse<T> Search<T>(ISearchRequest searchRequest) where T : class
