@@ -42,30 +42,15 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElasticsearchConnectionSettings.cs" />
     <Compile Include="ElasticsearchContext.cs" />
     <Compile Include="IElasticsearchContext.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="EFRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
-      <Name>KariyerAnalytics.Business.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

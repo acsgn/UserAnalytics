@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Data;
+using Nest;
 
 namespace KariyerAnalytics.Business
 {
@@ -28,15 +30,15 @@ namespace KariyerAnalytics.Business
                 ResponseTime = info.ResponseTime
             };
 
-            var rep = new EFRepository();
-            rep.Add(_IndexName, log);
+            var rep = new ElasticsearchContext();
+            rep.Index(_IndexName, log);
         }
 
-        public ResponseMetric GetBestResponseTime(Request request)
+        public KeyValuePair<string[], double> GetBestResponseTime(Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
             
-            var bestRequest = new Nest.SearchDescriptor<Log>()
+            var bestRequest = new SearchDescriptor<Log>()
                 .Size(0)
                 .Aggregations(aggs => aggs
                     .Terms("actions", s => s
@@ -53,18 +55,14 @@ namespace KariyerAnalytics.Business
             var bestResult = rep.Search<Log>(bestRequest);
             var bucket = bestResult.Aggs.MaxBucket("best-response-time");
 
-            return new ResponseMetric()
-            {
-                Actions = bucket.Keys,
-                Time = (double)bucket.Value
-            };
+            return new KeyValuePair<string[], double>(bucket.Keys.ToArray(), (double)bucket.Value);
         }
 
-        public ResponseMetric GetWorstResponseTime(Request request)
+        public KeyValuePair<string[], double> GetWorstResponseTime(Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
 
-            var worstRequest = new Nest.SearchDescriptor<Log>()
+            var worstRequest = new SearchDescriptor<Log>()
                 .Size(0)
                 .Aggregations(aggs => aggs
                     .Terms("actions", s => s
@@ -78,17 +76,14 @@ namespace KariyerAnalytics.Business
             var worstResult = rep.Search<Log>(worstRequest);
             var bucket = worstResult.Aggs.MaxBucket("worst-response-time");
 
-            return new ResponseMetric(){
-                Actions = bucket.Keys,
-                Time = (double) bucket.Value
-            };
+            return new KeyValuePair<string[], double>(bucket.Keys.ToArray(), (double) bucket.Value);
         }
 
         public string[] GetEndpoints(Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
 
-            var endpointsRequest = new Nest.SearchDescriptor<Log>()
+            var endpointsRequest = new SearchDescriptor<Log>()
                 .Size(0)
                 .Aggregations(aggs => aggs
                     .Terms("endpoints", s => s
@@ -103,9 +98,9 @@ namespace KariyerAnalytics.Business
 
         public int[] GetResponseTimes(string endpoint, Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
 
-            var responseTimeRequest = new Nest.SearchDescriptor<Log>()
+            var responseTimeRequest = new SearchDescriptor<Log>()
                 .Query(q => q
                     .MatchPhrase(s => s
                         .Field(f => f
@@ -126,9 +121,9 @@ namespace KariyerAnalytics.Business
 
         public string[] GetCompanies(Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
 
-            var companiesRequest = new Nest.SearchDescriptor<Log>()
+            var companiesRequest = new SearchDescriptor<Log>()
                 .Size(0)
                 .Aggregations(aggs => aggs
                     .Terms("companies", s => s
@@ -143,9 +138,9 @@ namespace KariyerAnalytics.Business
 
         public string[] GetUsersofCompany(string companyName, Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
 
-            var usersRequest = new Nest.SearchDescriptor<Log>()
+            var usersRequest = new SearchDescriptor<Log>()
                 .Query(q => q
                     .MatchPhrase(s => s
                         .Field(f => f
@@ -156,6 +151,34 @@ namespace KariyerAnalytics.Business
                     .Terms("users", s => s
                         .Field(f => f
                             .Username)));
+
+            //IQueryContainer qC = new QueryContainer();
+
+            //var searchRequest = new SearchRequest<Log>
+            //{
+            //    Query = new BoolQuery()
+            //    {
+            //        Must = new QueryContainer[]
+            //        {
+            //            new MatchPhraseQuery()
+            //            {
+            //                Field = new Field
+            //                {
+            //                    Name = ""
+            //                },
+            //                Query = companyName
+            //            }
+            //        },
+            //        Filter = new QueryContainer[]
+            //        {
+            //            new DateRangeQuery()
+            //            {
+                            
+            //            }
+            //        }
+            //    }
+            //};
+
             var usersResult = rep.Search<Log>(usersRequest);
 
             var userList = (from b in usersResult.Aggs.Terms("users").Buckets select b.Key).ToArray();
@@ -165,9 +188,9 @@ namespace KariyerAnalytics.Business
 
         public string[] GetActionbyUserandCompany(string companyName, string username, Request request)
         {
-            var rep = new EFRepository();
+            var rep = new ElasticsearchContext();
 
-            var actionsRequest = new Nest.SearchDescriptor<Log>()
+            var actionsRequest = new SearchDescriptor<Log>()
                 .Query(q => q
                     .Bool(b => b
                         .Must(

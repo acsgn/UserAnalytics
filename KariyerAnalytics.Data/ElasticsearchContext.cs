@@ -19,14 +19,12 @@ namespace KariyerAnalytics.Data
                 throw new Exception("The index is available, unable to create mapping!");
             }
 
-
-            var createIndexResult = _ElasticClient.CreateIndex(
-                indexName, indexDescriptor => indexDescriptor
+            var createIndexResult = _ElasticClient
+                .CreateIndex(indexName, indexDescriptor => indexDescriptor
                     .Mappings(mappingsDescriptor => mappingsDescriptor
                         .Map<T>(m => m.AutoMap())
                     )
             );
-
 
             if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
             {

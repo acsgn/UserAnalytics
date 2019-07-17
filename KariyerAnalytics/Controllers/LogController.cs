@@ -2,7 +2,7 @@
 using System.Web.Http;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Business;
-using KariyerAnalytics.Business.Entities;
+using System.Collections.Generic;
 
 namespace KariyerAnalytics.Controllers
 {
@@ -18,14 +18,14 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public ResponseMetric GetBestResponseTime(Request request)
+        public KeyValuePair<string[], double> GetBestResponseTime(Request request)
         {
             var engine = new LogEngine();
             return engine.GetBestResponseTime(request);
         }
 
         [HttpGet]
-        public ResponseMetric GetWorstResponseTime(Request request)
+        public KeyValuePair<string[], double> GetWorstResponseTime(Request request)
         {
             var engine = new LogEngine();
             return engine.GetWorstResponseTime(request);
@@ -44,11 +44,11 @@ namespace KariyerAnalytics.Controllers
             var engine = new LogEngine();
             if (detailRequest.Username == null)
             {
-                return engine.GetUsersofCompany(detailRequest.Company, (Request) detailRequest);
+                return engine.GetUsersofCompany(detailRequest.Company, detailRequest);
             }
             else
             {
-                return engine.GetActionbyUserandCompany(detailRequest.Company, detailRequest.Username, (Request)detailRequest);
+                return engine.GetActionbyUserandCompany(detailRequest.Company, detailRequest.Username, detailRequest);
             }
         }
 
@@ -63,7 +63,7 @@ namespace KariyerAnalytics.Controllers
         public int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
         {
             var engine = new LogEngine();
-            return engine.GetResponseTimes(responseTimeRequest.Endpoint, (Request) responseTimeRequest);
+            return engine.GetResponseTimes(responseTimeRequest.Endpoint, responseTimeRequest);
         }
 
     }
