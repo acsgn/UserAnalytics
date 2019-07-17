@@ -4,7 +4,7 @@ namespace KariyerAnalytics.Client.Entities
 {
     public class LogInformation
     {
-        public string CompanyName { get; set; }
+        public string CompanyName { get; set; } = "Login Screen";
         public string Username { get; set; }
         public string URL { get; set; }
         public string Endpoint { get; set; }

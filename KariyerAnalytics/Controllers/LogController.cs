@@ -18,24 +18,24 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public ResponseMetric GetBestResponseTime()
+        public ResponseMetric GetBestResponseTime(Request request)
         {
             var engine = new LogEngine();
-            return engine.GetBestResponseTime();
+            return engine.GetBestResponseTime(request);
         }
 
         [HttpGet]
-        public ResponseMetric GetWorstResponseTime()
+        public ResponseMetric GetWorstResponseTime(Request request)
         {
             var engine = new LogEngine();
-            return engine.GetWorstResponseTime();
+            return engine.GetWorstResponseTime(request);
         }
 
         [HttpGet]
-        public string[] GetCompanies()
+        public string[] GetCompanies(Request request)
         {
             var engine = new LogEngine();
-            return engine.GetCompanies();
+            return engine.GetCompanies(request);
         }
 
         [HttpPost]
@@ -44,26 +44,26 @@ namespace KariyerAnalytics.Controllers
             var engine = new LogEngine();
             if (detailRequest.Username == null)
             {
-                return engine.GetUsersofCompany(detailRequest.Company);
+                return engine.GetUsersofCompany(detailRequest.Company, (Request) detailRequest);
             }
             else
             {
-                return engine.GetActionbyUserandCompany(detailRequest.Company, detailRequest.Username);
+                return engine.GetActionbyUserandCompany(detailRequest.Company, detailRequest.Username, (Request)detailRequest);
             }
         }
 
         [HttpGet]
-        public string[] GetEndpoints()
+        public string[] GetEndpoints(Request request)
         {
             var engine = new LogEngine();
-            return engine.GetEndpoints();
+            return engine.GetEndpoints(request);
         }
 
         [HttpPost]
         public int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
         {
             var engine = new LogEngine();
-            return engine.GetResponseTimes(responseTimeRequest.Endpoint);
+            return engine.GetResponseTimes(responseTimeRequest.Endpoint, (Request) responseTimeRequest);
         }
 
     }

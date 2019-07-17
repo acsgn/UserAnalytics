@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KariyerAnalytics.Client.Entities
 {
-    public class ResponseTimeRequest
+    public class ResponseTimeRequest : Request
     {
         public string Endpoint { get; set; }
     }

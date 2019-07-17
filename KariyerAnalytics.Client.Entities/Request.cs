@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KariyerAnalytics.Client.Entities
 {
-    public class DetailRequest : Request
+    public class Request
     {
-        public string Company { get; set; }
-        public string Username { get; set; }
+        public DateTime After { get; set; }
+        public DateTime Before { get; set; }
     }
 }
