@@ -140,19 +140,18 @@ namespace KariyerAnalytics.Business
         {
             var rep = new ElasticsearchContext();
 
-            var usersRequest = new SearchDescriptor<Log>()
-                .Query(q => q
-                    .MatchPhrase(s => s
-                        .Field(f => f
-                            .CompanyName)
-                        .Query(companyName)))
-                .Size(0)
-                .Aggregations(aggs => aggs
-                    .Terms("users", s => s
-                        .Field(f => f
-                            .Username)));
-
-            //IQueryContainer qC = new QueryContainer();
+            //var usersRequest = new SearchDescriptor<Log>()
+            //    .Query(q => q
+            //        .MatchPhrase(s => s
+            //            .Field(f => f
+            //                .CompanyName)
+            //            .Query(companyName)))
+            //    .Size(0)
+            //    .Aggregations(aggs => aggs
+            //        .Terms("users", s => s
+            //            .Field(f => f
+            //                .Username)));
+            
 
             //var searchRequest = new SearchRequest<Log>
             //{
@@ -179,7 +178,9 @@ namespace KariyerAnalytics.Business
             //    }
             //};
 
-            var usersResult = rep.Search<Log>(usersRequest);
+            var usersResult = rep.Search<Log>(new SearchRequest {
+                Query = new QueryBuilder
+            });
 
             var userList = (from b in usersResult.Aggs.Terms("users").Buckets select b.Key).ToArray();
 
