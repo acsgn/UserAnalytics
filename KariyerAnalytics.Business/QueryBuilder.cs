@@ -30,7 +30,7 @@ namespace KariyerAnalytics.Business
 
         public QueryBuilder AddDateRangeFilter(DateTime gte, DateTime lte, string field)
         {
-            _FilterQueries.Add( new DateRangeQuery()
+            _FilterQueries.Add(new DateRangeQuery()
             {
                 Field = new Field
                 {
@@ -52,5 +52,63 @@ namespace KariyerAnalytics.Business
             };
         }
 
+
+        public abstract class TermFilterBase
+        {
+            readonly string _FieldName;
+            readonly string[] _Values;
+            readonly string _FilterName;
+
+            public TermFilterBase(string fieldName, string[] values, string filterName = null)
+
+            {
+                _FieldName = fieldName;
+                _Values = values;
+                _FilterName = filterName;
+            }
+
+            protected QueryContainer CreateFilterQuery()
+            {
+                QueryContainer queryContainer = null;
+
+                if (_Values.Length == 1)
+                {
+                    var termFilter = new TermQuery()
+                    {
+                        Field = _FieldName,
+                        Value = _Values[0]
+                    };
+
+                    if (!string.IsNullOrEmpty(_FilterName))
+                    {
+                        termFilter.Name = _FilterName;
+                    }
+
+                    queryContainer = termFilter;
+                }
+                else if (_Values.Length > 1)
+                {
+                    List<QueryContainer> should = new List<QueryContainer>();
+
+                    foreach (string value in _Values)
+                    {
+                        var termFilter = new TermQuery()
+                        {
+                            Field = _FieldName,
+                            Value = value
+                        };
+                        should.Add(termFilter);
+                    }
+                    queryContainer = new BoolQuery()
+                    {
+                        Should = should,
+                        Name = _FilterName
+                    };
+                }
+                return queryContainer;
+            }
+
+
+        }
     }
 }

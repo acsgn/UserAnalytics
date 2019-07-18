@@ -10,13 +10,20 @@ namespace KariyerAnalytics.Business
     public class AggregationBuilder
     {
 
+        private Dictionary<string, IAggregationContainer> _Aggregations;
 
-        public AggregationContainer Build()
+        public AggregationBuilder Add()
         {
-            return new AggregationContainer
+            new AggregationContainer()
             {
                 
             };
+            return this;
+        }
+
+        public AggregationDictionary Build()
+        {
+            return new AggregationDictionary(_Aggregations);
         }
 
     }

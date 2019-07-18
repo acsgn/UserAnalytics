@@ -140,17 +140,17 @@ namespace KariyerAnalytics.Business
         {
             var rep = new ElasticsearchContext();
 
-            var usersRequest = new SearchDescriptor<Log>()
-                .Query(q => q
-                    .MatchPhrase(s => s
-                        .Field(f => f
-                            .CompanyName)
-                        .Query(companyName)))
-                .Size(0)
-                .Aggregations(aggs => aggs
-                    .Terms("users", s => s
-                        .Field(f => f
-                            .Username)));
+            //var usersRequest = new SearchDescriptor<Log>()
+            //    .Query(q => q
+            //        .MatchPhrase(s => s
+            //            .Field(f => f
+            //                .CompanyName)
+            //            .Query(companyName)))
+            //    .Size(0)
+            //    .Aggregations(aggs => aggs
+            //        .Terms("users", s => s
+            //            .Field(f => f
+            //                .Username)));
 
 
             //var searchRequest = new SearchRequest<Log>
@@ -177,6 +177,11 @@ namespace KariyerAnalytics.Business
             //        }
             //    }
             //};
+
+            var usersRequest = new SearchRequest()
+            {
+                Query = new QueryBuilder().AddMatchQuery(companyName, "companyName").Build()
+            };
 
             var usersResult = rep.Search<Log>(usersRequest);
 
