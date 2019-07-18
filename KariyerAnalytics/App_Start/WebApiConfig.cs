@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace KariyerAnalytics
 {
@@ -11,7 +12,7 @@ namespace KariyerAnalytics
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}",
