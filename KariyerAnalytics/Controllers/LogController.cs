@@ -24,7 +24,7 @@ namespace KariyerAnalytics.Controllers
             return engine.GetBestResponseTime(request);
         }
 
-        [HttpGet]
+        [HttpPost]
         public KeyValuePair<string[], double> GetWorstResponseTime(Request request)
         {
             var engine = new LogEngine();

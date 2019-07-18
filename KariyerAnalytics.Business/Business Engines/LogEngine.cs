@@ -73,7 +73,25 @@ namespace KariyerAnalytics.Business
                                     .ResponseTime))))
                     .MaxBucket("worst-response-time", s => s
                         .BucketsPath("actions>average-response-time")));
-            var worstResult = rep.Search<Log>(worstRequest);
+            
+            var request2 = new SearchRequest()
+            {
+                Aggregations = new AggregationBuilder()
+                    .AddContainer()
+                        .AddTermsAggregation("actions", "endpoint")
+                        .AddSubAggregation()
+                            .AddContainer()
+                                .AddAverageAggregation("avg-res-time","responseTime")
+                            .Build()
+                        .FinishSubAggregation()
+                    .Build()
+                    .AddContainer()
+                        .AddMaxBucketAggregation("worst-time", "actions>avg-res-time")
+                    .Build()
+                .Build()
+            };
+
+            var worstResult = rep.Search<Log>(request2);
             var bucket = worstResult.Aggs.MaxBucket("worst-response-time");
 
             return new KeyValuePair<string[], double>(bucket.Keys.ToArray(), (double) bucket.Value);
@@ -112,6 +130,8 @@ namespace KariyerAnalytics.Business
                 .Fields(f => f
                     .Field(fi => fi
                         .ResponseTime));
+
+
             var responseTimeResult = rep.Search<Log>(responseTimeRequest);
 
             var responseTimeList = (from b in responseTimeResult.Fields select b.ValueOf<Log, int>(p => p.ResponseTime)).ToArray();
@@ -180,7 +200,16 @@ namespace KariyerAnalytics.Business
 
             var usersRequest = new SearchRequest()
             {
-                Query = new QueryBuilder().AddMatchQuery(companyName, "companyName").Build()
+                Query = new QueryBuilder()
+                    .AddMatchQuery(companyName, "companyName")
+                    .AddDateRangeFilter(request.After, request.Before, "timestamp")
+                    .Build(),
+                Size = 0,
+                Aggregations = new AggregationBuilder()
+                    .AddContainer()
+                        .AddTermsAggregation("users", "username")
+                        .Build()
+                    .Build()
             };
 
             var usersResult = rep.Search<Log>(usersRequest);

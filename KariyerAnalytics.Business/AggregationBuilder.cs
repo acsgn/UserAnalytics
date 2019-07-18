@@ -9,24 +9,37 @@ namespace KariyerAnalytics.Business
 {
     public class AggregationBuilder
     {
+        private AggregationContainerBuilder _AggregationContainerBuilder;
 
-        private Dictionary<string, IAggregationContainer> _Aggregations;
+        public Dictionary<string, AggregationContainer> _AggregationDictionary;
 
-        public AggregationBuilder Add()
+        public AggregationBuilder()
         {
-            var x = new TermsAggregation("xyz")
-                {
-                    Field = "xyz"
-                
-            });
-            _Aggregations.Add("asd", x);
-            return this;
+            _AggregationDictionary = new Dictionary<string, AggregationContainer>();
+        }
+
+        public AggregationBuilder(AggregationContainerBuilder aggregationContainerBuilder)
+        {
+            _AggregationContainerBuilder = aggregationContainerBuilder;
+            _AggregationDictionary = new Dictionary<string, AggregationContainer>();
+        }
+
+        public AggregationContainerBuilder AddContainer()
+        {
+            return new AggregationContainerBuilder(this);
+        }
+
+        public AggregationContainerBuilder FinishSubAggregation()
+        {
+            _AggregationContainerBuilder._AggregationContainer.Aggregations = new AggregationDictionary(_AggregationDictionary);
+            return _AggregationContainerBuilder;
         }
 
         public AggregationDictionary Build()
         {
-            return new AggregationDictionary(_Aggregations);
+            return new AggregationDictionary(_AggregationDictionary);
         }
 
     }
+    
 }
