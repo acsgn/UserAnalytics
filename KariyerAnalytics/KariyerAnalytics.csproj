@@ -99,19 +99,18 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1f3e6821-ec7f-4c81-b0c1-dca9cad57fc8}</Project>
-      <Name>KariyerAnalytics.Business.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
       <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
       <Name>KariyerAnalytics.Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Client.Entities\KariyerAnalytics.Client.Entities.csproj">
-      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
+      <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
       <Name>KariyerAnalytics.Client.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
+      <Project>{c67e743f-5ced-4728-b150-ae83b864ed36}</Project>
+      <Name>KariyerAnalytics.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
