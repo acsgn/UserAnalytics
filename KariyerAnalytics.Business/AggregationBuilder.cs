@@ -14,10 +14,12 @@ namespace KariyerAnalytics.Business
 
         public AggregationBuilder Add()
         {
-            new AggregationContainer()
-            {
+            var x = new TermsAggregation("xyz")
+                {
+                    Field = "xyz"
                 
-            };
+            });
+            _Aggregations.Add("asd", x);
             return this;
         }
 
