@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KariyerAnalytics.Common;
-using KariyerAnalytics.Data.Contract;
 using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class Repository : IRepository
+    public class GenericRepository<T> : Contract.IRepository<T>, IDisposable where T : class
     {
-        public async void Index<T>(string indexName, T document) where T : class
+        public async void Index(string indexName, T document)
         {
             using (var context = new ElasticsearchContext())
             {
@@ -19,7 +14,7 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public ISearchResponse<T> Search<T>(ISearchRequest searchRequest) where T : class
+        public ISearchResponse<T> Search(ISearchRequest searchRequest)
         {
             using (var context = new ElasticsearchContext())
             {
@@ -29,7 +24,7 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public void CreateIndex<T>(string indexName) where T : class
+        public void CreateIndex(string indexName)
         {
             using (var context = new ElasticsearchContext())
             {
@@ -51,5 +46,11 @@ namespace KariyerAnalytics.Data.Repositories
                 }
             }
         }
+
+        public void Dispose()
+        {
+            GC.Collect();
+        }
+
     }
 }

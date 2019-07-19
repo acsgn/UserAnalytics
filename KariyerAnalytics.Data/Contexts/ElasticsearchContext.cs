@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using KariyerAnalytics.Common;
 using KariyerAnalytics.Data.Contract;
 using Nest;
 

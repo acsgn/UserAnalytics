@@ -4,10 +4,10 @@ using Nest;
 
 namespace KariyerAnalytics.Data.Contract
 {
-    public interface IRepository
+    public interface IRepository<T> where T : class
     {
-        void Index<T>(string indexName, T document) where T : class;
-        ISearchResponse<T> Search<T>(ISearchRequest searchRequest) where T : class;
-        void CreateIndex<T>(string indexName) where T : class;
+        void Index(string indexName, T document);
+        ISearchResponse<T> Search(ISearchRequest searchRequest);
+        void CreateIndex(string indexName);
     }
 }

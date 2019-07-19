@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using KariyerAnalytics.Business;
 using KariyerAnalytics.Service.Entities;
 
@@ -14,16 +9,22 @@ namespace KariyerAnalytics.Controllers
         [HttpGet]
         public string[] GetCompanies()
         {
-            //Request request
-            var engine = new LogEngine();
+            var engine = new CompanyEngine();
             return engine.GetCompanies(new Request());
         }
 
         [HttpGet]
-        public string[] GetCompanyDetails(DetailRequest detailRequest)
+        public string[] GetCompanyUsers(CompanyDetailRequest companyDetailRequest)
         {
-            var engine = new LogEngine();
-            return engine.GetCompanyDetails(detailRequest);
+            var engine = new CompanyEngine();
+            return engine.GetCompanyUsers(companyDetailRequest);
+        }
+
+        [HttpGet]
+        public string[] GetEndpointsbyUserandCompany(UserDetailRequest userDetailRequest)
+        {
+            var engine = new CompanyEngine();
+            return engine.GetEndpointsbyUserandCompany(userDetailRequest);
         }
     }
 }

@@ -1,22 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using KariyerAnalytics.Business.Contract;
+﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data;
 using KariyerAnalytics.Data.Repositories;
-using Nest;
 
 namespace KariyerAnalytics.Business
 {
     public class LogEngine : ILogEngine
     {
-        private readonly static string _IndexName = "logs";
 
         public void CreateIndex()
         {
-            var rep = new Repository();
-            rep.CreateIndex<Log>(_IndexName);
+            var rep = new LogRepository();
+            rep.CreateIndex();
         }
 
         public void Add(LogInformation info)
@@ -32,8 +27,8 @@ namespace KariyerAnalytics.Business
                 ResponseTime = info.ResponseTime
             };
 
-            var rep = new Repository();
-            rep.Index(_IndexName, log);
+            var rep = new LogRepository();
+            rep.Index(log);
         }
     }
 }
