@@ -41,8 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEngine.cs" />
+    <Compile Include="IStatisticEngine.cs" />
+    <Compile Include="ILogEngine.cs" />
+    <Compile Include="ICompanyEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KariyerAnalytics.Client.Entities\KariyerAnalytics.Service.Entities.csproj">
+      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
+      <Name>KariyerAnalytics.Service.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
