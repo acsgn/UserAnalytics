@@ -2,7 +2,7 @@
 
 namespace KariyerAnalytics.Business.Contract
 {
-    public interface ICompanyEngine
+    public interface ICompanyEngine : IEngine
     {
         string[] GetCompanies(Request request);
         string[] GetCompanyUsers(CompanyDetailRequest userDetailRequest);

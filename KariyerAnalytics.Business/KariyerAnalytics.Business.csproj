@@ -40,6 +40,7 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\AggregationBuilder.cs" />
@@ -62,6 +63,10 @@
     <ProjectReference Include="..\KariyerAnalytics.Client.Entities\KariyerAnalytics.Service.Entities.csproj">
       <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Common\KariyerAnalytics.Common.csproj">
+      <Project>{698F8939-5310-41E2-B1F0-9B97D108F476}</Project>
+      <Name>KariyerAnalytics.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
       <Project>{C67E743F-5CED-4728-B150-AE83B864ED36}</Project>

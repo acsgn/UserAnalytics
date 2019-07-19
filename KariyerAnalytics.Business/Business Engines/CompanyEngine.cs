@@ -1,25 +1,36 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Repositories;
+using System.ComponentModel.Composition;
+using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Business
 {
+    [Export(typeof(ICompanyEngine))]
     public class CompanyEngine : ICompanyEngine
     {
+        [Import]
+        private CompanyRepository _CompanyRepository;
+
+        public CompanyEngine()
+        {
+            if (ObjectBase.Container != null)
+            {
+                ObjectBase.Container.SatisfyImportsOnce(this);
+            }
+        }
+
         public string[] GetCompanies(Request request)
         {
-            var companyRepository = new CompanyRepository();
-            return companyRepository.GetCompanies(request.After, request.Before);
+            return _CompanyRepository.GetCompanies(request.After, request.Before);
         }
         public string[] GetCompanyUsers(CompanyDetailRequest companyDetailRequest)
         {
-            var companyRepository = new CompanyRepository();
-            return companyRepository.GetCompanyUsers(companyDetailRequest.CompanyName, companyDetailRequest.After, companyDetailRequest.Before);
+            return _CompanyRepository.GetCompanyUsers(companyDetailRequest.CompanyName, companyDetailRequest.After, companyDetailRequest.Before);
         }
         public string[] GetEndpointsbyUserandCompany(UserDetailRequest userDetailRequest)
         {
-            var companyRepository = new CompanyRepository();
-            return companyRepository.GetEndpointsbyUserandCompany(userDetailRequest.CompanyName, userDetailRequest.Username, userDetailRequest.After, userDetailRequest.Before);
+            return _CompanyRepository.GetEndpointsbyUserandCompany(userDetailRequest.CompanyName, userDetailRequest.Username, userDetailRequest.After, userDetailRequest.Before);
         }
     }
 }

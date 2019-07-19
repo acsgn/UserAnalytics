@@ -2,7 +2,7 @@
 
 namespace KariyerAnalytics.Business.Contract
 {
-    public interface IStatisticEngine
+    public interface IStatisticEngine : IEngine
     {
         MetricResponse GetBestResponseTime(Request request);
         MetricResponse GetWorstResponseTime(Request request);

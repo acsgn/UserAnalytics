@@ -50,6 +50,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -78,9 +79,12 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
+    <Compile Include="DependencyInjection\MefConfig.cs" />
+    <Compile Include="DependencyInjection\MefLoader.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="DependencyInjection\MefDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +98,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\KariyerAnalytics.Business.Contract.csproj">
+      <Project>{69C23E01-0199-4ECB-941E-8BB0FD4F0684}</Project>
+      <Name>KariyerAnalytics.Business.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
       <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
       <Name>KariyerAnalytics.Business</Name>
@@ -101,6 +109,10 @@
     <ProjectReference Include="..\KariyerAnalytics.Client.Entities\KariyerAnalytics.Service.Entities.csproj">
       <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Common\KariyerAnalytics.Common.csproj">
+      <Project>{698f8939-5310-41e2-b1f0-9b97d108f476}</Project>
+      <Name>KariyerAnalytics.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
       <Project>{c67e743f-5ced-4728-b150-ae83b864ed36}</Project>

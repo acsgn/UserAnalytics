@@ -2,16 +2,28 @@
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Repositories;
+using System.ComponentModel.Composition;
+using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Business
 {
+    [Export(typeof(ILogEngine))]
     public class LogEngine : ILogEngine
     {
+        [Import]
+        private LogRepository _LogRepository;
+
+        public LogEngine()
+        {
+            if (ObjectBase.Container != null)
+            {
+                ObjectBase.Container.SatisfyImportsOnce(this);
+            }
+        }
 
         public void CreateIndex()
         {
-            var rep = new LogRepository();
-            rep.CreateIndex();
+            _LogRepository.CreateIndex();
         }
 
         public void Add(LogInformation info)
@@ -27,8 +39,7 @@ namespace KariyerAnalytics.Business
                 ResponseTime = info.ResponseTime
             };
 
-            var rep = new LogRepository();
-            rep.Index(log);
+            _LogRepository.Index(log);
         }
     }
 }

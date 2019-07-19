@@ -1,6 +1,5 @@
-﻿using System;
-using System.Web.Http;
-using KariyerAnalytics.Business;
+﻿using System.Web.Http;
+using KariyerAnalytics.DependencyInjection;
 
 namespace KariyerAnalytics
 {
@@ -9,13 +8,7 @@ namespace KariyerAnalytics
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            try
-            {
-                new LogEngine().Start();
-            } catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
+            MefConfig.RegisterMef();
         }
     }
 }
