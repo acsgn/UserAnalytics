@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Client.Entities;
 using KariyerAnalytics.Data;
+using KariyerAnalytics.Data.Repositories;
 using Nest;
 
 namespace KariyerAnalytics.Business
 {
-    public class LogEngine
+    public class LogEngine : IEngine
     {
         private readonly static string _IndexName = "logs";
 
         public void Start()
         {
-            var context = new ElasticsearchContext();
-            context.CreateIndex<Log>(_IndexName);
+            var rep = new Repository();
+            rep.CreateIndex<Log>(_IndexName);
         }
 
         public void Add(LogInformation info)
@@ -30,14 +32,14 @@ namespace KariyerAnalytics.Business
                 ResponseTime = info.ResponseTime
             };
 
-            var rep = new ElasticsearchContext();
+            var rep = new Repository();
             rep.Index(_IndexName, log);
         }
 
-        public KeyValuePair<string[], double> GetBestResponseTime(Request request)
+        public MetricResponse GetBestResponseTime(Request request)
         {
-            var rep = new ElasticsearchContext();
-            
+            var rep = new Repository();
+
             var bestRequest = new SearchDescriptor<Log>()
                 .Size(0)
                 .Aggregations(aggs => aggs
@@ -55,12 +57,16 @@ namespace KariyerAnalytics.Business
             var bestResult = rep.Search<Log>(bestRequest);
             var bucket = bestResult.Aggs.MaxBucket("best-response-time");
 
-            return new KeyValuePair<string[], double>(bucket.Keys.ToArray(), (double)bucket.Value);
+            return new MetricResponse
+            {
+                Endpoint = bucket.Keys.ToArray()[0],
+                ResponseTime = (double) bucket.Value
+            };
         }
 
-        public KeyValuePair<string[], double> GetWorstResponseTime(Request request)
+        public MetricResponse GetWorstResponseTime(Request request)
         {
-            var rep = new ElasticsearchContext();
+            var rep = new Repository();
 
             var worstRequest = new SearchDescriptor<Log>()
                 .Size(0)
@@ -76,6 +82,7 @@ namespace KariyerAnalytics.Business
             
             var request2 = new SearchRequest()
             {
+                Query = new QueryBuilder().AddDateRangeFilter(request.After, request.Before, "timestamp").Build(),
                 Aggregations = new AggregationBuilder()
                     .AddContainer()
                         .AddTermsAggregation("actions", "endpoint")
@@ -92,14 +99,18 @@ namespace KariyerAnalytics.Business
             };
 
             var worstResult = rep.Search<Log>(request2);
-            var bucket = worstResult.Aggs.MaxBucket("worst-response-time");
+            var bucket = worstResult.Aggs.MaxBucket("worst-time");
 
-            return new KeyValuePair<string[], double>(bucket.Keys.ToArray(), (double) bucket.Value);
+            return new MetricResponse
+            {
+                Endpoint = bucket.Keys.ToArray()[0],
+                ResponseTime = (double) bucket.Value
+            };
         }
 
         public string[] GetEndpoints(Request request)
         {
-            var rep = new ElasticsearchContext();
+            var rep = new Repository();
 
             var endpointsRequest = new SearchDescriptor<Log>()
                 .Size(0)
@@ -116,13 +127,12 @@ namespace KariyerAnalytics.Business
 
         public int[] GetResponseTimes(string endpoint, Request request)
         {
-            var rep = new ElasticsearchContext();
+            var rep = new Repository();
 
             var responseTimeRequest = new SearchDescriptor<Log>()
                 .Query(q => q
                     .MatchPhrase(s => s
-                        .Field(f => f
-                            .Endpoint)
+                        .Field(f => f.Endpoint)
                         .Query(endpoint)))
                 .Sort(s => s
                     .Ascending(f => f
@@ -141,14 +151,26 @@ namespace KariyerAnalytics.Business
 
         public string[] GetCompanies(Request request)
         {
-            var rep = new ElasticsearchContext();
+            var rep = new Repository();
 
-            var companiesRequest = new SearchDescriptor<Log>()
+            var companiesRequest2 = new SearchDescriptor<Log>()
                 .Size(0)
                 .Aggregations(aggs => aggs
                     .Terms("companies", s => s
                         .Field(f => f
                             .CompanyName)));
+
+            var companiesRequest = new SearchRequest
+            {
+                Size = 0,
+                Query = new QueryBuilder().AddDateRangeFilter(request.After, request.Before, "timestamp").Build(),
+                Aggregations = new AggregationBuilder()
+                        .AddContainer()
+                            .AddTermsAggregation("companies", "companyName")
+                        .Build()
+                    .Build()
+            };
+
             var companiesResult = rep.Search<Log>(companiesRequest);
 
             var companyList = (from b in companiesResult.Aggs.Terms("companies").Buckets select b.Key).ToArray();
@@ -156,47 +178,36 @@ namespace KariyerAnalytics.Business
             return companyList;
         }
 
-        public string[] GetUsersofCompany(string companyName, Request request)
+        public string[] GetCompanyDetails(DetailRequest detailRequest)
         {
-            var rep = new ElasticsearchContext();
+            if (detailRequest.CompanyName != null && detailRequest.Username == null)
+            {
+                return GetUsersofCompany(detailRequest.CompanyName, detailRequest);
+            }
+            else if (detailRequest.CompanyName != null && detailRequest.Username != null)
+            {
+                return GetActionbyUserandCompany(detailRequest.CompanyName, detailRequest.Username, detailRequest);
+            }
+            else
+            {
+                return new string[0];
+            }
+        }
+
+        private string[] GetUsersofCompany(string companyName, Request request)
+        {
+            var rep = new Repository();
 
             //var usersRequest = new SearchDescriptor<Log>()
             //    .Query(q => q
             //        .MatchPhrase(s => s
-            //            .Field(f => f
-            //                .CompanyName)
+            //            .Field(f => f.CompanyName)
             //            .Query(companyName)))
             //    .Size(0)
             //    .Aggregations(aggs => aggs
             //        .Terms("users", s => s
-            //            .Field(f => f
-            //                .Username)));
+            //            .Field(f => f.Username)));
 
-
-            //var searchRequest = new SearchRequest<Log>
-            //{
-            //    Query = new BoolQuery()
-            //    {
-            //        Must = new QueryContainer[]
-            //        {
-            //            new MatchPhraseQuery()
-            //            {
-            //                Field = new Field
-            //                {
-            //                    Name = ""
-            //                },
-            //                Query = companyName
-            //            }
-            //        },
-            //        Filter = new QueryContainer[]
-            //        {
-            //            new DateRangeQuery()
-            //            {
-
-            //            }
-            //        }
-            //    }
-            //};
 
             var usersRequest = new SearchRequest()
             {
@@ -219,9 +230,9 @@ namespace KariyerAnalytics.Business
             return userList;
         }
 
-        public string[] GetActionbyUserandCompany(string companyName, string username, Request request)
+        private string[] GetActionbyUserandCompany(string companyName, string username, Request request)
         {
-            var rep = new ElasticsearchContext();
+            var rep = new Repository();
 
             var actionsRequest = new SearchDescriptor<Log>()
                 .Query(q => q

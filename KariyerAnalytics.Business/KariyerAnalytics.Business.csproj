@@ -42,13 +42,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregationBuilder.cs" />
+    <Compile Include="Builders\AggregationBuilder.cs" />
     <Compile Include="Business Engines\LogEngine.cs" />
-    <Compile Include="AggregationContainerBuilder.cs" />
+    <Compile Include="Builders\AggregationContainerBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryBuilder.cs" />
+    <Compile Include="Builders\QueryBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\KariyerAnalytics.Business.Contract.csproj">
+      <Project>{69C23E01-0199-4ECB-941E-8BB0FD4F0684}</Project>
+      <Name>KariyerAnalytics.Business.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
       <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>

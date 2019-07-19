@@ -4,7 +4,7 @@ using Nest;
 
 namespace KariyerAnalytics.Data
 {
-    sealed class ElasticsearchConnectionSettings
+    sealed class ElasticsearchConnectionSettingsSingleton
     {
         private static ConnectionSettings connectionSettings;
 
