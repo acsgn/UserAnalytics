@@ -1,8 +1,7 @@
 ﻿using System.Web;
 using System.Web.Http;
-using KariyerAnalytics.Client.Entities;
+using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Business;
-using System.Collections.Generic;
 
 namespace KariyerAnalytics.Controllers
 {

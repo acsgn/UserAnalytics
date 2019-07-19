@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using KariyerAnalytics.Business;
-using KariyerAnalytics.Client.Entities;
+using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Controllers
 {

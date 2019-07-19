@@ -1,4 +1,4 @@
-﻿namespace KariyerAnalytics.Client.Entities
+﻿namespace KariyerAnalytics.Service.Entities
 {
     public class DetailRequest : Request
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Client.Entities;
+using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data;
 using KariyerAnalytics.Data.Repositories;
 using Nest;
