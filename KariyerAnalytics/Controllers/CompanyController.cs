@@ -6,8 +6,6 @@ using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Controllers
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class CompanyController : ApiController
     {
         [Import(typeof(ICompanyEngine))]

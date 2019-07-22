@@ -6,8 +6,6 @@ using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Controllers
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class StatisticController : ApiController
     {
         [Import(typeof(IStatisticEngine))]

@@ -79,7 +79,8 @@ namespace KariyerAnalytics.Data.Repositories
                 var realtimeUsersRequest = new CountDescriptor<Log>()
                     .Query(q => q
                         .DateRange(dr => dr
-                            .GreaterThanOrEquals(DateTime.Now.AddSeconds(secondsBefore))
+                            .Field(f => f.Timestamp)
+                            .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
                             .LessThanOrEquals(DateTime.Now)));
 
                 var realtimeUsersResult = repository.Count(realtimeUsersRequest);

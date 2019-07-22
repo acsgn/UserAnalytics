@@ -18,7 +18,7 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var context = new ElasticsearchContext())
             {
-                var json = StringHelpers.GetQueryJSonFromRequest(searchRequest, context.ElasticClient);
+                var json = StringHelpers.GetQueryJSonFromRequest(searchRequest, context.GetElasticClient());
                 var searchResponse = context.GetElasticClient().Search<T>(searchRequest);
                 return searchResponse;
             }
@@ -28,7 +28,7 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var context = new ElasticsearchContext())
             {
-                var json = StringHelpers.GetQueryJSonFromRequest(countRequest, context.ElasticClient);
+                var json = StringHelpers.GetQueryJSonFromRequest(countRequest, context.GetElasticClient());
                 var countResponse = context.GetElasticClient().Count<T>(countRequest);
                 return countResponse;
             }
@@ -45,7 +45,7 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var indexDescriptor = new CreateIndexDescriptor(indexName)
                     .Mappings(m => m
-                        .Map<T>(map => map.AutoMap())));
+                        .Map<T>(map => map.AutoMap()));
 
                 var createIndexResult = context.GetElasticClient().CreateIndex(indexDescriptor);
 

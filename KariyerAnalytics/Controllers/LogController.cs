@@ -7,8 +7,6 @@ using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Controllers
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class LogController : ApiController
     {
         [Import(typeof(ILogEngine))]
