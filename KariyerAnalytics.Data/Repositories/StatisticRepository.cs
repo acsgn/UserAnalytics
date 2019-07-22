@@ -15,22 +15,24 @@ namespace KariyerAnalytics.Data.Repositories
             {
                 var bestRequest = new SearchDescriptor<Log>()
                 .Size(0)
-                .Query(q => q
-                    .DateRange(r => r
-                        .Field(f => f.Timestamp)
-                        .GreaterThanOrEquals(after)
-                        .LessThanOrEquals(before)))
                 .Aggregations(aggs => aggs
-                    .Terms("endpoints", s => s
-                        .Field(f => f.Endpoint)
+                    .Filter("filtered", fi => fi
+                        .Filter(fil => fil
+                            .DateRange(r => r
+                                .Field(f => f.Timestamp)
+                                .GreaterThanOrEquals(after)
+                                .LessThanOrEquals(before)))
                         .Aggregations(nestedAggs => nestedAggs
-                            .Average("average-response-time", nestedS => nestedS
-                                .Field(f => f.ResponseTime))))
-                    .MinBucket("best-response-time", s => s
-                        .BucketsPath("endpoints>average-response-time")));
+                            .Terms("endpoints", s => s
+                                .Field(f => f.Endpoint)
+                                .Aggregations(nestedNestedAggs => nestedNestedAggs
+                                    .Average("average-response-time", nestedS => nestedS
+                                        .Field(f => f.ResponseTime))))
+                            .MinBucket("best-response-time", s => s
+                                .BucketsPath("endpoints>average-response-time")))));
                 
                 var bestResult = repository.Search(bestRequest);
-                var bucket = bestResult.Aggs.MaxBucket("best-response-time");
+                var bucket = bestResult.Aggs.Filter("filtered").MinBucket("best-response-time");
 
                 return new MetricResponse
                 {
@@ -47,22 +49,24 @@ namespace KariyerAnalytics.Data.Repositories
             {
                 var worstRequest = new SearchDescriptor<Log>()
                 .Size(0)
-                .Query(q => q
-                    .DateRange(r => r
-                        .Field(f => f.Timestamp)
-                        .GreaterThanOrEquals(after)
-                        .LessThanOrEquals(before)))
                 .Aggregations(aggs => aggs
-                    .Terms("endpoints", s => s
-                        .Field(f => f.Endpoint)
+                    .Filter("filtered", fi => fi
+                        .Filter(fil => fil
+                            .DateRange(r => r
+                                .Field(f => f.Timestamp)
+                                .GreaterThanOrEquals(after)
+                                .LessThanOrEquals(before)))
                         .Aggregations(nestedAggs => nestedAggs
-                            .Average("average-response-time", nestedS => nestedS
-                                .Field(f => f.ResponseTime))))
-                    .MaxBucket("worst-response-time", s => s
-                        .BucketsPath("endpoints>average-response-time")));
+                            .Terms("endpoints", s => s
+                                .Field(f => f.Endpoint)
+                                .Aggregations(nestedNestedAggs => nestedNestedAggs
+                                    .Average("average-response-time", nestedS => nestedS
+                                        .Field(f => f.ResponseTime))))
+                            .MaxBucket("worst-response-time", s => s
+                                .BucketsPath("endpoints>average-response-time")))));
                 
                 var worstResult = repository.Search(worstRequest);
-                var bucket = worstResult.Aggs.MaxBucket("worst-response-time");
+                var bucket = worstResult.Aggs.Filter("filtered").MaxBucket("worst-response-time");
 
                 return new MetricResponse
                 {
@@ -78,19 +82,21 @@ namespace KariyerAnalytics.Data.Repositories
             {
                 var realtimeUsersRequest = new SearchDescriptor<Log>()
                     .Size(0)
-                    .Query(q => q
-                        .DateRange(r => r
-                            .Field(f => f.Timestamp)
-                            .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
-                            .LessThanOrEquals(DateTime.Now)))
                     .Aggregations(aggs => aggs
-                        .Terms("endpoints", t => t
-                            .Field(f => f.Endpoint)));
+                        .Filter("filtered", fi => fi
+                            .Filter(fil => fil
+                                .DateRange(r => r
+                                    .Field(f => f.Timestamp)
+                                    .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
+                                    .LessThanOrEquals(DateTime.Now)))
+                            .Aggregations(nestedAggs => nestedAggs
+                                .Terms("endpoints", t => t
+                                    .Field(f => f.Endpoint)))));
 
                 var realtimeUsersResult = repository.Search(realtimeUsersRequest);
 
                 var realtimeUsersList =
-                    (from b in realtimeUsersResult.Aggs.Terms("endpoints").Buckets
+                    (from b in realtimeUsersResult.Aggs.Filter("filtered").Terms("endpoints").Buckets
                     select new RealtimeUserMetric
                     {
                         Endpoint = b.Key,
@@ -107,18 +113,20 @@ namespace KariyerAnalytics.Data.Repositories
             {
                 var endpointsRequest = new SearchDescriptor<Log>()
                 .Size(0)
-                .Query(q => q
-                    .DateRange(r => r
-                        .Field(f => f.Timestamp)
-                        .GreaterThanOrEquals(after)
-                        .LessThanOrEquals(before)))
                 .Aggregations(aggs => aggs
-                    .Terms("endpoints", s => s
-                        .Field(f => f.Endpoint)));
+                    .Filter("filtered", fi => fi
+                        .Filter(fil => fil
+                            .DateRange(r => r
+                                .Field(f => f.Timestamp)
+                                .GreaterThanOrEquals(after)
+                                .LessThanOrEquals(before)))
+                        .Aggregations(nestedAggs => nestedAggs
+                            .Terms("endpoints", s => s
+                                .Field(f => f.Endpoint)))));
 
                 var endpointsResult = repository.Search(endpointsRequest);
 
-                var endpointList = (from b in endpointsResult.Aggs.Terms("endpoints").Buckets select b.Key).ToArray();
+                var endpointList = (from b in endpointsResult.Aggs.Filter("filtered").Terms("endpoints").Buckets select b.Key).ToArray();
 
                 return endpointList;
             }
