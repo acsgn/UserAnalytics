@@ -72,20 +72,32 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public long GetRealtimeUsers(int secondsBefore)
+        public RealtimeUserMetric[] GetRealtimeUsers(int secondsBefore)
         {
             using (var repository = new GenericRepository<Log>())
             {
-                var realtimeUsersRequest = new CountDescriptor<Log>()
+                var realtimeUsersRequest = new SearchDescriptor<Log>()
+                    .Size(0)
                     .Query(q => q
-                        .DateRange(dr => dr
+                        .DateRange(r => r
                             .Field(f => f.Timestamp)
                             .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
-                            .LessThanOrEquals(DateTime.Now)));
+                            .LessThanOrEquals(DateTime.Now)))
+                    .Aggregations(aggs => aggs
+                        .Terms("endpoints", t => t
+                            .Field(f => f.Endpoint)));
 
-                var realtimeUsersResult = repository.Count(realtimeUsersRequest);
-                
-                return realtimeUsersResult.Count;
+                var realtimeUsersResult = repository.Search(realtimeUsersRequest);
+
+                var realtimeUsersList =
+                    (from b in realtimeUsersResult.Aggs.Terms("endpoints").Buckets
+                    select new RealtimeUserMetric
+                    {
+                        Endpoint = b.Key,
+                        UserCount = (long)b.DocCount
+                    }).ToArray();
+
+                return realtimeUsersList;
             }
         }
 
@@ -135,7 +147,8 @@ namespace KariyerAnalytics.Data.Repositories
                 
                 var responseTimeResult = repository.Search(responseTimeRequest);
 
-                var responseTimeList = (from b in responseTimeResult.Fields select b.ValueOf<Log, int>(p => p.ResponseTime)).ToArray();
+                var responseTimeList = (from b in responseTimeResult.Fields
+                                        select b.ValueOf<Log, int>(p => p.ResponseTime)).ToArray();
 
                 return responseTimeList;
             }

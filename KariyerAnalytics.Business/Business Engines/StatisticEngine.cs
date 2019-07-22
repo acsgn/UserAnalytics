@@ -3,6 +3,7 @@ using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Repositories;
 using System.ComponentModel.Composition;
 using KariyerAnalytics.Common.DependencyInjection;
+using System.Linq;
 
 namespace KariyerAnalytics.Business
 {
@@ -20,29 +21,35 @@ namespace KariyerAnalytics.Business
             }
         }
 
-        public MetricResponse GetBestResponseTime(Request request)
+        public MetricResponseDTO GetBestResponseTime(Request request)
         {
-            var response = _StatisticRepository.GetBestResponseTime(request.After, request.Before);
-            return new MetricResponse
+            var result = _StatisticRepository.GetBestResponseTime(request.After, request.Before);
+            return new MetricResponseDTO
             {
-                Endpoint = response.Endpoint,
-                ResponseTime = response.ResponseTime
+                Endpoint = result.Endpoint,
+                ResponseTime = result.ResponseTime
             };
         }
 
-        public MetricResponse GetWorstResponseTime(Request request)
+        public MetricResponseDTO GetWorstResponseTime(Request request)
         {
-            var response = _StatisticRepository.GetWorstResponseTime(request.After, request.Before);
-            return new MetricResponse
+            var result = _StatisticRepository.GetWorstResponseTime(request.After, request.Before);
+            return new MetricResponseDTO
             {
-                Endpoint = response.Endpoint,
-                ResponseTime = response.ResponseTime
+                Endpoint = result.Endpoint,
+                ResponseTime = result.ResponseTime
             };
         }
 
-        public long GetRealtimeUsers(int secondsBefore)
+        public RealtimeUserMetricDTO[] GetRealtimeUsers(int secondsBefore)
         {
-            return _StatisticRepository.GetRealtimeUsers(secondsBefore);
+            var result = _StatisticRepository.GetRealtimeUsers(secondsBefore);
+            return (from r in result
+                    select new RealtimeUserMetricDTO
+                    {
+                        Endpoint = r.Endpoint,
+                        UserCount = r.UserCount
+                    }).ToArray();
         }
 
         public string[] GetEndpoints(Request request)

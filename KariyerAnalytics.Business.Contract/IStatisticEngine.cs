@@ -4,9 +4,9 @@ namespace KariyerAnalytics.Business.Contract
 {
     public interface IStatisticEngine : IEngine
     {
-        MetricResponse GetBestResponseTime(Request request);
-        MetricResponse GetWorstResponseTime(Request request);
-        long GetRealtimeUsers(int secondsBefore);
+        MetricResponseDTO GetBestResponseTime(Request request);
+        MetricResponseDTO GetWorstResponseTime(Request request);
+        RealtimeUserMetricDTO[] GetRealtimeUsers(int secondsBefore);
         string[] GetEndpoints(Request request);
         int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
     }

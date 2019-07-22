@@ -60,10 +60,6 @@
       <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Client.Entities\KariyerAnalytics.Service.Entities.csproj">
-      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
-      <Name>KariyerAnalytics.Service.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Common\KariyerAnalytics.Common.csproj">
       <Project>{698F8939-5310-41E2-B1F0-9B97D108F476}</Project>
       <Name>KariyerAnalytics.Common</Name>

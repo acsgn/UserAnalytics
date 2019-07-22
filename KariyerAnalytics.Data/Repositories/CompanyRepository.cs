@@ -26,7 +26,8 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var companiesResult = repository.Search(companiesRequest);
 
-                var companyList = (from b in companiesResult.Aggs.Terms("companies").Buckets select b.Key).ToArray();
+                var companyList = (from b in companiesResult.Aggs.Terms("companies").Buckets
+                                   select b.Key).ToArray();
 
                 return companyList;
             }
@@ -47,7 +48,8 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var usersResult = repository.Search(usersRequest);
 
-                var userList = (from b in usersResult.Aggs.Terms("users").Buckets select b.Key).ToArray();
+                var userList = (from b in usersResult.Aggs.Terms("users").Buckets
+                                select b.Key).ToArray();
 
                 return userList;
             }
@@ -81,7 +83,8 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var endpointsResult = repository.Search(endpointsRequest);
 
-                var endpointsList = (from b in endpointsResult.Aggs.Terms("actions").Buckets select b.Key).ToArray();
+                var endpointsList = (from b in endpointsResult.Aggs.Terms("actions").Buckets
+                                     select b.Key).ToArray();
 
                 return endpointsList;
             }

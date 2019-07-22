@@ -20,19 +20,19 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public MetricResponse GetBestResponseTime(Request request)
+        public MetricResponseDTO GetBestResponseTime(Request request)
         {
             return _StatisticEngine.GetBestResponseTime(request);
         }
 
         [HttpGet]
-        public MetricResponse GetWorstResponseTime(Request request)
+        public MetricResponseDTO GetWorstResponseTime(Request request)
         {
             return _StatisticEngine.GetWorstResponseTime(request);
         }
 
         [HttpGet]
-        public long GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
+        public RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
         {
             return _StatisticEngine.GetRealtimeUsers(realtimeUserCountRequest.SecondsBefore);
         }
