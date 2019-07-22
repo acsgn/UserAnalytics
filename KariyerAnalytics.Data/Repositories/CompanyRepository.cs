@@ -91,13 +91,12 @@ namespace KariyerAnalytics.Data.Repositories
                                                 .Field(f => f.Username)
                                                 .Query(username)))
                                         .Aggregations(nestedNestedNestedAggs => nestedNestedNestedAggs
-                                            .Terms("actions", s => s
-                                                .Field(f => f
-                                                    .Endpoint)))))))));
+                                            .Terms("endpoints", s => s
+                                                .Field(f => f.Endpoint)))))))));
 
                 var endpointsResult = repository.Search(endpointsRequest);
 
-                var endpointsList = (from b in endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Filter("filtered3").Terms("actions").Buckets
+                var endpointsList = (from b in endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Filter("filtered3").Terms("endpoints").Buckets
                                      select b.Key).ToArray();
 
                 return endpointsList;
