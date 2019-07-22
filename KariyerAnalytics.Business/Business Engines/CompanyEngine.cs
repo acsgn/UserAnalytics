@@ -9,7 +9,7 @@ namespace KariyerAnalytics.Business
     [Export(typeof(ICompanyEngine))]
     public class CompanyEngine : ICompanyEngine
     {
-        [Import]
+        [Import(typeof(CompanyRepository))]
         private CompanyRepository _CompanyRepository;
 
         public CompanyEngine()

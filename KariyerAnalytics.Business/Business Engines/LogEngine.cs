@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Business
     [Export(typeof(ILogEngine))]
     public class LogEngine : ILogEngine
     {
-        [Import]
+        [Import(typeof(LogRepository))]
         private LogRepository _LogRepository;
 
         public LogEngine()

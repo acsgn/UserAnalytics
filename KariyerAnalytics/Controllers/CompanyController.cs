@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class CompanyController : ApiController
     {
-        [Import]
+        [Import(typeof(ICompanyEngine))]
         private ICompanyEngine _CompanyEngine;
 
         public CompanyController()

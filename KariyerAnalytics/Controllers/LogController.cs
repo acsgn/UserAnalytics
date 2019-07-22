@@ -11,7 +11,7 @@ namespace KariyerAnalytics.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class LogController : ApiController
     {
-        [Import]
+        [Import(typeof(ILogEngine))]
         private ILogEngine _LogEngine;
 
         public LogController()

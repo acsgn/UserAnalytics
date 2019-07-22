@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Linq;
 using KariyerAnalytics.Business.Entities;
 using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
+    [Export(typeof(CompanyRepository))]
     public class CompanyRepository
     {
         public string[] GetCompanies(DateTime after, DateTime before)

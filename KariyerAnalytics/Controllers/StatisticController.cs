@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class StatisticController : ApiController
     {
-        [Import]
+        [Import(typeof(IStatisticEngine))]
         private IStatisticEngine _StatisticEngine;
 
         public StatisticController()

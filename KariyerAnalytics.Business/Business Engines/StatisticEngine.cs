@@ -9,7 +9,7 @@ namespace KariyerAnalytics.Business
     [Export(typeof(IStatisticEngine))]
     public class StatisticEngine : IStatisticEngine
     {
-        [Import]
+        [Import(typeof(StatisticRepository))]
         private StatisticRepository _StatisticRepository;
 
         public StatisticEngine()
