@@ -68,6 +68,10 @@
       <Project>{C67E743F-5CED-4728-B150-AE83B864ED36}</Project>
       <Name>KariyerAnalytics.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
+      <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
+      <Name>KariyerAnalytics.Service.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

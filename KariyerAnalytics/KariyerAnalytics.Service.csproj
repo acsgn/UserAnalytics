@@ -114,6 +114,10 @@
       <Project>{c67e743f-5ced-4728-b150-ae83b864ed36}</Project>
       <Name>KariyerAnalytics.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
+      <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
+      <Name>KariyerAnalytics.Service.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
