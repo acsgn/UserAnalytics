@@ -32,7 +32,13 @@ namespace KariyerAnalytics.Controllers
         {
             return _StatisticEngine.GetWorstResponseTime(request);
         }
-        
+
+        [HttpGet]
+        public long GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
+        {
+            return _StatisticEngine.GetRealtimeUsers(realtimeUserCountRequest.SecondsBefore);
+        }
+
         [HttpGet]
         public string[] GetEndpoints(Request request)
         {

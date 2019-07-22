@@ -40,6 +40,11 @@ namespace KariyerAnalytics.Business
             };
         }
 
+        public long GetRealtimeUsers(int secondsBefore)
+        {
+            return _StatisticRepository.GetRealtimeUsers(secondsBefore);
+        }
+
         public string[] GetEndpoints(Request request)
         {
             return _StatisticRepository.GetEndpoints(request.After, request.Before);

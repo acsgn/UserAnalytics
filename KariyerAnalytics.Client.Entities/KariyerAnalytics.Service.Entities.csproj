@@ -35,6 +35,7 @@
     <Compile Include="LogInformation.cs" />
     <Compile Include="MetricResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealtimeUserCountRequest.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="ResponseTimeRequest.cs" />
     <Compile Include="UserDetailRequest.cs" />

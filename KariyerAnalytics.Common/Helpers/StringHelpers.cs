@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Common
 {
     public static class StringHelpers
     {
-        public static string GetQueryJSonFromRequest(ISearchRequest request, ElasticClient elasticClient)
+        public static string GetQueryJSonFromRequest(IRequest request, ElasticClient elasticClient)
         {
             using (var stream = new MemoryStream())
             {

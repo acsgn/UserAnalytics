@@ -6,6 +6,7 @@ namespace KariyerAnalytics.Business.Contract
     {
         MetricResponse GetBestResponseTime(Request request);
         MetricResponse GetWorstResponseTime(Request request);
+        long GetRealtimeUsers(int secondsBefore);
         string[] GetEndpoints(Request request);
         int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
     }

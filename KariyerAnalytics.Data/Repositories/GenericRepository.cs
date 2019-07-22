@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var context = new ElasticsearchContext())
             {
-                await context.ElasticClient.IndexAsync(document, i => i.Index(indexName).Type<T>());
+                await context.GetElasticClient().IndexAsync(document, i => i.Index(indexName).Type<T>());
             }
         }
 
@@ -19,8 +19,18 @@ namespace KariyerAnalytics.Data.Repositories
             using (var context = new ElasticsearchContext())
             {
                 var json = StringHelpers.GetQueryJSonFromRequest(searchRequest, context.ElasticClient);
-                var searchResponse = context.ElasticClient.Search<T>(searchRequest);
+                var searchResponse = context.GetElasticClient().Search<T>(searchRequest);
                 return searchResponse;
+            }
+        }
+
+        public ICountResponse Count(ICountRequest countRequest)
+        {
+            using (var context = new ElasticsearchContext())
+            {
+                var json = StringHelpers.GetQueryJSonFromRequest(countRequest, context.ElasticClient);
+                var countResponse = context.GetElasticClient().Count<T>(countRequest);
+                return countResponse;
             }
         }
 
@@ -28,17 +38,16 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var context = new ElasticsearchContext())
             {
-                if (context.ElasticClient.IndexExists(indexName).Exists)
+                if (context.GetElasticClient().IndexExists(indexName).Exists)
                 {
                     throw new Exception("The index is available, unable to create mapping!");
                 }
 
-                var createIndexResult = context.ElasticClient
-                    .CreateIndex(indexName, indexDescriptor => indexDescriptor
-                        .Mappings(mappingsDescriptor => mappingsDescriptor
-                            .Map<T>(m => m.AutoMap())
-                        )
-                );
+                var indexDescriptor = new CreateIndexDescriptor(indexName)
+                    .Mappings(m => m
+                        .Map<T>(map => map.AutoMap())));
+
+                var createIndexResult = context.GetElasticClient().CreateIndex(indexDescriptor);
 
                 if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
                 {

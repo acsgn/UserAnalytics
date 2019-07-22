@@ -72,6 +72,22 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
+        public long GetRealtimeUsers(int secondsBefore)
+        {
+            using (var repository = new GenericRepository<Log>())
+            {
+                var realtimeUsersRequest = new CountDescriptor<Log>()
+                    .Query(q => q
+                        .DateRange(dr => dr
+                            .GreaterThanOrEquals(DateTime.Now.AddSeconds(secondsBefore))
+                            .LessThanOrEquals(DateTime.Now)));
+
+                var realtimeUsersResult = repository.Count(realtimeUsersRequest);
+                
+                return realtimeUsersResult.Count;
+            }
+        }
+
         public string[] GetEndpoints(DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())

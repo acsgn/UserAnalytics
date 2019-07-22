@@ -6,5 +6,6 @@ namespace KariyerAnalytics.Data.Contract
 {
     public interface IElasticsearchContext
     {
+        ElasticClient GetElasticClient();
     }
 }

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Service.Entities
 {
-    public class UserDetailRequest : CompanyDetailRequest
+    public class UserDetailRequest
     {
+        public DateTime After { get; set; }
+        public DateTime Before { get; set; }
+        public string CompanyName { get; set; }
         public string Username { get; set; }
     }
 }

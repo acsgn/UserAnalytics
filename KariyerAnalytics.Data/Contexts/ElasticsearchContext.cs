@@ -6,10 +6,15 @@ namespace KariyerAnalytics.Data
 {
     public class ElasticsearchContext : IElasticsearchContext, IDisposable
     {
-        public readonly ElasticClient ElasticClient;
+        private readonly ElasticClient _ElasticClient;
         public ElasticsearchContext()
         {
-            ElasticClient = new ElasticClient(ElasticsearchConnectionSettingsSingleton.GetDefaultConnectionSettings());
+            _ElasticClient = new ElasticClient(ElasticsearchConnectionSettingsSingleton.GetDefaultConnectionSettings());
+        }
+
+        public ElasticClient GetElasticClient()
+        {
+            return _ElasticClient;
         }
 
         public void Dispose()
