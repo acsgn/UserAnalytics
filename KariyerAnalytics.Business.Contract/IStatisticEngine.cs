@@ -8,6 +8,6 @@ namespace KariyerAnalytics.Business.Contract
         MetricResponseDTO GetWorstResponseTime(Request request);
         RealtimeUserMetricDTO[] GetRealtimeUsers(int secondsBefore);
         string[] GetEndpoints(Request request);
-        int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
+        HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
     }
 }

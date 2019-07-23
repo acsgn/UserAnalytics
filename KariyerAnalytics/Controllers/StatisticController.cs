@@ -44,7 +44,7 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
+        public HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
         {
             return _StatisticEngine.GetResponseTimes(responseTimeRequest);
         }

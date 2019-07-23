@@ -57,9 +57,15 @@ namespace KariyerAnalytics.Business
             return _StatisticRepository.GetEndpoints(request.After, request.Before);
         }
 
-        public int[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
+        public HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
         {
-            return _StatisticRepository.GetResponseTimes(responseTimeRequest.Endpoint, responseTimeRequest.After, responseTimeRequest.Before);
+            var result = _StatisticRepository.GetResponseTimes(responseTimeRequest.Endpoint, responseTimeRequest.Interval, responseTimeRequest.After, responseTimeRequest.Before);
+            return (from r in result
+                    select new HistogramDTO
+                    {
+                        Average = r.Average,
+                        Timestamp = r.Timestamp
+                    }).ToArray();
         }
         
     }
