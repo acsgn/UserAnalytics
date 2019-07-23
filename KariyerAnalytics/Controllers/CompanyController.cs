@@ -1,22 +1,16 @@
-﻿using System.ComponentModel.Composition;
-using System.Web.Http;
+﻿using System.Web.Http;
 using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Common.DependencyInjection;
 using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Controllers
 {
     public class CompanyController : ApiController
     {
-        [Import(typeof(ICompanyEngine))]
-        private ICompanyEngine _CompanyEngine;
+        private readonly ICompanyEngine _CompanyEngine;
 
-        public CompanyController()
+        public CompanyController(ICompanyEngine companyEngine)
         {
-            if (ObjectBase.Container != null)
-            {
-                ObjectBase.Container.SatisfyImportsOnce(this);
-            }
+            _CompanyEngine = companyEngine;
         }
 
         [HttpGet]

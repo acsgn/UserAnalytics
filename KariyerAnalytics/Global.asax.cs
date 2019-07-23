@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
 using KariyerAnalytics.DependencyInjection;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
 
 namespace KariyerAnalytics
 {
@@ -8,7 +10,13 @@ namespace KariyerAnalytics
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            MefConfig.RegisterMef();
+
+            var container = DILoader.Create();
+
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+
+            GlobalConfiguration.Configuration.DependencyResolver =
+                new SimpleInjectorWebApiDependencyResolver(container);
         }
     }
 }

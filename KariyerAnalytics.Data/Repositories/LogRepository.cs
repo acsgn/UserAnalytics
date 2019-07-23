@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using KariyerAnalytics.Business.Entities;
+﻿using KariyerAnalytics.Business.Entities;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    [Export(typeof(LogRepository))]
     public class LogRepository
     {
         private readonly static string _IndexName = "logs";

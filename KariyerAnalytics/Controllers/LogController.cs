@@ -1,23 +1,17 @@
 ﻿using System.Web;
 using System.Web.Http;
 using KariyerAnalytics.Service.Entities;
-using System.ComponentModel.Composition;
 using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Controllers
 {
     public class LogController : ApiController
     {
-        [Import(typeof(ILogEngine))]
-        private ILogEngine _LogEngine;
+        private readonly ILogEngine _LogEngine;
 
-        public LogController()
+        public LogController(ILogEngine logEngine)
         {
-            if (ObjectBase.Container != null)
-            {
-                ObjectBase.Container.SatisfyImportsOnce(this);
-            }
+            _LogEngine = logEngine;
         }
 
         [HttpPost]

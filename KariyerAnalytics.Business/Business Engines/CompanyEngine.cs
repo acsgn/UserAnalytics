@@ -1,23 +1,16 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Repositories;
-using System.ComponentModel.Composition;
-using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Business
 {
-    [Export(typeof(ICompanyEngine))]
     public class CompanyEngine : ICompanyEngine
     {
-        [Import(typeof(CompanyRepository))]
         private CompanyRepository _CompanyRepository;
 
-        public CompanyEngine()
+        public CompanyEngine(CompanyRepository companyRepository)
         {
-            if (ObjectBase.Container != null)
-            {
-                ObjectBase.Container.SatisfyImportsOnce(this);
-            }
+            _CompanyRepository = companyRepository;
         }
 
         public string[] GetCompanies(Request request)

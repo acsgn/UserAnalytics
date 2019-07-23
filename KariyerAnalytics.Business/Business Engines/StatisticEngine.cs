@@ -1,24 +1,17 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Repositories;
-using System.ComponentModel.Composition;
-using KariyerAnalytics.Common.DependencyInjection;
 using System.Linq;
 
 namespace KariyerAnalytics.Business
 {
-    [Export(typeof(IStatisticEngine))]
     public class StatisticEngine : IStatisticEngine
     {
-        [Import(typeof(StatisticRepository))]
         private StatisticRepository _StatisticRepository;
 
-        public StatisticEngine()
+        public StatisticEngine(StatisticRepository statisticRepository)
         {
-            if (ObjectBase.Container != null)
-            {
-                ObjectBase.Container.SatisfyImportsOnce(this);
-            }
+            _StatisticRepository = statisticRepository;
         }
 
         public MetricResponseDTO GetBestResponseTime(Request request)

@@ -1,22 +1,16 @@
-﻿using System.ComponentModel.Composition;
-using System.Web.Http;
+﻿using System.Web.Http;
 using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Common.DependencyInjection;
 using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Controllers
 {
     public class StatisticController : ApiController
     {
-        [Import(typeof(IStatisticEngine))]
-        private IStatisticEngine _StatisticEngine;
+        private readonly IStatisticEngine _StatisticEngine;
 
-        public StatisticController()
+        public StatisticController(IStatisticEngine statisticEngine)
         {
-            if (ObjectBase.Container != null)
-            {
-                ObjectBase.Container.SatisfyImportsOnce(this);
-            }
+            _StatisticEngine = statisticEngine;
         }
 
         [HttpGet]

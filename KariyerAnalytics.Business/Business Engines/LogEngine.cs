@@ -2,23 +2,16 @@
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Repositories;
-using System.ComponentModel.Composition;
-using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Business
 {
-    [Export(typeof(ILogEngine))]
     public class LogEngine : ILogEngine
     {
-        [Import(typeof(LogRepository))]
-        private LogRepository _LogRepository;
+        private readonly LogRepository _LogRepository;
 
-        public LogEngine()
+        public LogEngine(LogRepository logRepository)
         {
-            if (ObjectBase.Container != null)
-            {
-                ObjectBase.Container.SatisfyImportsOnce(this);
-            }
+            _LogRepository = logRepository;
         }
 
         public void CreateIndex()
