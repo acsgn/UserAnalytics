@@ -50,7 +50,7 @@ namespace KariyerAnalytics.Tests
             var engine = new StatisticEngine(mockRepository);
             var response = engine.GetBestResponseTime(request);
 
-            Assert.AreEqual(entity.ResponseTime, response.ResponseTime);
+            Assert.AreEqual(entity.ResponseTime, response.AverageResponseTime);
             Assert.AreEqual(entity.Endpoint, response.Endpoint);
         }
 
@@ -75,7 +75,7 @@ namespace KariyerAnalytics.Tests
             var engine = new StatisticEngine(mockRepository);
             var response = engine.GetWorstResponseTime(request);
 
-            Assert.AreEqual(entity.ResponseTime, response.ResponseTime);
+            Assert.AreEqual(entity.ResponseTime, response.AverageResponseTime);
             Assert.AreEqual(entity.Endpoint, response.Endpoint);
         }
 

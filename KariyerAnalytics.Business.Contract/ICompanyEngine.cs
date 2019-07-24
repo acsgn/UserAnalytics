@@ -6,6 +6,7 @@ namespace KariyerAnalytics.Business.Contract
     {
         string[] GetCompanies(Request request);
         string[] GetCompanyUsers(CompanyDetailRequest userDetailRequest);
-        string[] GetEndpointsbyUserandCompany(UserDetailRequest userDetailRequest);
+        DetailedMetricResponseDTO[] GetEndpointMetricsbyCompany(CompanyDetailRequest companyDetailRequest);
+        DetailedMetricResponseDTO[] GetEndpointsbyUserandCompany(UserDetailRequest userDetailRequest);
     }
 }

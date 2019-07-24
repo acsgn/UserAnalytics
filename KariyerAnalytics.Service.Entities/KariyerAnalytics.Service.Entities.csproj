@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CompanyDetailRequest.cs" />
+    <Compile Include="DetailedMetricResponseDTO.cs" />
     <Compile Include="HistogramDTO.cs" />
     <Compile Include="LogInformation.cs" />
     <Compile Include="MetricResponseDTO.cs" />

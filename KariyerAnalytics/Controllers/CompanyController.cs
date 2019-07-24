@@ -26,7 +26,13 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public string[] GetEndpointsbyUserandCompany(UserDetailRequest userDetailRequest)
+        public DetailedMetricResponseDTO[] GetEndpointMetricsbyCompany(CompanyDetailRequest companyDetailRequest)
+        {
+            return _CompanyEngine.GetEndpointMetricsbyCompany(companyDetailRequest);
+        }
+
+        [HttpGet]
+        public DetailedMetricResponseDTO[] GetEndpointsbyUserandCompany(UserDetailRequest userDetailRequest)
         {
             return _CompanyEngine.GetEndpointsbyUserandCompany(userDetailRequest);
         }
