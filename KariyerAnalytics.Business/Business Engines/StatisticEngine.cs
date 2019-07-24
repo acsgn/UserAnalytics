@@ -34,9 +34,9 @@ namespace KariyerAnalytics.Business
             };
         }
 
-        public RealtimeUserMetricDTO[] GetRealtimeUsers(int secondsBefore)
+        public RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
         {
-            var result = _StatisticRepository.GetRealtimeUsers(secondsBefore);
+            var result = _StatisticRepository.GetRealtimeUsers(realtimeUserCountRequest.SecondsBefore);
             return (from r in result
                     select new RealtimeUserMetricDTO
                     {

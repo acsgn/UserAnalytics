@@ -28,7 +28,7 @@ namespace KariyerAnalytics.Controllers
         [HttpGet]
         public RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
         {
-            return _StatisticEngine.GetRealtimeUsers(realtimeUserCountRequest.SecondsBefore);
+            return _StatisticEngine.GetRealtimeUsers(realtimeUserCountRequest);
         }
 
         [HttpGet]

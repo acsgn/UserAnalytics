@@ -6,7 +6,7 @@ namespace KariyerAnalytics.Business.Contract
     {
         MetricResponseDTO GetBestResponseTime(Request request);
         MetricResponseDTO GetWorstResponseTime(Request request);
-        RealtimeUserMetricDTO[] GetRealtimeUsers(int secondsBefore);
+        RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest);
         string[] GetEndpoints(Request request);
         HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
     }
