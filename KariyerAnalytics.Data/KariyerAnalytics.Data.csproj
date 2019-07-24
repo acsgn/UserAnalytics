@@ -45,6 +45,9 @@
     <Reference Include="System.configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AggregationBuilder.cs" />
+    <Compile Include="Builders\AggregationContainerBuilder.cs" />
+    <Compile Include="Builders\QueryBuilder.cs" />
     <Compile Include="ElasticsearchConnectionSettingsSingleton.cs" />
     <Compile Include="Contexts\ElasticsearchContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

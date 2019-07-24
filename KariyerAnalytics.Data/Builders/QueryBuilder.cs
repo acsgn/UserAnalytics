@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Nest;
 
-namespace KariyerAnalytics.Business
+namespace KariyerAnalytics.Data
 {
     public class QueryBuilder
     {
