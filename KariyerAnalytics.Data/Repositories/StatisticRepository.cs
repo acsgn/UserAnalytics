@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using KariyerAnalytics.Business.Entities;
+using KariyerAnalytics.Data.Contract;
 using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class StatisticRepository
+    public class StatisticRepository : IStatisticRepository
     {
         public MetricResponse GetBestResponseTime(DateTime after, DateTime before)
         {

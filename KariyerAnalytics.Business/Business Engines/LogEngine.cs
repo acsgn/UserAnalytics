@@ -1,15 +1,15 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data.Repositories;
+using KariyerAnalytics.Data.Contract;
 
 namespace KariyerAnalytics.Business
 {
     public class LogEngine : ILogEngine
     {
-        private readonly LogRepository _LogRepository;
+        private readonly ILogRepository _LogRepository;
 
-        public LogEngine(LogRepository logRepository)
+        public LogEngine(ILogRepository logRepository)
         {
             _LogRepository = logRepository;
         }

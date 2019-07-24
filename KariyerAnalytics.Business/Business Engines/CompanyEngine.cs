@@ -1,14 +1,14 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data.Repositories;
+using KariyerAnalytics.Data.Contract;
 
 namespace KariyerAnalytics.Business
 {
     public class CompanyEngine : ICompanyEngine
     {
-        private CompanyRepository _CompanyRepository;
+        private readonly ICompanyRepository _CompanyRepository;
 
-        public CompanyEngine(CompanyRepository companyRepository)
+        public CompanyEngine(ICompanyRepository companyRepository)
         {
             _CompanyRepository = companyRepository;
         }

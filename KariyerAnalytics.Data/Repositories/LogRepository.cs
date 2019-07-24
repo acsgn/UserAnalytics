@@ -1,8 +1,9 @@
 ﻿using KariyerAnalytics.Business.Entities;
+using KariyerAnalytics.Data.Contract;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class LogRepository
+    public class LogRepository : ILogRepository
     {
         private readonly static string _IndexName = "logs";
         public void Index(Log log)

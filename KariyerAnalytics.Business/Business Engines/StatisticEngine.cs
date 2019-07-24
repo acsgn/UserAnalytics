@@ -1,15 +1,15 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data.Repositories;
 using System.Linq;
+using KariyerAnalytics.Data.Contract;
 
 namespace KariyerAnalytics.Business
 {
     public class StatisticEngine : IStatisticEngine
     {
-        private StatisticRepository _StatisticRepository;
+        private readonly IStatisticRepository _StatisticRepository;
 
-        public StatisticEngine(StatisticRepository statisticRepository)
+        public StatisticEngine(IStatisticRepository statisticRepository)
         {
             _StatisticRepository = statisticRepository;
         }

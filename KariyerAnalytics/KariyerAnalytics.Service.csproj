@@ -120,6 +120,10 @@
       <Project>{698f8939-5310-41e2-b1f0-9b97d108f476}</Project>
       <Name>KariyerAnalytics.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
+      <Project>{E83991C4-2439-4575-8DA3-C366D869AE9E}</Project>
+      <Name>KariyerAnalytics.Data.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
       <Project>{c67e743f-5ced-4728-b150-ae83b864ed36}</Project>
       <Name>KariyerAnalytics.Data</Name>
