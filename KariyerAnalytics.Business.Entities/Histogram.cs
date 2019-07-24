@@ -9,6 +9,7 @@ namespace KariyerAnalytics.Business.Entities
     public class Histogram
     {
         public DateTime Timestamp { get; set; }
+        public long NumberOfRequests { get; set; }
         public double Average { get; set; }
     }
 }

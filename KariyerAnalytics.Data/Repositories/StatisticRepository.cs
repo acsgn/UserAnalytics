@@ -36,7 +36,7 @@ namespace KariyerAnalytics.Data.Repositories
                 return new MetricResponse
                 {
                     Endpoint = bucket.Keys.ToArray()[0],
-                    ResponseTime = (double)bucket.Value
+                    AverageResponseTime = (double)bucket.Value
                 };
             }
            
@@ -70,7 +70,7 @@ namespace KariyerAnalytics.Data.Repositories
                 return new MetricResponse
                 {
                     Endpoint = bucket.Keys.ToArray()[0],
-                    ResponseTime = (double)bucket.Value
+                    AverageResponseTime = (double)bucket.Value
                 };
             }
         }
@@ -94,8 +94,10 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var realtimeUsersResult = repository.Search(realtimeUsersRequest);
 
+                var buckets = realtimeUsersResult.Aggs.Filter("filtered").Terms("endpoints").Buckets;
+
                 var realtimeUsersList =
-                    (from b in realtimeUsersResult.Aggs.Filter("filtered").Terms("endpoints").Buckets
+                    (from b in buckets
                     select new RealtimeUserMetric
                     {
                         Endpoint = b.Key,
@@ -131,7 +133,49 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public Histogram[] GetResponseTimes(string endpoint, TimeSpan interval, DateTime after, DateTime before)
+        public Histogram[] GetResponseTimes(TimeSpan interval, DateTime after, DateTime before)
+        {
+            using (var repository = new GenericRepository<Log>())
+            {
+                var responseTimeRequest = new SearchDescriptor<Log>()
+                    .Size(0)
+                    .Aggregations(aggs => aggs
+                        .Filter("filtered", fi => fi
+                            .Filter(fil => fil
+                                .DateRange(r => r
+                                    .Field(f => f.Timestamp)
+                                    .GreaterThanOrEquals(after)
+                                    .LessThanOrEquals(before)))
+                            .Aggregations(nestedAggs => nestedAggs
+                                    .DateHistogram("histogram", dh => dh
+                                        .Field(f => f.Timestamp)
+                                        .Interval(interval)
+                                        .Aggregations(nestedNestedAggs => nestedNestedAggs
+                                            .Average("average-response-time", a => a.Field(f => f.ResponseTime))
+                                        )
+                                    )
+                                )
+                            )
+                        );
+
+
+                var responseTimeResult = repository.Search(responseTimeRequest);
+
+                var buckets = responseTimeResult.Aggs.Filter("filtered").DateHistogram("histogram").Buckets;
+
+                var responseTimeList = (from b in buckets
+                                        select new Histogram
+                                        {
+                                            Timestamp = b.Date,
+                                            NumberOfRequests = (long)b.DocCount,
+                                            Average = (double)b.Average("average-response-time").Value
+                                        }).ToArray();
+
+                return responseTimeList;
+            }
+        }
+
+        public Histogram[] GetResponseTimesByEndpoint(string endpoint, TimeSpan interval, DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())
             {
@@ -167,7 +211,8 @@ namespace KariyerAnalytics.Data.Repositories
                                         select new Histogram
                                         {
                                             Timestamp = b.Date,
-                                            Average = b.Average("average-response-time").Value.HasValue?(double) b.Average("average-response-time").Value:0
+                                            NumberOfRequests = (long) b.DocCount,
+                                            Average = (double) b.Average("average-response-time").Value
                                         }).ToArray();
 
                 return responseTimeList;

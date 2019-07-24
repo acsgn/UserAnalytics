@@ -41,7 +41,7 @@ namespace KariyerAnalytics.Tests
             var entity = new MetricResponse
                 {
                     Endpoint = _Endpoint,
-                    ResponseTime = _ResponseTime
+                    AverageResponseTime = _ResponseTime
             };
 
             var mockRepository = Substitute.For<IStatisticRepository>();
@@ -50,7 +50,7 @@ namespace KariyerAnalytics.Tests
             var engine = new StatisticEngine(mockRepository);
             var response = engine.GetBestResponseTime(request);
 
-            Assert.AreEqual(entity.ResponseTime, response.AverageResponseTime);
+            Assert.AreEqual(entity.AverageResponseTime, response.AverageResponseTime);
             Assert.AreEqual(entity.Endpoint, response.Endpoint);
         }
 
@@ -66,7 +66,7 @@ namespace KariyerAnalytics.Tests
             var entity = new MetricResponse
             {
                 Endpoint = _Endpoint,
-                ResponseTime = _ResponseTime
+                AverageResponseTime = _ResponseTime
             };
 
             var mockRepository = Substitute.For<IStatisticRepository>();
@@ -75,7 +75,7 @@ namespace KariyerAnalytics.Tests
             var engine = new StatisticEngine(mockRepository);
             var response = engine.GetWorstResponseTime(request);
 
-            Assert.AreEqual(entity.ResponseTime, response.AverageResponseTime);
+            Assert.AreEqual(entity.AverageResponseTime, response.AverageResponseTime);
             Assert.AreEqual(entity.Endpoint, response.Endpoint);
         }
 
@@ -147,7 +147,7 @@ namespace KariyerAnalytics.Tests
                 };
 
             var mockRepository = Substitute.For<IStatisticRepository>();
-            mockRepository.GetResponseTimes(_Endpoint, _Interval, _After, _Before).Returns(entity);
+            mockRepository.GetResponseTimesByEndpoint(_Endpoint, _Interval, _After, _Before).Returns(entity);
 
             var engine = new StatisticEngine(mockRepository);
             var response = engine.GetResponseTimes(request);

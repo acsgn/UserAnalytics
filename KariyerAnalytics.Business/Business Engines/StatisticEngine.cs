@@ -20,7 +20,7 @@ namespace KariyerAnalytics.Business
             return new MetricResponseDTO
             {
                 Endpoint = result.Endpoint,
-                ResponseTime = result.ResponseTime
+                AverageResponseTime = result.AverageResponseTime
             };
         }
 
@@ -30,7 +30,7 @@ namespace KariyerAnalytics.Business
             return new MetricResponseDTO
             {
                 Endpoint = result.Endpoint,
-                ResponseTime = result.ResponseTime
+                AverageResponseTime = result.AverageResponseTime
             };
         }
 
@@ -52,11 +52,24 @@ namespace KariyerAnalytics.Business
 
         public HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
         {
-            var result = _StatisticRepository.GetResponseTimes(responseTimeRequest.Endpoint, responseTimeRequest.Interval, responseTimeRequest.After, responseTimeRequest.Before);
+            var result = _StatisticRepository.GetResponseTimes(responseTimeRequest.Interval, responseTimeRequest.After, responseTimeRequest.Before);
             return (from r in result
                     select new HistogramDTO
                     {
                         Average = r.Average,
+                        NumberOfRequests = r.NumberOfRequests,
+                        Timestamp = r.Timestamp
+                    }).ToArray();
+        }
+
+        public HistogramDTO[] GetResponseTimesByEndpoint(ResponseTimeRequest responseTimeRequest)
+        {
+            var result = _StatisticRepository.GetResponseTimesByEndpoint(responseTimeRequest.Endpoint, responseTimeRequest.Interval, responseTimeRequest.After, responseTimeRequest.Before);
+            return (from r in result
+                    select new HistogramDTO
+                    {
+                        Average = r.Average,
+                        NumberOfRequests = r.NumberOfRequests,
                         Timestamp = r.Timestamp
                     }).ToArray();
         }

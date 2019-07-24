@@ -9,5 +9,6 @@ namespace KariyerAnalytics.Business.Contract
         RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest);
         string[] GetEndpoints(Request request);
         HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
+        HistogramDTO[] GetResponseTimesByEndpoint(ResponseTimeRequest responseTimeRequest);
     }
 }
