@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace KariyerAnalytics.UnitTests
+namespace KariyerAnalytics.Tests
 {
     public class CompanyTests
     {

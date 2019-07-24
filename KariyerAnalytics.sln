@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KariyerAnalytics.Business.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KariyerAnalytics.Service.Entities", "KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj", "{E93726E3-4611-492A-B194-55F15B70C9C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KariyerAnalytics.UnitTests", "KariyerAnalytics.UnitTests\KariyerAnalytics.UnitTests.csproj", "{474074FF-CD18-4D60-BB2E-F2B5FF447025}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KariyerAnalytics.Tests", "KariyerAnalytics.Tests\KariyerAnalytics.Tests.csproj", "{70EAF651-3C08-481F-BC9C-355C0F6CA6E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,10 @@ Global
 		{E93726E3-4611-492A-B194-55F15B70C9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E93726E3-4611-492A-B194-55F15B70C9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E93726E3-4611-492A-B194-55F15B70C9C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{474074FF-CD18-4D60-BB2E-F2B5FF447025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{474074FF-CD18-4D60-BB2E-F2B5FF447025}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{474074FF-CD18-4D60-BB2E-F2B5FF447025}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{474074FF-CD18-4D60-BB2E-F2B5FF447025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70EAF651-3C08-481F-BC9C-355C0F6CA6E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70EAF651-3C08-481F-BC9C-355C0F6CA6E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70EAF651-3C08-481F-BC9C-355C0F6CA6E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70EAF651-3C08-481F-BC9C-355C0F6CA6E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
