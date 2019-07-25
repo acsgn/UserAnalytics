@@ -16,11 +16,16 @@ namespace KariyerAnalytics.DependencyInjection
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
             container.Register<ILogEngine, LogEngine>();
-            container.Register<ICompanyEngine, CompanyEngine>();
+            container.Register<IRealtimeEngine, RealtimeEngine>();
+            container.Register<IHistogramEngine, HistogramEngine>();
             container.Register<IStatisticEngine, StatisticEngine>();
+            container.Register<IInformationEngine, InformationEngine>();
+
             container.Register<ILogRepository, LogRepository>();
-            container.Register<IStatisticRepository,StatisticRepository>();
-            container.Register<ICompanyRepository, CompanyRepository>();
+            container.Register<IRealtimeRepository, RealtimeRepository>();
+            container.Register<IHistogramRepository, HistogramRepository>();
+            container.Register<IStatisticRepository, StatisticRepository>();
+            container.Register<IInformationRepository, InformationRepository>();
 
             return container;
         }

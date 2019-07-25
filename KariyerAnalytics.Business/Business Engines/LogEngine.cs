@@ -19,17 +19,17 @@ namespace KariyerAnalytics.Business
             _LogRepository.CreateIndex();
         }
 
-        public void Add(LogInformation info)
+        public void Add(LogRequest logRequest)
         {
             var log = new Log()
             {
-                CompanyName = info.CompanyName,
-                Username = info.Username,
-                URL = info.URL,
-                Endpoint = info.Endpoint,
-                Timestamp = info.Timestamp,
-                IP = info.IP,
-                ResponseTime = info.ResponseTime
+                CompanyName = logRequest.CompanyName,
+                Username = logRequest.Username,
+                URL = logRequest.URL,
+                Endpoint = logRequest.Endpoint,
+                Timestamp = logRequest.Timestamp,
+                IP = logRequest.IP,
+                ResponseTime = logRequest.ResponseTime
             };
 
             _LogRepository.Index(log);

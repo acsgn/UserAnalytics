@@ -3,7 +3,7 @@ using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Data.Contract;
 using KariyerAnalytics.Service.Entities;
 
-namespace KariyerAnalytics.Business.Business_Engines
+namespace KariyerAnalytics.Business
 {
     public class RealtimeEngine : IRealtimeEngine
     {

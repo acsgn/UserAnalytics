@@ -88,8 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\HistogramController.cs" />
+    <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\RealtimeController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="DependencyInjection\DILoader.cs" />
     <Compile Include="Global.asax.cs">

@@ -15,11 +15,11 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpPost]
-        public void Create(LogInformation info)
+        public void Create(LogRequest logRequest)
         {
-            info.IP = HttpContext.Current.Request.UserHostAddress;
-            info.Timestamp = HttpContext.Current.Timestamp;
-            _LogEngine.Add(info);
+            logRequest.IP = HttpContext.Current.Request.UserHostAddress;
+            logRequest.Timestamp = HttpContext.Current.Timestamp;
+            _LogEngine.Add(logRequest);
         }
     }
 }

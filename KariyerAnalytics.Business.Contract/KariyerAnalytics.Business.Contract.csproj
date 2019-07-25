@@ -43,12 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEngine.cs" />
+    <Compile Include="IHistogramEngine.cs" />
+    <Compile Include="IRealtimeEngine.cs" />
     <Compile Include="IStatisticEngine.cs" />
     <Compile Include="ILogEngine.cs" />
-    <Compile Include="ICompanyEngine.cs" />
+    <Compile Include="IInformationEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
+      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
+      <Name>KariyerAnalytics.Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
       <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>

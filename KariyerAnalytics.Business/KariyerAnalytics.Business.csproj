@@ -34,8 +34,10 @@
     <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business Engines\HistogramEngine.cs" />
+    <Compile Include="Business Engines\RealtimeEngine.cs" />
     <Compile Include="Business Engines\StatisticEngine.cs" />
-    <Compile Include="Business Engines\CompanyEngine.cs" />
+    <Compile Include="Business Engines\InformationEngine.cs" />
     <Compile Include="Business Engines\LogEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

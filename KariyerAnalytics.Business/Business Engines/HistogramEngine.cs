@@ -3,7 +3,7 @@ using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Data.Contract;
 using KariyerAnalytics.Service.Entities;
 
-namespace KariyerAnalytics.Business.Business_Engines
+namespace KariyerAnalytics.Business
 {
     public class HistogramEngine : IHistogramEngine
     {
@@ -16,7 +16,7 @@ namespace KariyerAnalytics.Business.Business_Engines
 
         public HistogramResponseDTO[] GetResponseTimesHistogram(ResponseTimesHistogramRequest histogramRequest)
         {
-            var result = _HistogramRepository.GetResponseTimes(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before);
+            var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before);
             return (from r in result
                     select new HistogramResponseDTO
                     {
@@ -28,7 +28,7 @@ namespace KariyerAnalytics.Business.Business_Engines
 
         public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(EndpointResponseTimesHistogramRequest endpointHistogramRequest)
         {
-            var result = _HistogramRepository.GetResponseTimesByEndpoint(endpointHistogramRequest.Endpoint, endpointHistogramRequest.Interval, endpointHistogramRequest.After, endpointHistogramRequest.Before);
+            var result = _HistogramRepository.GetResponseTimesHistogramByEndpoint(endpointHistogramRequest.Endpoint, endpointHistogramRequest.Interval, endpointHistogramRequest.After, endpointHistogramRequest.Before);
             return (from r in result
                     select new HistogramResponseDTO
                     {
