@@ -1,6 +1,6 @@
-﻿namespace KariyerAnalytics.Service.Entities
+﻿namespace KariyerAnalytics.Business.Entities
 {
-    public class RealtimeUserMetricDTO
+    public class RealtimeUserCountResponse
     {
         public string Endpoint { get; set; }
         public long UserCount { get; set; }
