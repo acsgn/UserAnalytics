@@ -31,17 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CompanyDetailRequest.cs" />
-    <Compile Include="DetailedMetricResponseDTO.cs" />
-    <Compile Include="HistogramDTO.cs" />
-    <Compile Include="LogInformation.cs" />
-    <Compile Include="MetricResponseDTO.cs" />
+    <Compile Include="DTOs\EndpointAbsoluteMetricResponseDTO.cs" />
+    <Compile Include="DTOs\EndpointMetricsResponseDTO.cs" />
+    <Compile Include="Requests\UserRequest.cs" />
+    <Compile Include="DTOs\HistogramDTO.cs" />
+    <Compile Include="Requests\LogRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealtimeUserCountRequest.cs" />
-    <Compile Include="RealtimeUserMetricDTO.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="ResponseTimeRequest.cs" />
-    <Compile Include="UserDetailRequest.cs" />
+    <Compile Include="Requests\RealtimeUserCountRequest.cs" />
+    <Compile Include="DTOs\RealtimeUserMetricDTO.cs" />
+    <Compile Include="Requests\Request.cs" />
+    <Compile Include="Requests\ResponseTimeRequest.cs" />
+    <Compile Include="Requests\EndpointRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

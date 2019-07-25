@@ -2,7 +2,7 @@
 
 namespace KariyerAnalytics.Service.Entities
 {
-    public class LogInformation
+    public class LogRequest
     {
         public string CompanyName { get; set; } = "Login Screen";
         public string Username { get; set; }

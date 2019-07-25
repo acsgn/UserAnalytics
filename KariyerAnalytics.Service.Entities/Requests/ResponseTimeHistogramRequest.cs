@@ -2,10 +2,8 @@
 
 namespace KariyerAnalytics.Service.Entities
 {
-    public class ResponseTimeRequest
+    public class ResponseTimeHistogramRequest : Request
     {
-        public DateTime After { get; set; }
-        public DateTime Before { get; set; }
         public string Endpoint { get; set; }
         public TimeSpan Interval { get; set; }
     }
