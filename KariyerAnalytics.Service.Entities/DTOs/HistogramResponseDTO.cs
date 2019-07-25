@@ -2,7 +2,7 @@
 
 namespace KariyerAnalytics.Service.Entities
 {
-    public class HistogramDTO
+    public class HistogramResponseDTO
     {
         public DateTime Timestamp { get; set; }
         public long NumberOfRequests { get; set; }

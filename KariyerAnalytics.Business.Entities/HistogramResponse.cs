@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KariyerAnalytics.Business.Entities
 {
-    public class Histogram
+    public class HistogramResponse
     {
         public DateTime Timestamp { get; set; }
         public long NumberOfRequests { get; set; }
