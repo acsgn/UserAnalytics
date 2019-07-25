@@ -1,6 +1,6 @@
 ﻿namespace KariyerAnalytics.Business.Entities
 {
-    public class DetailedMetricResponse
+    public class EndpointMetricsResponse
     {
         public string Endpoint { get; set; }
         public long NumberOfRequests { get; set; }

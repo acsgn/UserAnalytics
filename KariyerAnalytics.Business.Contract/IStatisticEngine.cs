@@ -4,11 +4,10 @@ namespace KariyerAnalytics.Business.Contract
 {
     public interface IStatisticEngine : IEngine
     {
-        MetricResponseDTO GetBestResponseTime(Request request);
-        MetricResponseDTO GetWorstResponseTime(Request request);
-        RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest);
-        string[] GetEndpoints(Request request);
-        HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest);
-        HistogramDTO[] GetResponseTimesByEndpoint(ResponseTimeRequest responseTimeRequest);
+        EndpointAbsoluteMetricsResponseDTO GetBestResponseTime(Request request);
+        EndpointAbsoluteMetricsResponseDTO GetWorstResponseTime(Request request);
+        EndpointMetricsResponseDTO[] GetEndpointMetrics(Request request);
+        EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(UserRequest userRequest);
+        EndpointMetricsResponseDTO[] GetEndpointMetricsbyUserandCompany(EndpointRequest endpointRequest);
     }
 }

@@ -5,11 +5,10 @@ namespace KariyerAnalytics.Data.Contract
 {
     public interface IStatisticRepository
     {
-        MetricResponse GetBestResponseTime(DateTime after, DateTime before);
-        MetricResponse GetWorstResponseTime(DateTime after, DateTime before);
-        RealtimeUserMetric[] GetRealtimeUsers(int secondsBefore);
-        string[] GetEndpoints(DateTime after, DateTime before);
-        Histogram[] GetResponseTimes(TimeSpan interval, DateTime after, DateTime before);
-        Histogram[] GetResponseTimesByEndpoint(string endpoint, TimeSpan interval, DateTime after, DateTime before);
+        EndpointAbsoluteMetricsResponse GetBestResponseTime(DateTime after, DateTime before);
+        EndpointAbsoluteMetricsResponse GetWorstResponseTime(DateTime after, DateTime before);
+        EndpointMetricsResponse[] GetEndpointMetrics(DateTime after, DateTime before);
+        EndpointMetricsResponse[] GetEndpointMetricsbyCompany(string companyName, DateTime after, DateTime before);
+        EndpointMetricsResponse[] GetEndpointMetricsbyUserandCompany(string companyName, string username, DateTime after, DateTime before);
     }
 }

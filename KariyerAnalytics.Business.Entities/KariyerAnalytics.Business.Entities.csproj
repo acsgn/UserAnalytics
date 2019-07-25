@@ -31,10 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DetailedMetricResponse.cs" />
+    <Compile Include="EndpointAbsoluteMetricsResponse.cs" />
+    <Compile Include="EndpointMetricsResponse.cs" />
     <Compile Include="HistogramResponse.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MetricResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealtimeUserCountResponse.cs" />
   </ItemGroup>

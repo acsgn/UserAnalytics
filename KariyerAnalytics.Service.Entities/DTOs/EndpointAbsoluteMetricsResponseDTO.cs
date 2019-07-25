@@ -1,6 +1,6 @@
 ﻿namespace KariyerAnalytics.Service.Entities
 {
-    public class EndpointAbsoluteMetricResponseDTO
+    public class EndpointAbsoluteMetricsResponseDTO
     {
         public string Endpoint { get; set; }
         public long NumberOfRequests { get; set; }

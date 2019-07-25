@@ -14,65 +14,66 @@ namespace KariyerAnalytics.Business
             _StatisticRepository = statisticRepository;
         }
 
-        public MetricResponseDTO GetBestResponseTime(Request request)
+        public EndpointAbsoluteMetricsResponseDTO GetBestResponseTime(Request request)
         {
             var result = _StatisticRepository.GetBestResponseTime(request.After, request.Before);
-            return new MetricResponseDTO
+            return new EndpointAbsoluteMetricsResponseDTO
             {
                 Endpoint = result.Endpoint,
                 AverageResponseTime = result.AverageResponseTime
             };
         }
 
-        public MetricResponseDTO GetWorstResponseTime(Request request)
+        public EndpointAbsoluteMetricsResponseDTO GetWorstResponseTime(Request request)
         {
             var result = _StatisticRepository.GetWorstResponseTime(request.After, request.Before);
-            return new MetricResponseDTO
+            return new EndpointAbsoluteMetricsResponseDTO
             {
                 Endpoint = result.Endpoint,
                 AverageResponseTime = result.AverageResponseTime
             };
         }
 
-        public RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetrics(Request request)
         {
-            var result = _StatisticRepository.GetRealtimeUsers(realtimeUserCountRequest.SecondsBefore);
+            var result = _StatisticRepository.GetEndpointMetrics(request.After, request.Before);
             return (from r in result
-                    select new RealtimeUserMetricDTO
+                    select new EndpointMetricsResponseDTO
                     {
                         Endpoint = r.Endpoint,
-                        UserCount = r.UserCount
-                    }).ToArray();
-        }
-
-        public string[] GetEndpoints(Request request)
-        {
-            return _StatisticRepository.GetEndpoints(request.After, request.Before);
-        }
-
-        public HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
-        {
-            var result = _StatisticRepository.GetResponseTimes(responseTimeRequest.Interval, responseTimeRequest.After, responseTimeRequest.Before);
-            return (from r in result
-                    select new HistogramDTO
-                    {
-                        Average = r.Average,
                         NumberOfRequests = r.NumberOfRequests,
-                        Timestamp = r.Timestamp
+                        MinResponseTime = r.MinResponseTime,
+                        AverageResponseTime = r.AverageResponseTime,
+                        MaxResponseTime = r.MaxResponseTime
                     }).ToArray();
         }
 
-        public HistogramDTO[] GetResponseTimesByEndpoint(ResponseTimeRequest responseTimeRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(UserRequest userRequest)
         {
-            var result = _StatisticRepository.GetResponseTimesByEndpoint(responseTimeRequest.Endpoint, responseTimeRequest.Interval, responseTimeRequest.After, responseTimeRequest.Before);
+            var result = _StatisticRepository.GetEndpointMetricsbyCompany(userRequest.CompanyName, userRequest.After, userRequest.Before);
             return (from r in result
-                    select new HistogramDTO
+                    select new EndpointMetricsResponseDTO
                     {
-                        Average = r.Average,
+                        Endpoint = r.Endpoint,
                         NumberOfRequests = r.NumberOfRequests,
-                        Timestamp = r.Timestamp
+                        MinResponseTime = r.MinResponseTime,
+                        AverageResponseTime = r.AverageResponseTime,
+                        MaxResponseTime = r.MaxResponseTime
                     }).ToArray();
         }
-        
+
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyUserandCompany(EndpointRequest endpointRequest)
+        {
+            var result = _StatisticRepository.GetEndpointMetricsbyUserandCompany(endpointRequest.CompanyName, endpointRequest.Username, endpointRequest.After, endpointRequest.Before);
+            return (from r in result
+                    select new EndpointMetricsResponseDTO
+                    {
+                        Endpoint = r.Endpoint,
+                        NumberOfRequests = r.NumberOfRequests,
+                        MinResponseTime = r.MinResponseTime,
+                        AverageResponseTime = r.AverageResponseTime,
+                        MaxResponseTime = r.MaxResponseTime
+                    }).ToArray();
+        }
     }
 }

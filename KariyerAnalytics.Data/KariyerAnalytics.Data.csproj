@@ -51,8 +51,10 @@
     <Compile Include="ElasticsearchConnectionSettingsSingleton.cs" />
     <Compile Include="Contexts\ElasticsearchContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\HistogramRepository.cs" />
+    <Compile Include="Repositories\InformationRepository.cs" />
     <Compile Include="Repositories\LogRepository.cs" />
+    <Compile Include="Repositories\RealtimeRepository.cs" />
     <Compile Include="Repositories\StatisticRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
   </ItemGroup>

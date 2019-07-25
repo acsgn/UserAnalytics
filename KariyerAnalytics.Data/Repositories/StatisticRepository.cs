@@ -8,7 +8,7 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class StatisticRepository : IStatisticRepository
     {
-        public MetricResponse GetBestResponseTime(DateTime after, DateTime before)
+        public EndpointAbsoluteMetricsResponse GetBestResponseTime(DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())
             {
@@ -33,16 +33,15 @@ namespace KariyerAnalytics.Data.Repositories
                 var bestResult = repository.Search(bestRequest);
                 var bucket = bestResult.Aggs.Filter("filtered").MinBucket("best-response-time");
 
-                return new MetricResponse
+                return new EndpointAbsoluteMetricsResponse
                 {
                     Endpoint = bucket.Keys.ToArray()[0],
                     AverageResponseTime = (double)bucket.Value
                 };
             }
-           
         }
 
-        public MetricResponse GetWorstResponseTime(DateTime after, DateTime before)
+        public EndpointAbsoluteMetricsResponse GetWorstResponseTime(DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())
             {
@@ -67,7 +66,7 @@ namespace KariyerAnalytics.Data.Repositories
                 var worstResult = repository.Search(worstRequest);
                 var bucket = worstResult.Aggs.Filter("filtered").MaxBucket("worst-response-time");
 
-                return new MetricResponse
+                return new EndpointAbsoluteMetricsResponse
                 {
                     Endpoint = bucket.Keys.ToArray()[0],
                     AverageResponseTime = (double)bucket.Value
@@ -75,150 +74,142 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public RealtimeUserMetric[] GetRealtimeUsers(int secondsBefore)
-        {
-            using (var repository = new GenericRepository<Log>())
-            {
-                var realtimeUsersRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
-                                    .LessThanOrEquals(DateTime.Now)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                .Terms("endpoints", t => t
-                                    .Field(f => f.Endpoint)))));
-
-                var realtimeUsersResult = repository.Search(realtimeUsersRequest);
-
-                var buckets = realtimeUsersResult.Aggs.Filter("filtered").Terms("endpoints").Buckets;
-
-                var realtimeUsersList =
-                    (from b in buckets
-                    select new RealtimeUserMetric
-                    {
-                        Endpoint = b.Key,
-                        UserCount = (long)b.DocCount
-                    }).ToArray();
-
-                return realtimeUsersList;
-            }
-        }
-
-        public string[] GetEndpoints(DateTime after, DateTime before)
+        public EndpointMetricsResponse[] GetEndpointMetrics(DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())
             {
                 var endpointsRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(after)
-                                    .LessThanOrEquals(before)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                .Terms("endpoints", s => s
-                                    .Field(f => f.Endpoint)))));
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Filter("filtered", fi => fi
+                        .Filter(fil => fil
+                            .DateRange(r => r
+                                .Field(f => f.Timestamp)
+                                .GreaterThanOrEquals(after)
+                                .LessThanOrEquals(before)))
+                        .Aggregations(aggs2 => aggs2
+                            .Terms("endpoints", s => s
+                                .Field(f => f.Endpoint)
+                                .Aggregations(aggs5 => aggs5
+                                    .Min("min-response-time", a => a.Field(f => f.ResponseTime))
+                                    .Average("average-response-time", a => a.Field(f => f.ResponseTime))
+                                    .Max("max-response-time", a => a.Field(f => f.ResponseTime)))))));
 
                 var endpointsResult = repository.Search(endpointsRequest);
 
-                var endpointList = (from b in endpointsResult.Aggs.Filter("filtered").Terms("endpoints").Buckets select b.Key).ToArray();
+                var buckets = endpointsResult.Aggs.Filter("filtered").Terms("endpoints").Buckets;
 
-                return endpointList;
+                var endpointsList = (from b in buckets
+                                     select new EndpointMetricsResponse
+                                     {
+                                         Endpoint = b.Key,
+                                         NumberOfRequests = (long)b.DocCount,
+                                         MinResponseTime = (double)b.Min("min-response-time").Value,
+                                         AverageResponseTime = (double)b.Average("average-response-time").Value,
+                                         MaxResponseTime = (double)b.Max("max-response-time").Value,
+                                     }).ToArray();
+
+                return endpointsList;
             }
         }
 
-        public Histogram[] GetResponseTimes(TimeSpan interval, DateTime after, DateTime before)
+        public EndpointMetricsResponse[] GetEndpointMetricsbyCompany(string companyName, DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())
             {
-                var responseTimeRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(after)
-                                    .LessThanOrEquals(before)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                    .DateHistogram("histogram", dh => dh
-                                        .Field(f => f.Timestamp)
-                                        .Interval(interval)
-                                        .Aggregations(nestedNestedAggs => nestedNestedAggs
+                var endpointsRequest = new SearchDescriptor<Log>()
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Filter("filtered", fi => fi
+                        .Filter(fil => fil
+                            .DateRange(r => r
+                                .Field(f => f.Timestamp)
+                                .GreaterThanOrEquals(after)
+                                .LessThanOrEquals(before)))
+                        .Aggregations(aggs2 => aggs2
+                            .Filter("filtered2", fi2 => fi2
+                                .Filter(fil => fil
+                                    .MatchPhrase(s => s
+                                        .Field(f => f.CompanyName)
+                                        .Query(companyName)))
+                                .Aggregations(aggs3 => aggs3
+                                    .Terms("endpoints", s => s
+                                        .Field(f => f.Endpoint)
+                                        .Aggregations(aggs5 => aggs5
+                                            .Min("min-response-time", a => a.Field(f => f.ResponseTime))
                                             .Average("average-response-time", a => a.Field(f => f.ResponseTime))
-                                        )
-                                    )
-                                )
-                            )
-                        );
+                                            .Max("max-response-time", a => a.Field(f => f.ResponseTime)))))))));
 
+                var endpointsResult = repository.Search(endpointsRequest);
 
-                var responseTimeResult = repository.Search(responseTimeRequest);
+                var buckets = endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Terms("endpoints").Buckets;
 
-                var buckets = responseTimeResult.Aggs.Filter("filtered").DateHistogram("histogram").Buckets;
+                var endpointsList = (from b in buckets
+                                     select new EndpointMetricsResponse
+                                     {
+                                         Endpoint = b.Key,
+                                         NumberOfRequests = (long)b.DocCount,
+                                         MinResponseTime = (double)b.Min("min-response-time").Value,
+                                         AverageResponseTime = (double)b.Average("average-response-time").Value,
+                                         MaxResponseTime = (double)b.Max("max-response-time").Value,
+                                     }).ToArray();
 
-                var responseTimeList = (from b in buckets
-                                        select new Histogram
-                                        {
-                                            Timestamp = b.Date,
-                                            NumberOfRequests = (long)b.DocCount,
-                                            Average = (double)b.Average("average-response-time").Value
-                                        }).ToArray();
-
-                return responseTimeList;
+                return endpointsList;
             }
         }
 
-        public Histogram[] GetResponseTimesByEndpoint(string endpoint, TimeSpan interval, DateTime after, DateTime before)
+        public EndpointMetricsResponse[] GetEndpointMetricsbyUserandCompany(string companyName, string username, DateTime after, DateTime before)
         {
             using (var repository = new GenericRepository<Log>())
             {
-                var responseTimeRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(after)
-                                    .LessThanOrEquals(before)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                .Filter("filtered2", fi2 => fi2
+                var endpointsRequest = new SearchDescriptor<Log>()
+                .Size(0)
+                .Aggregations(aggs => aggs
+                    .Filter("filtered", fi => fi
+                        .Filter(fil => fil
+                            .DateRange(r => r
+                                .Field(f => f.Timestamp)
+                                .GreaterThanOrEquals(after)
+                                .LessThanOrEquals(before)))
+                        .Aggregations(aggs2 => aggs2
+                            .Filter("filtered2", fi2 => fi2
+                                .Filter(fil => fil
+                                    .MatchPhrase(s => s
+                                        .Field(f => f.CompanyName)
+                                        .Query(companyName)))
+                                .Aggregations(aggs3 => aggs3
+                                    .Filter("filtered3", fi3 => fi3
                                         .Filter(fil => fil
                                             .MatchPhrase(s => s
+                                                .Field(f => f.Username)
+                                                .Query(username)))
+                                        .Aggregations(aggs4 => aggs4
+                                            .Terms("endpoints", s => s
                                                 .Field(f => f.Endpoint)
-                                                .Query(endpoint)))
-                                        .Aggregations(nestedNestedNestedAggs => nestedNestedNestedAggs
-                                            .DateHistogram("histogram", dh => dh
-                                                .Field(f => f.Timestamp)
-                                                .Interval(interval)
-                                                .Aggregations(nestedNestedAggs => nestedNestedAggs
+                                                .Aggregations(aggs5 => aggs5
+                                                    .Min("min-response-time", a => a
+                                                        .Field(f => f.ResponseTime))
                                                     .Average("average-response-time", a => a
-                                                        .Field(f => f.ResponseTime)))))))));
-                                            
-                
-                var responseTimeResult = repository.Search(responseTimeRequest);
+                                                        .Field(f => f.ResponseTime))
+                                                    .Max("max-response-time", a => a
+                                                        .Field(f => f.ResponseTime)))))))))));
 
-                var buckets = responseTimeResult.Aggs.Filter("filtered").Filter("filtered2").DateHistogram("histogram").Buckets;
+                var endpointsResult = repository.Search(endpointsRequest);
 
-                var responseTimeList = (from b in buckets
-                                        select new Histogram
-                                        {
-                                            Timestamp = b.Date,
-                                            NumberOfRequests = (long) b.DocCount,
-                                            Average = (double) b.Average("average-response-time").Value
-                                        }).ToArray();
+                var buckets = endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Filter("filtered3").Terms("endpoints").Buckets;
 
-                return responseTimeList;
+                var endpointsList = (from b in buckets
+                                     select new EndpointMetricsResponse
+                                     {
+                                         Endpoint = b.Key,
+                                         NumberOfRequests = (long)b.DocCount,
+                                         MinResponseTime = (double)b.Min("min-response-time").Value,
+                                         AverageResponseTime = (double)b.Average("average-response-time").Value,
+                                         MaxResponseTime = (double)b.Max("max-response-time").Value,
+                                     }).ToArray();
+
+                return endpointsList;
             }
-
         }
-
     }
 }

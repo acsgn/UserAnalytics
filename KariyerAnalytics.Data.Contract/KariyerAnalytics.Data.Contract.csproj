@@ -50,8 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICompanyRepository.cs" />
+    <Compile Include="IHistogramRepository.cs" />
+    <Compile Include="IInformationRepository.cs" />
     <Compile Include="ILogRepository.cs" />
+    <Compile Include="IRealtimeRepository.cs" />
     <Compile Include="IStatisticRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IElasticsearchContext.cs" />

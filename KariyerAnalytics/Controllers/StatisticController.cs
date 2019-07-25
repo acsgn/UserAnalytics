@@ -14,34 +14,33 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public MetricResponseDTO GetBestResponseTime(Request request)
+        public EndpointAbsoluteMetricsResponseDTO GetBestResponseTime(Request request)
         {
             return _StatisticEngine.GetBestResponseTime(request);
         }
 
         [HttpGet]
-        public MetricResponseDTO GetWorstResponseTime(Request request)
+        public EndpointAbsoluteMetricsResponseDTO GetWorstResponseTime(Request request)
         {
             return _StatisticEngine.GetWorstResponseTime(request);
         }
 
         [HttpGet]
-        public RealtimeUserMetricDTO[] GetRealtimeUsers(RealtimeUserCountRequest realtimeUserCountRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetrics(Request request)
         {
-            return _StatisticEngine.GetRealtimeUsers(realtimeUserCountRequest);
+            return _StatisticEngine.GetEndpointMetrics(request);
         }
 
         [HttpGet]
-        public string[] GetEndpoints(Request request)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(UserRequest userRequest)
         {
-            return _StatisticEngine.GetEndpoints(request);
+            return _StatisticEngine.GetEndpointMetricsbyCompany(userRequest);
         }
 
         [HttpGet]
-        public HistogramDTO[] GetResponseTimes(ResponseTimeRequest responseTimeRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyUserandCompany(EndpointRequest endpointRequest)
         {
-            return _StatisticEngine.GetResponseTimes(responseTimeRequest);
+            return _StatisticEngine.GetEndpointMetricsbyUserandCompany(endpointRequest);
         }
-
     }
 }

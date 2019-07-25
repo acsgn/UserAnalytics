@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DTOs\EndpointAbsoluteMetricResponseDTO.cs" />
+    <Compile Include="DTOs\EndpointAbsoluteMetricsResponseDTO.cs" />
     <Compile Include="DTOs\EndpointMetricsResponseDTO.cs" />
     <Compile Include="Requests\EndpointResponseTimesHistogramRequest.cs" />
     <Compile Include="Requests\ResponseTimesHistogramRequest.cs" />
