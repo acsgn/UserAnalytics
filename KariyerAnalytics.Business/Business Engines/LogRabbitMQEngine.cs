@@ -5,18 +5,13 @@ using KariyerAnalytics.Data.Contract;
 
 namespace KariyerAnalytics.Business
 {
-    public class LogEngine : ILogEngine
+    public class LogRabbitMQEngine : ILogRabbitMQEngine
     {
-        private readonly ILogRepository _LogRepository;
+        private readonly ILogRabbitMQRepository _Repository;
 
-        public LogEngine(ILogRepository logRepository)
+        public LogRabbitMQEngine(ILogRabbitMQRepository repository)
         {
-            _LogRepository = logRepository;
-        }
-
-        public void CreateIndex()
-        {
-            _LogRepository.CreateIndex();
+            _Repository = repository;
         }
 
         public void Add(LogRequest logRequest)
@@ -32,7 +27,17 @@ namespace KariyerAnalytics.Business
                 ResponseTime = logRequest.ResponseTime
             };
 
-            _LogRepository.Index(log);
+            _Repository.Queue(log);
+        }
+
+        public void Get()
+        {
+            _Repository.Dequeue();
+        }
+
+        public void CreateQueue()
+        {
+            _Repository.CreateQueue();
         }
     }
 }
