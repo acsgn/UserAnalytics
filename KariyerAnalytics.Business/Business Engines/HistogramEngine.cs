@@ -26,9 +26,9 @@ namespace KariyerAnalytics.Business
                     }).ToArray();
         }
 
-        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(EndpointResponseTimesHistogramRequest endpointHistogramRequest)
+        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(ResponseTimesHistogramRequest histogramRequest)
         {
-            var result = _HistogramRepository.GetResponseTimesHistogramByEndpoint(endpointHistogramRequest.Endpoint, endpointHistogramRequest.Interval, endpointHistogramRequest.After, endpointHistogramRequest.Before);
+            var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before, histogramRequest.Endpoint);
             return (from r in result
                     select new HistogramResponseDTO
                     {

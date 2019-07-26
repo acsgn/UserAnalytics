@@ -14,15 +14,15 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public HistogramResponseDTO[] GetResponseTimesHistogram(ResponseTimesHistogramRequest responseTimeRequest)
+        public HistogramResponseDTO[] GetResponseTimesHistogram(ResponseTimesHistogramRequest histogramRequest)
         {
-            return _HistogramEngine.GetResponseTimesHistogram(responseTimeRequest);
+            return _HistogramEngine.GetResponseTimesHistogram(histogramRequest);
         }
 
         [HttpGet]
-        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(EndpointResponseTimesHistogramRequest endpointHistogramRequest)
+        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(ResponseTimesHistogramRequest histogramRequest)
         {
-            return _HistogramEngine.GetResponseTimesHistogramByEndpoint(endpointHistogramRequest);
+            return _HistogramEngine.GetResponseTimesHistogramByEndpoint(histogramRequest);
         }
 
     }

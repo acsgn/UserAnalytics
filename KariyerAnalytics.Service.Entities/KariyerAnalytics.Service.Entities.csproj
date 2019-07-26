@@ -33,16 +33,15 @@
   <ItemGroup>
     <Compile Include="DTOs\EndpointAbsoluteMetricsResponseDTO.cs" />
     <Compile Include="DTOs\EndpointMetricsResponseDTO.cs" />
-    <Compile Include="Requests\EndpointResponseTimesHistogramRequest.cs" />
+    <Compile Include="Requests\EndpointMetricsRequest.cs" />
     <Compile Include="Requests\ResponseTimesHistogramRequest.cs" />
-    <Compile Include="Requests\UserRequest.cs" />
     <Compile Include="DTOs\HistogramResponseDTO.cs" />
     <Compile Include="Requests\LogRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\RealtimeUserCountRequest.cs" />
     <Compile Include="DTOs\RealtimeUserCountResponseDTO.cs" />
     <Compile Include="Requests\Request.cs" />
-    <Compile Include="Requests\EndpointRequest.cs" />
+    <Compile Include="Requests\UserRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,9 +2,9 @@
 
 namespace KariyerAnalytics.Business.Contract
 {
-    public interface IHistogramEngine
+    public interface IHistogramEngine : IEngine
     {
         HistogramResponseDTO[] GetResponseTimesHistogram(ResponseTimesHistogramRequest histogramRequest);
-        HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(EndpointResponseTimesHistogramRequest endpointHistogramRequest);
+        HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(ResponseTimesHistogramRequest histogramRequest);
     }
 }
