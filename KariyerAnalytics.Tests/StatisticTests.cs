@@ -13,20 +13,22 @@ namespace KariyerAnalytics.Tests
         private DateTime _After;
         private DateTime _Before;
         private DateTime _TimeStamp;
-        private string _Endpoint;
-        private TimeSpan _Interval;
         private int _ResponseTime;
+        private string _CompanyName;
+        private string _Username;
+        private string _Endpoint;
 
 
         [SetUp]
         public void Setup()
         {
-             _After = DateTime.Now;
-             _Before = DateTime.Now;
-             _TimeStamp = DateTime.Now;
-             _Endpoint = "";
-             _Interval = new TimeSpan();
-             _ResponseTime = 100;
+            _After = DateTime.Now;
+            _Before = DateTime.Now;
+            _TimeStamp = DateTime.Now;
+            _ResponseTime = 100;
+            _CompanyName = "";
+            _Username = "";
+            _Endpoint = "";
         }
 
         [Test]
@@ -38,7 +40,7 @@ namespace KariyerAnalytics.Tests
                 Before = _Before
             };
 
-            var entity = new MetricResponse
+            var entity = new EndpointAbsoluteMetricsResponse
                 {
                     Endpoint = _Endpoint,
                     AverageResponseTime = _ResponseTime
@@ -63,7 +65,7 @@ namespace KariyerAnalytics.Tests
                 Before = _Before
             };
 
-            var entity = new MetricResponse
+            var entity = new EndpointAbsoluteMetricsResponse
             {
                 Endpoint = _Endpoint,
                 AverageResponseTime = _ResponseTime
@@ -80,81 +82,105 @@ namespace KariyerAnalytics.Tests
         }
 
         [Test]
-        public void GetRealtimeUsers_HappyPath()
+        public void GetEndpointMetrics_HappyPath()
         {
-            var request = new RealtimeUserCountRequest()
-            {
-                SecondsBefore = _ResponseTime
-            };
-
-            var entity = new RealtimeUserMetric[] {
-                new RealtimeUserMetric{
-                    Endpoint = _Endpoint,
-                    UserCount = _ResponseTime
-                }
-            };
-
-            var mockRepository = Substitute.For<IStatisticRepository>();
-            mockRepository.GetRealtimeUsers(_ResponseTime).Returns(entity);
-
-            var engine = new StatisticEngine(mockRepository);
-            var response = engine.GetRealtimeUsers(request);
-
-            Assert.AreEqual(entity[0].UserCount, response[0].UserCount);
-            Assert.AreEqual(entity[0].Endpoint, response[0].Endpoint);
-        }
-
-        [Test]
-        public void GetEndpoints_HappyPath()
-        {
-            var request = new Request
+            var request = new StatisticRequest
             {
                 After = _After,
                 Before = _Before
             };
 
-            var entity = new string[] {
-                ""
+            var entity = new EndpointMetricsResponse[]
+            {
+                new EndpointMetricsResponse{
+                    Endpoint = _Endpoint,
+                    NumberOfRequests = _ResponseTime,
+                    MinResponseTime = _ResponseTime,
+                    AverageResponseTime = _ResponseTime,
+                    MaxResponseTime = _ResponseTime
+                }
             };
 
             var mockRepository = Substitute.For<IStatisticRepository>();
-            mockRepository.GetEndpoints(_After, _Before).Returns(entity);
+            mockRepository.GetEndpointMetrics(_After, _Before).Returns(entity);
 
             var engine = new StatisticEngine(mockRepository);
-            var response = engine.GetEndpoints(request);
+            var response = engine.GetEndpointMetricsbyCompanyAndUser(request);
 
-            Assert.AreEqual(entity[0], response[0]);
+            Assert.AreEqual(entity[0].Endpoint, response[0].Endpoint);
+            Assert.AreEqual(entity[0].NumberOfRequests, response[0].NumberOfRequests);
+            Assert.AreEqual(entity[0].MinResponseTime, response[0].MinResponseTime);
+            Assert.AreEqual(entity[0].AverageResponseTime, response[0].AverageResponseTime);
+            Assert.AreEqual(entity[0].MaxResponseTime, response[0].MaxResponseTime);
         }
 
         [Test]
-        public void GetResponseTimes_HappyPath()
+        public void GetEndpointMetricsbyCompany_HappyPath()
         {
-            var request = new ResponseTimeRequest()
+            var request = new StatisticRequest
             {
                 After = _After,
                 Before = _Before,
-                Endpoint = _Endpoint,
-                Interval = _Interval
+                CompanyName = _CompanyName
             };
 
-            var entity = new Histogram[]
-                {
-                    new Histogram
-                    {
-                        Average = _ResponseTime,
-                        Timestamp = _TimeStamp
-                    }
-                };
+            var entity = new EndpointMetricsResponse[]
+            {
+                new EndpointMetricsResponse{
+                    Endpoint = _Endpoint,
+                    NumberOfRequests = _ResponseTime,
+                    MinResponseTime = _ResponseTime,
+                    AverageResponseTime = _ResponseTime,
+                    MaxResponseTime = _ResponseTime
+                }
+            };
 
             var mockRepository = Substitute.For<IStatisticRepository>();
-            mockRepository.GetResponseTimesByEndpoint(_Endpoint, _Interval, _After, _Before).Returns(entity);
+            mockRepository.GetEndpointMetrics(_After, _Before, _CompanyName).Returns(entity);
 
             var engine = new StatisticEngine(mockRepository);
-            var response = engine.GetResponseTimes(request);
+            var response = engine.GetEndpointMetricsbyCompanyAndUser(request);
 
-            Assert.AreEqual(entity[0].Average, response[0].Average);
-            Assert.AreEqual(entity[0].Timestamp, response[0].Timestamp);
+            Assert.AreEqual(entity[0].Endpoint, response[0].Endpoint);
+            Assert.AreEqual(entity[0].NumberOfRequests, response[0].NumberOfRequests);
+            Assert.AreEqual(entity[0].MinResponseTime, response[0].MinResponseTime);
+            Assert.AreEqual(entity[0].AverageResponseTime, response[0].AverageResponseTime);
+            Assert.AreEqual(entity[0].MaxResponseTime, response[0].MaxResponseTime);
         }
 
+        [Test]
+        public void GetEndpointMetricsbyCompanyAndUser_HappyPath()
+        {
+            var request = new StatisticRequest
+            {
+                After = _After,
+                Before = _Before,
+                CompanyName = _CompanyName,
+                Username = _Username
+            };
+
+            var entity = new EndpointMetricsResponse[]
+            {
+                new EndpointMetricsResponse{
+                    Endpoint = _Endpoint,
+                    NumberOfRequests = _ResponseTime,
+                    MinResponseTime = _ResponseTime,
+                    AverageResponseTime = _ResponseTime,
+                    MaxResponseTime = _ResponseTime
+                }
+            };
+
+            var mockRepository = Substitute.For<IStatisticRepository>();
+            mockRepository.GetEndpointMetrics(_After, _Before, _CompanyName, _Username).Returns(entity);
+
+            var engine = new StatisticEngine(mockRepository);
+            var response = engine.GetEndpointMetricsbyCompanyAndUser(request);
+
+            Assert.AreEqual(entity[0].Endpoint, response[0].Endpoint);
+            Assert.AreEqual(entity[0].NumberOfRequests, response[0].NumberOfRequests);
+            Assert.AreEqual(entity[0].MinResponseTime, response[0].MinResponseTime);
+            Assert.AreEqual(entity[0].AverageResponseTime, response[0].AverageResponseTime);
+            Assert.AreEqual(entity[0].MaxResponseTime, response[0].MaxResponseTime);
+        }
     }
 }

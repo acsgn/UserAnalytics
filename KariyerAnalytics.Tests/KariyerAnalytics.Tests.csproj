@@ -65,7 +65,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompanyTests.cs" />
+    <Compile Include="HistogramTests.cs" />
+    <Compile Include="InformationTests.cs" />
+    <Compile Include="RealtimeTests.cs" />
     <Compile Include="StatisticTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
