@@ -26,21 +26,21 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public EndpointMetricsResponseDTO[] GetEndpointMetrics(Request request)
+        public EndpointMetricsResponseDTO[] GetEndpointMetrics(StatisticRequest request)
         {
             return _StatisticEngine.GetEndpointMetrics(request);
         }
 
         [HttpGet]
-        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(UserRequest userRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(StatisticRequest request)
         {
-            return _StatisticEngine.GetEndpointMetricsbyCompany(userRequest);
+            return _StatisticEngine.GetEndpointMetricsbyCompany(request);
         }
 
         [HttpGet]
-        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyUserandCompany(EndpointRequest endpointRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompanyAndUser(StatisticRequest request)
         {
-            return _StatisticEngine.GetEndpointMetricsbyUserandCompany(endpointRequest);
+            return _StatisticEngine.GetEndpointMetricsbyCompanyAndUser(request);
         }
     }
 }

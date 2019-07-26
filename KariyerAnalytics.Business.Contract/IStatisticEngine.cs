@@ -6,8 +6,8 @@ namespace KariyerAnalytics.Business.Contract
     {
         EndpointAbsoluteMetricsResponseDTO GetBestResponseTime(Request request);
         EndpointAbsoluteMetricsResponseDTO GetWorstResponseTime(Request request);
-        EndpointMetricsResponseDTO[] GetEndpointMetrics(Request request);
-        EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(UserRequest userRequest);
-        EndpointMetricsResponseDTO[] GetEndpointMetricsbyUserandCompany(EndpointRequest endpointRequest);
+        EndpointMetricsResponseDTO[] GetEndpointMetrics(StatisticRequest request);
+        EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(StatisticRequest request);
+        EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompanyAndUser(StatisticRequest request);
     }
 }

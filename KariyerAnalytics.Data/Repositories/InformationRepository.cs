@@ -8,9 +8,9 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class InformationRepository : IInformationRepository
     {
-        public string[] GetEndpoints(DateTime after, DateTime before)
+        public string[] GetEndpoints(DateTime after, DateTime before, string companyName, string username)
         {
-            using (var repository = new GenericRepository<Log>())
+            using (var repository = new ElasticsearchRepository<Log>())
             {
                 var endpointsRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -21,13 +21,25 @@ namespace KariyerAnalytics.Data.Repositories
                                     .Field(f => f.Timestamp)
                                     .GreaterThanOrEquals(after)
                                     .LessThanOrEquals(before)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                .Terms("endpoints", s => s
-                                    .Field(f => f.Endpoint)))));
+                            .Aggregations(aggs2 => aggs2
+                                .Filter("filtered2", fi2 => fi2
+                                    .Filter(fil => fil
+                                        .MatchPhrase(s => s
+                                            .Field(f => f.CompanyName)
+                                            .Query(companyName)))
+                                    .Aggregations(aggs3 => aggs3
+                                        .Filter("filtered3", fi3 => fi3
+                                            .Filter(fil => fil
+                                                .MatchPhrase(s => s
+                                                    .Field(f => f.Username)
+                                                    .Query(username)))
+                                            .Aggregations(aggs4 => aggs4
+                                                .Terms("endpoints", s => s
+                                                    .Field(f => f.Endpoint)))))))));
 
                 var endpointsResult = repository.Search(endpointsRequest);
 
-                var buckets = endpointsResult.Aggs.Filter("filtered").Terms("endpoints").Buckets;
+                var buckets = endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Filter("filtered3").Terms("endpoints").Buckets;
 
                 var endpointList = (from b in buckets select b.Key).ToArray();
 
@@ -36,7 +48,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public string[] GetCompanies(DateTime after, DateTime before)
         {
-            using (var repository = new GenericRepository<Log>())
+            using (var repository = new ElasticsearchRepository<Log>())
             {
                 var companiesRequest = new SearchDescriptor<Log>()
                 .Size(0)
@@ -53,15 +65,16 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var companiesResult = repository.Search(companiesRequest);
 
-                var companyList = (from b in companiesResult.Aggs.Filter("filtered").Terms("companies").Buckets
-                                   select b.Key).ToArray();
+                var buckets = companiesResult.Aggs.Filter("filtered").Terms("companies").Buckets;
+
+                var companyList = (from b in buckets select b.Key).ToArray();
 
                 return companyList;
             }
         }
         public string[] GetCompanyUsers(string companyName, DateTime after, DateTime before)
         {
-            using (var repository = new GenericRepository<Log>())
+            using (var repository = new ElasticsearchRepository<Log>())
             {
                 var usersRequest = new SearchDescriptor<Log>()
                 .Size(0)

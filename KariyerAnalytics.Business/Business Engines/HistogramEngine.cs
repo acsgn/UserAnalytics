@@ -14,7 +14,7 @@ namespace KariyerAnalytics.Business
             _HistogramRepository = histogramRepository;
         }
 
-        public HistogramResponseDTO[] GetResponseTimesHistogram(ResponseTimesHistogramRequest histogramRequest)
+        public HistogramResponseDTO[] GetResponseTimesHistogram(HistogramRequest histogramRequest)
         {
             var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before);
             return (from r in result
@@ -26,7 +26,7 @@ namespace KariyerAnalytics.Business
                     }).ToArray();
         }
 
-        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(ResponseTimesHistogramRequest histogramRequest)
+        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(HistogramRequest histogramRequest)
         {
             var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before, histogramRequest.Endpoint);
             return (from r in result

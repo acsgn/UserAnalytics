@@ -44,9 +44,10 @@
   <ItemGroup>
     <Compile Include="IEngine.cs" />
     <Compile Include="IHistogramEngine.cs" />
+    <Compile Include="ILogRabbitMQEngine.cs" />
     <Compile Include="IRealtimeEngine.cs" />
     <Compile Include="IStatisticEngine.cs" />
-    <Compile Include="ILogEngine.cs" />
+    <Compile Include="ILogElasticsearchEngine.cs" />
     <Compile Include="IInformationEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

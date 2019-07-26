@@ -1,6 +1,6 @@
 ﻿namespace KariyerAnalytics.Service.Entities
 {
-    public class RealtimeUserCountRequest
+    public class RealtimeRequest
     {
         public int SecondsBefore { get; set; }
     }

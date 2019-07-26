@@ -4,8 +4,10 @@ namespace KariyerAnalytics.Business.Contract
 {
     public interface IInformationEngine : IEngine
     {
-        string[] GetEndpoints(Request request);
-        string[] GetCompanies(Request request);
-        string[] GetCompanyUsers(UserRequest userDetailRequest);
+        string[] GetCompanies(InformationRequest request);
+        string[] GetCompanyUsers(InformationRequest userDetailRequest);
+        string[] GetEndpoints(InformationRequest request);
+        string[] GetEndpointsByCompany(InformationRequest request);
+        string[] GetEndpointsByCompanyAndUser(InformationRequest request);
     }
 }

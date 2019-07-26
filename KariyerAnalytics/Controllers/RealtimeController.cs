@@ -14,13 +14,13 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public long GetRealtimeUserCount(RealtimeUserCountRequest realtimeUserCountRequest)
+        public long GetRealtimeUserCount(RealtimeRequest realtimeUserCountRequest)
         {
             return _RealtimeEngine.GetRealtimeUserCount(realtimeUserCountRequest);
         }
 
         [HttpGet]
-        public RealtimeUserCountResponseDTO[] GetRealtimeUserCountByEndpoints(RealtimeUserCountRequest realtimeUserCountRequest)
+        public RealtimeUserCountResponseDTO[] GetRealtimeUserCountByEndpoints(RealtimeRequest realtimeUserCountRequest)
         {
             return _RealtimeEngine.GetRealtimeUserCountByEndpoints(realtimeUserCountRequest);
         }

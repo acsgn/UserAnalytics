@@ -7,9 +7,9 @@ namespace KariyerAnalytics.Controllers
 {
     public class LogController : ApiController
     {
-        private readonly ILogEngine _LogEngine;
+        private readonly ILogElasticsearchEngine _LogEngine;
 
-        public LogController(ILogEngine logEngine)
+        public LogController(ILogElasticsearchEngine logEngine)
         {
             _LogEngine = logEngine;
         }

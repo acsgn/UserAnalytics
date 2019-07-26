@@ -14,12 +14,12 @@ namespace KariyerAnalytics.Business
             _RealtimeRepository = realtimeRepository;
         }
 
-        public long GetRealtimeUserCount(RealtimeUserCountRequest realtimeUserCountRequest)
+        public long GetRealtimeUserCount(RealtimeRequest realtimeUserCountRequest)
         {
             return _RealtimeRepository.GetRealtimeUserCount(realtimeUserCountRequest.SecondsBefore);
         }
 
-        public RealtimeUserCountResponseDTO[] GetRealtimeUserCountByEndpoints(RealtimeUserCountRequest realtimeUserCountRequest)
+        public RealtimeUserCountResponseDTO[] GetRealtimeUserCountByEndpoints(RealtimeRequest realtimeUserCountRequest)
         {
             var result = _RealtimeRepository.GetRealtimeUserCountByEndpoints(realtimeUserCountRequest.SecondsBefore);
             return (from r in result

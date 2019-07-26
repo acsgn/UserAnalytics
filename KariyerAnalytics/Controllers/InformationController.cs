@@ -14,21 +14,33 @@ namespace KariyerAnalytics.Controllers
         }
 
         [HttpGet]
-        public string[] GetEndpoints(Request request)
-        {
-            return _InformationEngine.GetEndpoints(request);
-        }
-
-        [HttpGet]
-        public string[] GetCompanies(Request request)
+        public string[] GetCompanies(InformationRequest request)
         {
             return _InformationEngine.GetCompanies(request);
         }
 
         [HttpGet]
-        public string[] GetCompanyUsers(UserRequest userRequest)
+        public string[] GetCompanyUsers(InformationRequest userRequest)
         {
             return _InformationEngine.GetCompanyUsers(userRequest);
+        }
+
+        [HttpGet]
+        public string[] GetEndpoints(InformationRequest request)
+        {
+            return _InformationEngine.GetEndpoints(request);
+        }
+
+        [HttpGet]
+        public string[] GetEndpointsByCompany(InformationRequest request)
+        {
+            return _InformationEngine.GetEndpoints(request);
+        }
+
+        [HttpGet]
+        public string[] GetEndpointsByCompanyAndUser(InformationRequest request)
+        {
+            return _InformationEngine.GetEndpoints(request);
         }
     }
 }

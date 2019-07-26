@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public EndpointAbsoluteMetricsResponse GetBestResponseTime(DateTime after, DateTime before)
         {
-            using (var repository = new GenericRepository<Log>())
+            using (var repository = new ElasticsearchRepository<Log>())
             {
                 var bestRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -43,7 +43,7 @@ namespace KariyerAnalytics.Data.Repositories
 
         public EndpointAbsoluteMetricsResponse GetWorstResponseTime(DateTime after, DateTime before)
         {
-            using (var repository = new GenericRepository<Log>())
+            using (var repository = new ElasticsearchRepository<Log>())
             {
                 var worstRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -73,94 +73,9 @@ namespace KariyerAnalytics.Data.Repositories
                 };
             }
         }
-
-        public EndpointMetricsResponse[] GetEndpointMetrics(DateTime after, DateTime before)
+        public EndpointMetricsResponse[] GetEndpointMetrics(DateTime after, DateTime before, string companyName, string username)
         {
-            using (var repository = new GenericRepository<Log>())
-            {
-                var endpointsRequest = new SearchDescriptor<Log>()
-                .Size(0)
-                .Aggregations(aggs => aggs
-                    .Filter("filtered", fi => fi
-                        .Filter(fil => fil
-                            .DateRange(r => r
-                                .Field(f => f.Timestamp)
-                                .GreaterThanOrEquals(after)
-                                .LessThanOrEquals(before)))
-                        .Aggregations(aggs2 => aggs2
-                            .Terms("endpoints", s => s
-                                .Field(f => f.Endpoint)
-                                .Aggregations(aggs5 => aggs5
-                                    .Min("min-response-time", a => a.Field(f => f.ResponseTime))
-                                    .Average("average-response-time", a => a.Field(f => f.ResponseTime))
-                                    .Max("max-response-time", a => a.Field(f => f.ResponseTime)))))));
-
-                var endpointsResult = repository.Search(endpointsRequest);
-
-                var buckets = endpointsResult.Aggs.Filter("filtered").Terms("endpoints").Buckets;
-
-                var endpointsList = (from b in buckets
-                                     select new EndpointMetricsResponse
-                                     {
-                                         Endpoint = b.Key,
-                                         NumberOfRequests = (long)b.DocCount,
-                                         MinResponseTime = (double)b.Min("min-response-time").Value,
-                                         AverageResponseTime = (double)b.Average("average-response-time").Value,
-                                         MaxResponseTime = (double)b.Max("max-response-time").Value,
-                                     }).ToArray();
-
-                return endpointsList;
-            }
-        }
-
-        public EndpointMetricsResponse[] GetEndpointMetricsbyCompany(string companyName, DateTime after, DateTime before)
-        {
-            using (var repository = new GenericRepository<Log>())
-            {
-                var endpointsRequest = new SearchDescriptor<Log>()
-                .Size(0)
-                .Aggregations(aggs => aggs
-                    .Filter("filtered", fi => fi
-                        .Filter(fil => fil
-                            .DateRange(r => r
-                                .Field(f => f.Timestamp)
-                                .GreaterThanOrEquals(after)
-                                .LessThanOrEquals(before)))
-                        .Aggregations(aggs2 => aggs2
-                            .Filter("filtered2", fi2 => fi2
-                                .Filter(fil => fil
-                                    .MatchPhrase(s => s
-                                        .Field(f => f.CompanyName)
-                                        .Query(companyName)))
-                                .Aggregations(aggs3 => aggs3
-                                    .Terms("endpoints", s => s
-                                        .Field(f => f.Endpoint)
-                                        .Aggregations(aggs5 => aggs5
-                                            .Min("min-response-time", a => a.Field(f => f.ResponseTime))
-                                            .Average("average-response-time", a => a.Field(f => f.ResponseTime))
-                                            .Max("max-response-time", a => a.Field(f => f.ResponseTime)))))))));
-
-                var endpointsResult = repository.Search(endpointsRequest);
-
-                var buckets = endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Terms("endpoints").Buckets;
-
-                var endpointsList = (from b in buckets
-                                     select new EndpointMetricsResponse
-                                     {
-                                         Endpoint = b.Key,
-                                         NumberOfRequests = (long)b.DocCount,
-                                         MinResponseTime = (double)b.Min("min-response-time").Value,
-                                         AverageResponseTime = (double)b.Average("average-response-time").Value,
-                                         MaxResponseTime = (double)b.Max("max-response-time").Value,
-                                     }).ToArray();
-
-                return endpointsList;
-            }
-        }
-
-        public EndpointMetricsResponse[] GetEndpointMetricsbyUserandCompany(string companyName, string username, DateTime after, DateTime before)
-        {
-            using (var repository = new GenericRepository<Log>())
+            using (var repository = new ElasticsearchRepository<Log>())
             {
                 var endpointsRequest = new SearchDescriptor<Log>()
                 .Size(0)

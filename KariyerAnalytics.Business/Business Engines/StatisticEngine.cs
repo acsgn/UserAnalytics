@@ -1,7 +1,7 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Service.Entities;
-using System.Linq;
 using KariyerAnalytics.Data.Contract;
+using System.Linq;
 
 namespace KariyerAnalytics.Business
 {
@@ -34,7 +34,7 @@ namespace KariyerAnalytics.Business
             };
         }
 
-        public EndpointMetricsResponseDTO[] GetEndpointMetrics(Request request)
+        public EndpointMetricsResponseDTO[] GetEndpointMetrics(StatisticRequest request)
         {
             var result = _StatisticRepository.GetEndpointMetrics(request.After, request.Before);
             return (from r in result
@@ -48,9 +48,9 @@ namespace KariyerAnalytics.Business
                     }).ToArray();
         }
 
-        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(UserRequest userRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompany(StatisticRequest userRequest)
         {
-            var result = _StatisticRepository.GetEndpointMetricsbyCompany(userRequest.CompanyName, userRequest.After, userRequest.Before);
+            var result = _StatisticRepository.GetEndpointMetrics(userRequest.After, userRequest.Before, userRequest.CompanyName);
             return (from r in result
                     select new EndpointMetricsResponseDTO
                     {
@@ -62,9 +62,9 @@ namespace KariyerAnalytics.Business
                     }).ToArray();
         }
 
-        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyUserandCompany(EndpointRequest endpointRequest)
+        public EndpointMetricsResponseDTO[] GetEndpointMetricsbyCompanyAndUser(StatisticRequest endpointRequest)
         {
-            var result = _StatisticRepository.GetEndpointMetricsbyUserandCompany(endpointRequest.CompanyName, endpointRequest.Username, endpointRequest.After, endpointRequest.Before);
+            var result = _StatisticRepository.GetEndpointMetrics(endpointRequest.After, endpointRequest.Before, endpointRequest.CompanyName, endpointRequest.Username);
             return (from r in result
                     select new EndpointMetricsResponseDTO
                     {
