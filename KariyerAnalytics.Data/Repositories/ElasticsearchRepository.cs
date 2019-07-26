@@ -1,10 +1,11 @@
 ﻿using System;
 using KariyerAnalytics.Common;
+using KariyerAnalytics.Data.Contract;
 using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class GenericRepository<T> : Contract.IRepository<T>, IDisposable where T : class
+    public class ElasticsearchRepository<T> : IElasticsearchRepository<T>, IDisposable where T : class
     {
         public async void Index(string indexName, T document)
         {

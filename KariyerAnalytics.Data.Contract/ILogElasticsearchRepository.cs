@@ -2,7 +2,7 @@
 
 namespace KariyerAnalytics.Data.Contract
 {
-    public interface ILogRepository
+    public interface ILogElasticsearchRepository
     {
         void CreateIndex();
         void Index(Log log);

@@ -2,7 +2,7 @@
 
 namespace KariyerAnalytics.Business.Contract
 {
-    public interface ILogEngine : IEngine
+    public interface ILogElasticsearchEngine : IEngine
     {
         void Add(LogRequest logRequest);
         void CreateIndex();
