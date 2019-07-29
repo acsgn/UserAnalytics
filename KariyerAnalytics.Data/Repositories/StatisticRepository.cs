@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public EndpointAbsoluteMetricsResponse GetBestResponseTime(DateTime after, DateTime before)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var bestRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -43,7 +43,7 @@ namespace KariyerAnalytics.Data.Repositories
 
         public EndpointAbsoluteMetricsResponse GetWorstResponseTime(DateTime after, DateTime before)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var worstRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -75,7 +75,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public EndpointMetricsResponse[] GetEndpointMetrics(DateTime after, DateTime before, string companyName, string username)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var endpointsRequest = new SearchDescriptor<Log>()
                 .Size(0)

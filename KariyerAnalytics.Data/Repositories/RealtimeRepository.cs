@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public long GetRealtimeUserCount(int secondsBefore)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var realtimeUsersRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -31,7 +31,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public RealtimeUserCountResponse[] GetRealtimeUserCountByEndpoints(int secondsBefore)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var realtimeUsersRequest = new SearchDescriptor<Log>()
                     .Size(0)

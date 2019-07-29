@@ -8,14 +8,14 @@ namespace KariyerAnalytics.Data.Repositories
         private readonly static string _IndexName = "logs";
         public void Index(Log log)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 repository.Index(_IndexName, log);
             }
         }
         public void CreateIndex()
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 repository.CreateIndex(_IndexName);
             }

@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public HistogramResponse[] GetResponseTimesHistogram(TimeSpan interval, DateTime after, DateTime before, string endpoint)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var responseTimeRequest = new SearchDescriptor<Log>()
                     .Size(0)

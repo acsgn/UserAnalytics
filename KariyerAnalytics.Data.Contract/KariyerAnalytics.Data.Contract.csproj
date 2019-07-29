@@ -56,13 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IElasticsearchRepository.cs" />
+    <Compile Include="IGenericElasticsearchRepository.cs" />
+    <Compile Include="IGenericRabbitMQRepository.cs" />
     <Compile Include="IHistogramRepository.cs" />
     <Compile Include="IInformationRepository.cs" />
     <Compile Include="ILogElasticsearchRepository.cs" />
     <Compile Include="ILogRabbitMQRepository.cs" />
     <Compile Include="IRabbitMQContext.cs" />
-    <Compile Include="IRabbitMQRepository.cs" />
     <Compile Include="IRealtimeRepository.cs" />
     <Compile Include="IStatisticRepository.cs" />
     <Compile Include="IElasticsearchContext.cs" />

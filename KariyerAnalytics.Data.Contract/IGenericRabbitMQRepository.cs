@@ -1,6 +1,6 @@
 ﻿namespace KariyerAnalytics.Data.Contract
 {
-    public interface IRabbitMQRepository<T> where T : class
+    public interface IGenericRabbitMQRepository<T> where T : class
     {
         void Queue(string routingKey, T obj);
         void Dequeue(string routingKey);

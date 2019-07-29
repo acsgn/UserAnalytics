@@ -5,7 +5,7 @@ using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class ElasticsearchRepository<T> : IElasticsearchRepository<T>, IDisposable where T : class
+    public class GenericElasticsearchRepository<T> : IGenericElasticsearchRepository<T>, IDisposable where T : class
     {
         public async void Index(string indexName, T document)
         {

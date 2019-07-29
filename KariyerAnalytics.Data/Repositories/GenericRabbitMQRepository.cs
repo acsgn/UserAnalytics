@@ -7,7 +7,7 @@ using RabbitMQ.Client.Events;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class RabbitMQRepository<T> : IRabbitMQRepository<T>, IDisposable where T : class
+    public class GenericRabbitMQRepository<T> : IGenericRabbitMQRepository<T>, IDisposable where T : class
     {
         public void Queue(string routingKey, T obj)
         {

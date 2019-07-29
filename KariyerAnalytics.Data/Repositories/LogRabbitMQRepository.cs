@@ -8,21 +8,21 @@ namespace KariyerAnalytics.Data.Repositories
         private readonly static string _QueueName = "logs";
         public void Queue(Log log)
         {
-            using (var repository = new RabbitMQRepository<Log>())
+            using (var repository = new GenericRabbitMQRepository<Log>())
             {
                 repository.Queue(_QueueName, log);
             }
         }
         public void Dequeue()
         {
-            using (var repository = new RabbitMQRepository<Log>())
+            using (var repository = new GenericRabbitMQRepository<Log>())
             {
                 repository.Dequeue(_QueueName);
             }
         }
         public void CreateQueue()
         {
-            using (var repository = new RabbitMQRepository<Log>())
+            using (var repository = new GenericRabbitMQRepository<Log>())
             {
                 repository.CreateQueue(_QueueName);
             }

@@ -10,7 +10,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public string[] GetEndpoints(DateTime after, DateTime before, string companyName, string username)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var endpointsRequest = new SearchDescriptor<Log>()
                     .Size(0)
@@ -48,7 +48,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public string[] GetCompanies(DateTime after, DateTime before)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var companiesRequest = new SearchDescriptor<Log>()
                 .Size(0)
@@ -74,7 +74,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public string[] GetCompanyUsers(string companyName, DateTime after, DateTime before)
         {
-            using (var repository = new ElasticsearchRepository<Log>())
+            using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 var usersRequest = new SearchDescriptor<Log>()
                 .Size(0)
