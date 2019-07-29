@@ -53,7 +53,9 @@
   <ItemGroup>
     <Compile Include="Builders\AggregationBuilder.cs" />
     <Compile Include="Builders\AggregationContainerBuilder.cs" />
+    <Compile Include="Builders\CountBuilder.cs" />
     <Compile Include="Builders\QueryBuilder.cs" />
+    <Compile Include="Builders\SearchBuilder.cs" />
     <Compile Include="Contexts\RabbitMQContext.cs" />
     <Compile Include="RabbitMQConnectionSettingsSingleton.cs" />
     <Compile Include="ElasticsearchConnectionSettingsSingleton.cs" />

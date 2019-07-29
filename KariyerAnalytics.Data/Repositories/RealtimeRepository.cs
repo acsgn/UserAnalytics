@@ -2,7 +2,6 @@
 using System.Linq;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
-using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
@@ -12,19 +11,20 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                var realtimeUsersRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
-                                    .LessThanOrEquals(DateTime.Now)))));
+                var query = new QueryBuilder()
+                    .AddDateRangeQuery(
+                        DateTime.Now.AddSeconds(-secondsBefore),
+                        DateTime.Now,
+                        "timestamp")
+                    .Build();
+                
+                var request = new CountBuilder<Log>()
+                    .AddQuery(query)
+                    .Build();
 
-                var realtimeUsersResult = repository.Search(realtimeUsersRequest);
+                var result = repository.Count(request);
 
-                var count = realtimeUsersResult.Aggs.Filter("filtered").DocCount;
+                var count = result.Count/secondsBefore;
 
                 return count;
             }
@@ -33,32 +33,37 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                var realtimeUsersRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(DateTime.Now.AddSeconds(-secondsBefore))
-                                    .LessThanOrEquals(DateTime.Now)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                .Terms("endpoints", t => t
-                                    .Field(f => f.Endpoint)))));
+                var query = new QueryBuilder()
+                    .AddDateRangeQuery(
+                        DateTime.Now.AddSeconds(-secondsBefore),
+                        DateTime.Now,
+                        "timestamp")
+                    .Build();
 
-                var realtimeUsersResult = repository.Search(realtimeUsersRequest);
+                var aggregation = new AggregationBuilder()
+                    .AddContainer()
+                        .AddTermsAggregation("endpoints", "endpoint")
+                        .Build()
+                    .Build();
 
-                var buckets = realtimeUsersResult.Aggs.Filter("filtered").Terms("endpoints").Buckets;
+                var request = new SearchBuilder<Log>()
+                    .SetSize(0)
+                    .AddQuery(query)
+                    .AddAggregation(aggregation)
+                    .Build();
 
-                var realtimeUsersList =
-                    (from b in buckets
-                     select new RealtimeUserCountResponse
-                     {
-                         Endpoint = b.Key,
-                         UserCount = (long)b.DocCount
-                     }).ToArray();
+                var result = repository.Search(request);
 
-                return realtimeUsersList;
+                var buckets = result.Aggs.Terms("endpoints").Buckets;
+
+                var list = (from b in buckets
+                             select new RealtimeUserCountResponse
+                             {
+                                 Endpoint = b.Key,
+                                 UserCount = (long) b.DocCount/secondsBefore
+                             }).ToArray();
+
+                return list;
             }
         }
     }

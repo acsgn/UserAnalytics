@@ -2,7 +2,6 @@
 using System.Linq;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
-using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
@@ -12,96 +11,93 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                var endpointsRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(after)
-                                    .LessThanOrEquals(before)))
-                            .Aggregations(aggs2 => aggs2
-                                .Filter("filtered2", fi2 => fi2
-                                    .Filter(fil => fil
-                                        .MatchPhrase(s => s
-                                            .Field(f => f.CompanyName)
-                                            .Query(companyName)))
-                                    .Aggregations(aggs3 => aggs3
-                                        .Filter("filtered3", fi3 => fi3
-                                            .Filter(fil => fil
-                                                .MatchPhrase(s => s
-                                                    .Field(f => f.Username)
-                                                    .Query(username)))
-                                            .Aggregations(aggs4 => aggs4
-                                                .Terms("endpoints", s => s
-                                                    .Field(f => f.Endpoint)))))))));
+                var query = new QueryBuilder()
+                    .AddDateRangeQuery(after, before, "timestamp")
+                    .AddMatchPhraseQuery(companyName, "companyName")
+                    .AddMatchPhraseQuery(username, "username")
+                    .Build();
 
-                var endpointsResult = repository.Search(endpointsRequest);
+                var aggregation = new AggregationBuilder()
+                    .AddContainer()
+                        .AddTermsAggregation("endpoints", "endpoint")
+                        .Build()
+                    .Build();
 
-                var buckets = endpointsResult.Aggs.Filter("filtered").Filter("filtered2").Filter("filtered3").Terms("endpoints").Buckets;
+                var request = new SearchBuilder<Log>()
+                    .SetSize(0)
+                    .AddQuery(query)
+                    .AddAggregation(aggregation)
+                    .Build();
 
-                var endpointList = (from b in buckets select b.Key).ToArray();
+                var result = repository.Search(request);
+                
+                var buckets = result.Aggs.Terms("endpoints").Buckets;
 
-                return endpointList;
+                var list = (from b in buckets select b.Key).ToArray();
+
+                return list;
             }
         }
         public string[] GetCompanies(string endpoint, string username, DateTime after, DateTime before)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                var companiesRequest = new SearchDescriptor<Log>()
-                .Size(0)
-                .Aggregations(aggs => aggs
-                    .Filter("filtered", fi => fi
-                        .Filter(fil => fil
-                            .DateRange(r => r
-                                .Field(f => f.Timestamp)
-                                .GreaterThanOrEquals(after)
-                                .LessThanOrEquals(before)))
-                        .Aggregations(nestedAggs => nestedAggs
-                            .Terms("companies", s => s
-                                .Field(f => f.CompanyName)))));
+                var query = new QueryBuilder()
+                    .AddDateRangeQuery(after, before, "timestamp")
+                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                    .AddMatchPhraseQuery(username, "username")
+                    .Build();
 
-                var companiesResult = repository.Search(companiesRequest);
+                var aggregation = new AggregationBuilder()
+                    .AddContainer()
+                        .AddTermsAggregation("companies", "companyName")
+                        .Build()
+                    .Build();
 
-                var buckets = companiesResult.Aggs.Filter("filtered").Terms("companies").Buckets;
+                var request = new SearchBuilder<Log>()
+                    .SetSize(0)
+                    .AddQuery(query)
+                    .AddAggregation(aggregation)
+                    .Build();
 
-                var companyList = (from b in buckets select b.Key).ToArray();
+                var result = repository.Search(request);
 
-                return companyList;
+                var buckets = result.Aggs.Terms("companies").Buckets;
+
+                var list = (from b in buckets select b.Key).ToArray();
+
+                return list;
             }
         }
         public string[] GetUsers(string endpoint, string companyName, DateTime after, DateTime before)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                var usersRequest = new SearchDescriptor<Log>()
-                .Size(0)
-                .Aggregations(aggs => aggs
-                    .Filter("filtered", fi => fi
-                        .Filter(fil => fil
-                            .DateRange(r => r
-                                .Field(f => f.Timestamp)
-                                .GreaterThanOrEquals(after)
-                                .LessThanOrEquals(before)))
-                        .Aggregations(nestedAggs => nestedAggs
-                            .Filter("filtered2", fi2 => fi2
-                                .Filter(fil => fil
-                                    .MatchPhrase(s => s
-                                        .Field(f => f.CompanyName)
-                                        .Query(companyName)))
-                                .Aggregations(nestedNestedAggs => nestedNestedAggs                                
-                                    .Terms("users", s => s
-                                        .Field(f => f.Username)))))));
+                var query = new QueryBuilder()
+                    .AddDateRangeQuery(after, before, "timestamp")
+                    .AddMatchPhraseQuery(companyName, "companyName")
+                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                    .Build();
 
-                var usersResult = repository.Search(usersRequest);
+                var aggregation = new AggregationBuilder()
+                    .AddContainer()
+                        .AddTermsAggregation("users", "username")
+                        .Build()
+                    .Build();
 
-                var buckets = usersResult.Aggs.Filter("filtered").Filter("filtered2").Terms("users").Buckets;
+                var request = new SearchBuilder<Log>()
+                    .SetSize(0)
+                    .AddQuery(query)
+                    .AddAggregation(aggregation)
+                    .Build();
 
-                var userList = (from b in buckets select b.Key).ToArray();
+                var result = repository.Search(request);
 
-                return userList;
+                var buckets = result.Aggs.Terms("users").Buckets;
+
+                var list = (from b in buckets select b.Key).ToArray();
+
+                return list;
             }
         }
     }

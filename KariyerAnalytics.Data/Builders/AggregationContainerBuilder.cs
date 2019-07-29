@@ -17,6 +17,17 @@ namespace KariyerAnalytics.Data
             _AggregationBuilder = aggregationBuilder;
         }
 
+        public AggregationContainerBuilder AddFilterAggregation(string name, QueryContainer query)
+        {
+            _Name = name;
+            _CanBeSubAggregated = true;
+            _AggregationContainer = new FilterAggregation(name)
+            {
+                Filter = query
+            };
+            return this;
+        }
+
         public AggregationContainerBuilder AddTermsAggregation(string name, string field)
         {
             _Name = name;
@@ -28,11 +39,39 @@ namespace KariyerAnalytics.Data
             return this;
         }
 
+        public AggregationContainerBuilder AddDateHistogram(string name, string field, TimeSpan interval)
+        {
+            _Name = name;
+            _CanBeSubAggregated = true;
+            _AggregationContainer = new DateHistogramAggregation(name)
+            {
+                Field = field,
+                Interval = new Union<DateInterval, Time>(interval)
+            };
+            return this;
+        }
+
         public AggregationContainerBuilder AddAverageAggregation(string name, string field)
         {
             _Name = name;
             _CanBeSubAggregated = true;
             _AggregationContainer = new AverageAggregation(name, field);
+            return this;
+        }
+
+        public AggregationContainerBuilder AddMaxAggregation(string name, string field)
+        {
+            _Name = name;
+            _CanBeSubAggregated = true;
+            _AggregationContainer = new MaxAggregation(name, field);
+            return this;
+        }
+
+        public AggregationContainerBuilder AddMinAggregation(string name, string field)
+        {
+            _Name = name;
+            _CanBeSubAggregated = true;
+            _AggregationContainer = new MinAggregation(name, field);
             return this;
         }
 

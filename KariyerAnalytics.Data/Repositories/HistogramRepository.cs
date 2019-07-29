@@ -2,7 +2,6 @@
 using System.Linq;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
-using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
@@ -12,43 +11,41 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                var responseTimeRequest = new SearchDescriptor<Log>()
-                    .Size(0)
-                    .Aggregations(aggs => aggs
-                        .Filter("filtered", fi => fi
-                            .Filter(fil => fil
-                                .DateRange(r => r
-                                    .Field(f => f.Timestamp)
-                                    .GreaterThanOrEquals(after)
-                                    .LessThanOrEquals(before)))
-                            .Aggregations(nestedAggs => nestedAggs
-                                .Filter("filtered2", fi2 => fi2
-                                        .Filter(fil => fil
-                                            .MatchPhrase(s => s
-                                                .Field(f => f.Endpoint)
-                                                .Query(endpoint)))
-                                        .Aggregations(nestedNestedNestedAggs => nestedNestedNestedAggs
-                                            .DateHistogram("histogram", dh => dh
-                                                .Field(f => f.Timestamp)
-                                                .Interval(interval)
-                                                .Aggregations(nestedNestedAggs => nestedNestedAggs
-                                                    .Average("average-response-time", a => a
-                                                        .Field(f => f.ResponseTime)))))))));
+                var query = new QueryBuilder()
+                    .AddDateRangeQuery(after, before, "timestamp")
+                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                    .Build();
 
+                var aggregation = new AggregationBuilder()
+                    .AddContainer()
+                        .AddDateHistogram("histogram", "timestamp", interval)
+                        .AddSubAggregation()
+                            .AddContainer()
+                                .AddAverageAggregation("average-response-time", "responseTime")
+                                .Build()
+                            .FinishSubAggregation()
+                        .Build()
+                    .Build();
 
-                var responseTimeResult = repository.Search(responseTimeRequest);
+                var request = new SearchBuilder<Log>()
+                    .SetSize(0)
+                    .AddQuery(query)
+                    .AddAggregation(aggregation)
+                    .Build();
 
-                var buckets = responseTimeResult.Aggs.Filter("filtered").Filter("filtered2").DateHistogram("histogram").Buckets;
+                var result = repository.Search(request);
 
-                var responseTimeList = (from b in buckets
-                                        select new HistogramResponse
-                                        {
-                                            Timestamp = b.Date,
-                                            NumberOfRequests = b.DocCount,
-                                            Average = (double) b.Average("average-response-time").Value
-                                        }).ToArray();
+                var buckets = result.Aggs.DateHistogram("histogram").Buckets;
 
-                return responseTimeList;
+                var  list = (from b in buckets
+                             select new HistogramResponse
+                             {
+                                Timestamp = b.Date,
+                                NumberOfRequests = b.DocCount,
+                                Average = (double) b.Average("average-response-time").Value
+                             }).ToArray();
+
+                return list;
             }
 
         }
