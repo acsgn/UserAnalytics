@@ -5,6 +5,5 @@ namespace KariyerAnalytics.Business.Contract
     public interface IHistogramEngine : IEngine
     {
         HistogramResponseDTO[] GetResponseTimesHistogram(HistogramRequest histogramRequest);
-        HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(HistogramRequest histogramRequest);
     }
 }

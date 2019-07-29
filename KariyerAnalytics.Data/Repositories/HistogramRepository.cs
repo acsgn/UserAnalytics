@@ -8,7 +8,7 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class HistogramRepository : IHistogramRepository
     {
-        public HistogramResponse[] GetResponseTimesHistogram(TimeSpan interval, DateTime after, DateTime before, string endpoint)
+        public HistogramResponse[] GetResponseTimesHistogram(string endpoint, TimeSpan interval, DateTime after, DateTime before)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {

@@ -16,19 +16,7 @@ namespace KariyerAnalytics.Business
 
         public HistogramResponseDTO[] GetResponseTimesHistogram(HistogramRequest histogramRequest)
         {
-            var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before);
-            return (from r in result
-                    select new HistogramResponseDTO
-                    {
-                        Average = r.Average,
-                        NumberOfRequests = r.NumberOfRequests,
-                        Timestamp = r.Timestamp
-                    }).ToArray();
-        }
-
-        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(HistogramRequest histogramRequest)
-        {
-            var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Interval, histogramRequest.After, histogramRequest.Before, histogramRequest.Endpoint);
+            var result = _HistogramRepository.GetResponseTimesHistogram(histogramRequest.Endpoint, histogramRequest.Interval, histogramRequest.After, histogramRequest.Before);
             return (from r in result
                     select new HistogramResponseDTO
                     {

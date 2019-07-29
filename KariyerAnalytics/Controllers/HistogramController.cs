@@ -18,12 +18,5 @@ namespace KariyerAnalytics.Controllers
         {
             return _HistogramEngine.GetResponseTimesHistogram(histogramRequest);
         }
-
-        [HttpGet]
-        public HistogramResponseDTO[] GetResponseTimesHistogramByEndpoint(HistogramRequest histogramRequest)
-        {
-            return _HistogramEngine.GetResponseTimesHistogramByEndpoint(histogramRequest);
-        }
-
     }
 }

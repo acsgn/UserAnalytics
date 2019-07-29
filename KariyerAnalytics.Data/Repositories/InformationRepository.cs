@@ -8,7 +8,7 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class InformationRepository : IInformationRepository
     {
-        public string[] GetEndpoints(DateTime after, DateTime before, string companyName, string username)
+        public string[] GetEndpoints(string companyName, string username, DateTime after, DateTime before)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
@@ -46,7 +46,7 @@ namespace KariyerAnalytics.Data.Repositories
                 return endpointList;
             }
         }
-        public string[] GetCompanies(DateTime after, DateTime before)
+        public string[] GetCompanies(string endpoint, string username, DateTime after, DateTime before)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
@@ -72,7 +72,7 @@ namespace KariyerAnalytics.Data.Repositories
                 return companyList;
             }
         }
-        public string[] GetCompanyUsers(string companyName, DateTime after, DateTime before)
+        public string[] GetUsers(string endpoint, string companyName, DateTime after, DateTime before)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {

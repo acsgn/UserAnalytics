@@ -5,6 +5,6 @@ namespace KariyerAnalytics.Data.Contract
 {
     public interface IHistogramRepository
     {
-        HistogramResponse[] GetResponseTimesHistogram(TimeSpan interval, DateTime after, DateTime before, string endpoint = null);
+        HistogramResponse[] GetResponseTimesHistogram(string endpoint, TimeSpan interval, DateTime after, DateTime before, );
     }
 }
