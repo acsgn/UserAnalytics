@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Nest;
 
 namespace KariyerAnalytics.Data
@@ -10,7 +11,6 @@ namespace KariyerAnalytics.Data
         public AggregationContainer _AggregationContainer;
 
         private string _Name;
-        private bool _CanBeSubAggregated = false;
 
         public AggregationContainerBuilder(AggregationBuilder aggregationBuilder)
         {
@@ -20,7 +20,6 @@ namespace KariyerAnalytics.Data
         public AggregationContainerBuilder AddFilterAggregation(string name, QueryContainer query)
         {
             _Name = name;
-            _CanBeSubAggregated = true;
             _AggregationContainer = new FilterAggregation(name)
             {
                 Filter = query
@@ -28,13 +27,21 @@ namespace KariyerAnalytics.Data
             return this;
         }
 
-        public AggregationContainerBuilder AddTermsAggregation(string name, string field)
+        public AggregationContainerBuilder AddTermsAggregation(string name, string field, int? size = null, string orderKey = null, bool ascending = true)
         {
             _Name = name;
-            _CanBeSubAggregated = true;
             _AggregationContainer = new TermsAggregation(name)
             {
-                Field = field
+                Field = field,
+                Size = size,
+                Order = string.IsNullOrEmpty(orderKey) ? null : new List<TermsOrder>
+                {
+                    new TermsOrder()
+                    {
+                        Key = orderKey,
+                        Order = ascending ? SortOrder.Ascending : SortOrder.Descending
+                    }
+                }
             };
             return this;
         }
@@ -42,7 +49,6 @@ namespace KariyerAnalytics.Data
         public AggregationContainerBuilder AddDateHistogram(string name, string field, TimeSpan interval)
         {
             _Name = name;
-            _CanBeSubAggregated = true;
             _AggregationContainer = new DateHistogramAggregation(name)
             {
                 Field = field,
@@ -54,7 +60,6 @@ namespace KariyerAnalytics.Data
         public AggregationContainerBuilder AddAverageAggregation(string name, string field)
         {
             _Name = name;
-            _CanBeSubAggregated = true;
             _AggregationContainer = new AverageAggregation(name, field);
             return this;
         }
@@ -62,7 +67,6 @@ namespace KariyerAnalytics.Data
         public AggregationContainerBuilder AddMaxAggregation(string name, string field)
         {
             _Name = name;
-            _CanBeSubAggregated = true;
             _AggregationContainer = new MaxAggregation(name, field);
             return this;
         }
@@ -70,35 +74,13 @@ namespace KariyerAnalytics.Data
         public AggregationContainerBuilder AddMinAggregation(string name, string field)
         {
             _Name = name;
-            _CanBeSubAggregated = true;
             _AggregationContainer = new MinAggregation(name, field);
-            return this;
-        }
-
-        public AggregationContainerBuilder AddMaxBucketAggregation(string name, string bucketsPath)
-        {
-            _Name = name;
-            _AggregationContainer = new MaxBucketAggregation(name, new SingleBucketsPath(bucketsPath));
-            return this;
-        }
-
-        public AggregationContainerBuilder AddMinBucketAggregation(string name, string bucketsPath)
-        {
-            _Name = name;
-            _AggregationContainer = new MinBucketAggregation(name, new SingleBucketsPath(bucketsPath));
             return this;
         }
 
         public AggregationBuilder AddSubAggregation()
         {
-            if (_CanBeSubAggregated)
-            {
-                return new AggregationBuilder(this);
-            }
-            else
-            {
-                throw new Exception("Can't sub aggregate");
-            }
+            return new AggregationBuilder(this);
         }
 
         public AggregationBuilder Build()
