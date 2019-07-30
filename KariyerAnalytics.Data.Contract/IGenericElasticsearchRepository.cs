@@ -6,7 +6,8 @@ namespace KariyerAnalytics.Data.Contract
     {
         void Index(string indexName, T document);
         ISearchResponse<T> Search(ISearchRequest searchRequest);
+        ISuggestResponse Suggest(ISuggestRequest suggestRequest);
         ICountResponse Count(ICountRequest countRequest);
-        void CreateIndex(string indexName);
+        void CreateIndex(string indexName, ICreateIndexRequest createIndexRequest);
     }
 }

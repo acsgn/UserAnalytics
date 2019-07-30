@@ -9,7 +9,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public long GetRealtimeUserCount(int secondsBefore)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
+            using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
                     .AddDateRangeQuery(
@@ -31,7 +31,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public RealtimeUserCountResponse[] GetRealtimeUserCountByEndpoints(int secondsBefore)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
+            using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
                     .AddDateRangeQuery(

@@ -25,6 +25,16 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
+        public ISuggestResponse Suggest(ISuggestRequest suggestRequest)
+        {
+            using (var context = new ElasticsearchContext())
+            {
+                var json = StringHelpers.GetQueryJSonFromRequest(suggestRequest, context.GetElasticClient());
+                var suggestResponse = context.GetElasticClient().Suggest(suggestRequest);
+                return suggestResponse;
+            }
+        }
+
         public ICountResponse Count(ICountRequest countRequest)
         {
             using (var context = new ElasticsearchContext())
@@ -35,20 +45,16 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public void CreateIndex(string indexName)
+        public void CreateIndex(string indexName, ICreateIndexRequest createIndexRequest)
         {
             using (var context = new ElasticsearchContext())
             {
                 if (context.GetElasticClient().IndexExists(indexName).Exists)
                 {
-                    throw new Exception("The index is available, unable to create mapping!");
+                    throw new Exception("The index is available, unable to create index!");
                 }
 
-                var indexDescriptor = new CreateIndexDescriptor(indexName)
-                    .Mappings(m => m
-                        .Map<T>(map => map.AutoMap()));
-
-                var createIndexResult = context.GetElasticClient().CreateIndex(indexDescriptor);
+                var createIndexResult = context.GetElasticClient().CreateIndex(createIndexRequest);
 
                 if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
                 {

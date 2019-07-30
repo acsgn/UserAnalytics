@@ -9,7 +9,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public string[] GetEndpoints(string companyName, string username, DateTime after, DateTime before)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
+            using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
                     .AddDateRangeQuery(after, before, "timestamp")
@@ -40,7 +40,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public string[] GetCompanies(string endpoint, string username, DateTime after, DateTime before)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
+            using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
                     .AddDateRangeQuery(after, before, "timestamp")
@@ -71,7 +71,7 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public string[] GetUsers(string endpoint, string companyName, DateTime after, DateTime before)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
+            using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
                     .AddDateRangeQuery(after, before, "timestamp")

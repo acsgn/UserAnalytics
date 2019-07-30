@@ -67,8 +67,8 @@
     <Compile Include="Repositories\InformationRepository.cs" />
     <Compile Include="Repositories\LogElasticsearchRepository.cs" />
     <Compile Include="Repositories\LogRabbitMQRepository.cs" />
+    <Compile Include="Repositories\MetricRepository.cs" />
     <Compile Include="Repositories\RealtimeRepository.cs" />
-    <Compile Include="Repositories\StatisticRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

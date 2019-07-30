@@ -9,7 +9,7 @@ namespace KariyerAnalytics.Data.Repositories
     {
         public HistogramResponse[] GetResponseTimesHistogram(string endpoint, TimeSpan interval, DateTime after, DateTime before)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
+            using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
                     .AddDateRangeQuery(after, before, "timestamp")
