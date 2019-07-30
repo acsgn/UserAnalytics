@@ -5,6 +5,6 @@ namespace KariyerAnalytics.Business.Contract
     public interface IRealtimeEngine : IEngine
     {
         long GetRealtimeUserCount(RealtimeRequest realtimeUserCountRequest);
-        RealtimeUserCountResponseDTO[] GetRealtimeUserCountByEndpoints(RealtimeRequest realtimeUserCountRequest);
+        RealtimeUserCountResponseDTO[] GetEndpointsRealtimeUserCount(RealtimeRequest realtimeUserCountRequest);
     }
 }

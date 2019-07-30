@@ -19,9 +19,9 @@ namespace KariyerAnalytics.Business
             return _RealtimeRepository.GetRealtimeUserCount(realtimeUserCountRequest.SecondsBefore);
         }
 
-        public RealtimeUserCountResponseDTO[] GetRealtimeUserCountByEndpoints(RealtimeRequest request)
+        public RealtimeUserCountResponseDTO[] GetEndpointsRealtimeUserCount(RealtimeRequest request)
         {
-            var result = _RealtimeRepository.GetRealtimeUserCountByEndpoints(request.SecondsBefore, request.Size);
+            var result = _RealtimeRepository.GetEndpointsRealtimeUserCount(request.SecondsBefore, request.Size);
             return (from r in result
                     select new RealtimeUserCountResponseDTO
                     {

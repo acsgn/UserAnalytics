@@ -29,7 +29,7 @@ namespace KariyerAnalytics.Data.Repositories
                 return count;
             }
         }
-        public RealtimeUserCountResponse[] GetRealtimeUserCountByEndpoints(int secondsBefore, int? size)
+        public RealtimeUserCountResponse[] GetEndpointsRealtimeUserCount(int secondsBefore, int? size)
         {
             using (var repository = new LogElasticsearchRepository())
             {
