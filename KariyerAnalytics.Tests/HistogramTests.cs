@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KariyerAnalytics.Business;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
@@ -55,41 +51,10 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IHistogramRepository>();
-            mockRepository.GetResponseTimesHistogram(_Interval, _After, _Before).Returns(entity);
+            mockRepository.GetResponseTimesHistogram(_Endpoint, _Interval, _After, _Before).Returns(entity);
 
             var engine = new HistogramEngine(mockRepository);
             var response = engine.GetResponseTimesHistogram(request);
-
-            Assert.AreEqual(entity[0].Average, response[0].Average);
-            Assert.AreEqual(entity[0].Timestamp, response[0].Timestamp);
-            Assert.AreEqual(entity[0].NumberOfRequests, response[0].NumberOfRequests);
-        }
-
-        [Test]
-        public void GetResponseTimesHistogramByEndpoint_HappyPath()
-        {
-            var request = new HistogramRequest
-            {
-                After = _After,
-                Before = _Before,
-                Interval = _Interval,
-                Endpoint = _Endpoint
-            };
-
-            var entity = new HistogramResponse[] {
-                new HistogramResponse
-                {
-                    Average = _Average,
-                    NumberOfRequests = _NumberOfRequests,
-                    Timestamp = _Timestamp
-                }
-            };
-
-            var mockRepository = Substitute.For<IHistogramRepository>();
-            mockRepository.GetResponseTimesHistogram(_Interval, _After, _Before, _Endpoint).Returns(entity);
-
-            var engine = new HistogramEngine(mockRepository);
-            var response = engine.GetResponseTimesHistogramByEndpoint(request);
 
             Assert.AreEqual(entity[0].Average, response[0].Average);
             Assert.AreEqual(entity[0].Timestamp, response[0].Timestamp);

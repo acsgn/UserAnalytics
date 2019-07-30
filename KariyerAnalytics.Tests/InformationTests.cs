@@ -13,6 +13,7 @@ namespace KariyerAnalytics.Tests
         private DateTime _Before;
         private string _CompanyName;
         private string _Username;
+        private string _Endpoint;
 
 
         [SetUp]
@@ -22,6 +23,7 @@ namespace KariyerAnalytics.Tests
             _Before = DateTime.Now;
             _CompanyName = "";
             _Username = "";
+            _Endpoint = "";
         }
 
         [Test]
@@ -61,10 +63,10 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetCompanyUsers(_CompanyName, _After, _Before).Returns(entity);
+            mockRepository.GetUsers(_Endpoint, _CompanyName, _After, _Before).Returns(entity);
 
             var engine = new InformationEngine(mockRepository);
-            var response = engine.GetCompanyUsers(request);
+            var response = engine.GetUsers(request);
 
             Assert.AreEqual(entity[0], response[0]);
         }
@@ -72,51 +74,6 @@ namespace KariyerAnalytics.Tests
 
         [Test]
         public void GetEndpoints_HappyPath()
-        {
-            var request = new InformationRequest
-            {
-                After = _After,
-                Before = _Before
-            };
-
-            var entity = new string[] {
-                ""
-            };
-
-            var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetEndpoints(_After, _Before).Returns(entity);
-
-            var engine = new InformationEngine(mockRepository);
-            var response = engine.GetEndpoints(request);
-
-            Assert.AreEqual(entity[0], response[0]);
-        }
-
-        [Test]
-        public void GetEndpointsByCompany_HappyPath()
-        {
-            var request = new InformationRequest
-            {
-                After = _After,
-                Before = _Before,
-                CompanyName = _CompanyName
-            };
-
-            var entity = new string[] {
-                ""
-            };
-
-            var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetEndpoints(_After, _Before, _CompanyName).Returns(entity);
-
-            var engine = new InformationEngine(mockRepository);
-            var response = engine.GetEndpointsByCompany(request);
-
-            Assert.AreEqual(entity[0], response[0]);
-        }
-
-        [Test]
-        public void GetEndpointsByCompanyAndUser_HappyPath()
         {
             var request = new InformationRequest
             {
@@ -131,10 +88,10 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetEndpoints(_After, _Before, _CompanyName, _Username).Returns(entity);
+            mockRepository.GetEndpoints(_CompanyName, _Username, _After, _Before).Returns(entity);
 
             var engine = new InformationEngine(mockRepository);
-            var response = engine.GetEndpointsByCompanyAndUser(request);
+            var response = engine.GetEndpoints(request);
 
             Assert.AreEqual(entity[0], response[0]);
         }
