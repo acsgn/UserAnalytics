@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KariyerAnalytics.Common;
 using KariyerAnalytics.Data.Contract;
 using Nest;
@@ -12,6 +13,13 @@ namespace KariyerAnalytics.Data.Repositories
             using (var context = new ElasticsearchContext())
             {
                 await context.GetElasticClient().IndexAsync(document, i => i.Index(indexName).Type<T>());
+            }
+        }
+        public async void BulkIndex(string indexName, IEnumerable<T> documents)
+        {
+            using (var context = new ElasticsearchContext())
+            {
+                await context.GetElasticClient().IndexManyAsync(documents, indexName);
             }
         }
 

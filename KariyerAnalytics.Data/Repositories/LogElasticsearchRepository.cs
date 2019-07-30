@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
 using Nest;
@@ -13,6 +14,13 @@ namespace KariyerAnalytics.Data.Repositories
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
                 repository.Index(_IndexName, log);
+            }
+        }
+        public void BulkIndex(IEnumerable<Log> documents)
+        {
+            using (var repository = new GenericElasticsearchRepository<Log>())
+            {
+                repository.BulkIndex(_IndexName, documents);
             }
         }
         public ISearchResponse<Log> Search(ISearchRequest searchRequest)

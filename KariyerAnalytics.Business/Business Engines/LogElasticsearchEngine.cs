@@ -1,38 +1,60 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data.Contract;
+using KariyerAnalytics.Data.Repositories;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KariyerAnalytics.Business
 {
     public class LogElasticsearchEngine : ILogElasticsearchEngine
     {
-        private readonly ILogElasticsearchRepository _Repository;
-
-        public LogElasticsearchEngine(ILogElasticsearchRepository repository)
-        {
-            _Repository = repository;
-        }
-
         public void CreateIndex()
         {
-            _Repository.CreateIndex();
+            using (var repository = new LogElasticsearchRepository())
+            {
+                repository.CreateIndex();
+            }
         }
 
         public void Add(LogRequest logRequest)
         {
-            var log = new Log()
+            using (var repository = new LogElasticsearchRepository())
             {
-                CompanyName = logRequest.CompanyName,
-                Username = logRequest.Username,
-                URL = logRequest.URL,
-                Endpoint = logRequest.Endpoint,
-                Timestamp = logRequest.Timestamp,
-                IP = logRequest.IP,
-                ResponseTime = logRequest.ResponseTime
-            };
+                var log = new Log()
+                {
+                    CompanyName = logRequest.CompanyName,
+                    Username = logRequest.Username,
+                    URL = logRequest.URL,
+                    Endpoint = logRequest.Endpoint,
+                    Timestamp = logRequest.Timestamp,
+                    IP = logRequest.IP,
+                    ResponseTime = logRequest.ResponseTime
+                };
 
-            _Repository.Index(log);
+                repository.Index(log);
+            }
+        }
+
+        public void AddMany(IEnumerable<LogRequest> logRequests)
+        {
+            using (var repository = new LogElasticsearchRepository())
+            {
+                var list = (from logRequest in logRequests
+                           select
+                            new Log()
+                            {
+                                CompanyName = logRequest.CompanyName,
+                                Username = logRequest.Username,
+                                URL = logRequest.URL,
+                                Endpoint = logRequest.Endpoint,
+                                Timestamp = logRequest.Timestamp,
+                                IP = logRequest.IP,
+                                ResponseTime = logRequest.ResponseTime
+                            }).ToList();
+
+                repository.BulkIndex(list);
+            }
         }
     }
 }
