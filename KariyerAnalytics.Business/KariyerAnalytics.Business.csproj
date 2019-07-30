@@ -37,8 +37,8 @@
     <Compile Include="Business Engines\HistogramEngine.cs" />
     <Compile Include="Business Engines\LogElasticsearchEngine.cs" />
     <Compile Include="Business Engines\LogRabbitMQEngine.cs" />
+    <Compile Include="Business Engines\MetricEngine.cs" />
     <Compile Include="Business Engines\RealtimeEngine.cs" />
-    <Compile Include="Business Engines\StatisticEngine.cs" />
     <Compile Include="Business Engines\InformationEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

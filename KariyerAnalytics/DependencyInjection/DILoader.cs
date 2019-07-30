@@ -19,14 +19,14 @@ namespace KariyerAnalytics.DependencyInjection
             container.Register<ILogRabbitMQEngine, LogRabbitMQEngine>();
             container.Register<IRealtimeEngine, RealtimeEngine>();
             container.Register<IHistogramEngine, HistogramEngine>();
-            container.Register<IStatisticEngine, StatisticEngine>();
+            container.Register<IMetricEngine, MetricEngine>();
             container.Register<IInformationEngine, InformationEngine>();
 
             container.Register<ILogElasticsearchRepository, LogElasticsearchRepository>();
             container.Register<ILogRabbitMQRepository, LogRabbitMQRepository>();
             container.Register<IRealtimeRepository, RealtimeRepository>();
             container.Register<IHistogramRepository, HistogramRepository>();
-            container.Register<IStatisticRepository, StatisticRepository>();
+            container.Register<IMetricRepository, MetricRepository>();
             container.Register<IInformationRepository, InformationRepository>();
 
             return container;

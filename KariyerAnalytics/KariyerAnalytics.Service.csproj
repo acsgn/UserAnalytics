@@ -98,8 +98,8 @@
     <Compile Include="Controllers\HistogramController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\MetricController.cs" />
     <Compile Include="Controllers\RealtimeController.cs" />
-    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="DependencyInjection\DILoader.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
