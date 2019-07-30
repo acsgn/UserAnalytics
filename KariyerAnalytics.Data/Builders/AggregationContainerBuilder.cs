@@ -27,7 +27,7 @@ namespace KariyerAnalytics.Data
             return this;
         }
 
-        public AggregationContainerBuilder AddTermsAggregation(string name, string field, int? size, string orderKey, bool? ascending)
+        public AggregationContainerBuilder AddTermsAggregation(string name, string field, int? size, string orderKey = null, bool? ascending = null)
         {
             _Name = name;
             _AggregationContainer = new TermsAggregation(name)

@@ -29,7 +29,7 @@ namespace KariyerAnalytics.Data.Repositories
                 return count;
             }
         }
-        public RealtimeUserCountResponse[] GetRealtimeUserCountByEndpoints(int secondsBefore)
+        public RealtimeUserCountResponse[] GetRealtimeUserCountByEndpoints(int secondsBefore, int? size)
         {
             using (var repository = new LogElasticsearchRepository())
             {
@@ -42,7 +42,7 @@ namespace KariyerAnalytics.Data.Repositories
 
                 var aggregation = new AggregationBuilder()
                     .AddContainer()
-                        .AddTermsAggregation("endpoints", "endpoint")
+                        .AddTermsAggregation("endpoints", "endpoint", size)
                         .Build()
                     .Build();
 
