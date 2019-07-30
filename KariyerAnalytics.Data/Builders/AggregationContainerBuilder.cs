@@ -27,19 +27,19 @@ namespace KariyerAnalytics.Data
             return this;
         }
 
-        public AggregationContainerBuilder AddTermsAggregation(string name, string field, int? size = null, string orderKey = null, bool ascending = true)
+        public AggregationContainerBuilder AddTermsAggregation(string name, string field, int? size, string orderKey, bool? ascending)
         {
             _Name = name;
             _AggregationContainer = new TermsAggregation(name)
             {
                 Field = field,
                 Size = size,
-                Order = string.IsNullOrEmpty(orderKey) ? null : new List<TermsOrder>
+                Order = string.IsNullOrEmpty(orderKey) && !ascending.HasValue ? null : new List<TermsOrder>
                 {
                     new TermsOrder()
                     {
                         Key = orderKey,
-                        Order = ascending ? SortOrder.Ascending : SortOrder.Descending
+                        Order = ascending.Value ? SortOrder.Ascending : SortOrder.Descending
                     }
                 }
             };
