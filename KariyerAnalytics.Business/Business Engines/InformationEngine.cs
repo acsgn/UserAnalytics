@@ -14,15 +14,15 @@ namespace KariyerAnalytics.Business
         }
         public string[] GetCompanies(InformationRequest request)
         {
-            return _InformationRepository.GetCompanies(request.Endpoint, request.Username, request.After, request.Before);
+            return _InformationRepository.GetCompanies(request.Endpoint, request.CompanyName, request.Username);
         }
         public string[] GetUsers(InformationRequest request)
         {
-            return _InformationRepository.GetUsers(request.Endpoint, request.CompanyName, request.After, request.Before);
+            return _InformationRepository.GetUsers(request.Endpoint, request.CompanyName, request.Username);
         }
         public string[] GetEndpoints(InformationRequest request)
         {
-            return _InformationRepository.GetEndpoints(request.CompanyName, request.Username, request.After, request.Before);
+            return _InformationRepository.GetEndpoints(request.Endpoint, request.CompanyName, request.Username);
         }
     }
 }

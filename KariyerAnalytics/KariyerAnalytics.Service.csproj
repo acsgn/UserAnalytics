@@ -141,6 +141,10 @@
       <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Service.QueueConsumer\KariyerAnalytics.Service.QueueConsumer.csproj">
+      <Project>{254BE7FB-64EA-4280-ABD7-41B2D1442E7C}</Project>
+      <Name>KariyerAnalytics.Service.QueueConsumer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
