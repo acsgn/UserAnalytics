@@ -9,7 +9,7 @@ namespace KariyerAnalytics.Data
         private readonly IModel _RabbitMQClient;
         public RabbitMQContext()
         {
-            var factory = new ConnectionFactory() { Uri = RabbitMQConnectionSettingsSingleton.GetConnectionSettings() };
+            var factory = new ConnectionFactory() { HostName = "localhost" };
             var connection = factory.CreateConnection();
             _RabbitMQClient = connection.CreateModel();
         }

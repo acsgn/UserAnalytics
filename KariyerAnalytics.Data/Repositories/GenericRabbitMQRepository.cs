@@ -3,7 +3,6 @@ using System.Text;
 using KariyerAnalytics.Data.Contract;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace KariyerAnalytics.Data.Repositories
 {
@@ -16,28 +15,32 @@ namespace KariyerAnalytics.Data.Repositories
                 var json = JsonConvert.SerializeObject(obj);
                 var body = Encoding.UTF8.GetBytes(json);
 
-                context.GetRabbitMQClient().BasicPublish(exchange: "",
-                                     routingKey: routingKey,
-                                     basicProperties: null,
-                                     body: body);
+                context.GetRabbitMQClient().BasicPublish(
+                    exchange: "",
+                    routingKey: routingKey,
+                    basicProperties: null,
+                    body: body);
             }
         }
-        
-        public void Dequeue(string routingKey)
+        public void Dequeue(string routingKey, Func<T, bool> target)
         {
             using (var context = new RabbitMQContext())
             {
-                var consumer = new EventingBasicConsumer(context.GetRabbitMQClient());
-                consumer.Received += (model, ea) =>
-                {
-                    var body = ea.Body;
-                    var json = Encoding.UTF8.GetString(body);
-                    var obj = JsonConvert.DeserializeObject(json, typeof(T));
-                    // Here we have our T object again
-                };
-                context.GetRabbitMQClient().BasicConsume(queue: routingKey,
-                                     autoAck: true,
-                                     consumer: consumer);
+                var consumer = new GenericRabbitMQConsumer<T>(context.GetRabbitMQClient(), target);
+                context.GetRabbitMQClient().BasicConsume(
+                    queue: routingKey,
+                    consumer: consumer);
+            }
+        }
+
+        public void BulkDequeue(string routingKey, int bulk)
+        {
+            using (var context = new RabbitMQContext())
+            {
+                var consumer = new GenericBulkRabbitMQConsumer<T>(bulk, context.GetRabbitMQClient());
+                context.GetRabbitMQClient().BasicConsume(
+                    queue: routingKey,
+                    consumer: consumer);
             }
         }
 

@@ -11,7 +11,7 @@ namespace KariyerAnalytics.Data
         {
             if (_ConnectionURL == null)
             {
-                _ConnectionURL = new Uri(ConfigurationManager.AppSettings["RabbitMQhUri"]);
+                _ConnectionURL = new Uri(ConfigurationManager.AppSettings["RabbitMQUri"]);
             }
             return _ConnectionURL;
         }

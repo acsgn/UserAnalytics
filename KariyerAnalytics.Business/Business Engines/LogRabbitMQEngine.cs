@@ -2,6 +2,8 @@
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Service.Entities;
 using KariyerAnalytics.Data.Contract;
+using System;
+using KariyerAnalytics.Data.Repositories;
 
 namespace KariyerAnalytics.Business
 {
@@ -9,9 +11,9 @@ namespace KariyerAnalytics.Business
     {
         private readonly ILogRabbitMQRepository _Repository;
 
-        public LogRabbitMQEngine(ILogRabbitMQRepository repository)
+        public LogRabbitMQEngine()
         {
-            _Repository = repository;
+            _Repository = new LogRabbitMQRepository();
         }
 
         public void Add(LogRequest logRequest)
@@ -30,9 +32,14 @@ namespace KariyerAnalytics.Business
             _Repository.Queue(log);
         }
 
-        public void Get()
+        public void Get(Func<Log, bool> target)
         {
-            _Repository.Dequeue();
+            _Repository.Dequeue(target);
+        }
+
+        public void GetMany()
+        {
+            _Repository.BulkDequeue();
         }
 
         public void CreateQueue()
