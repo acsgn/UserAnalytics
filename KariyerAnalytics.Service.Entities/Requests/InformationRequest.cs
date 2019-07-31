@@ -5,5 +5,6 @@
         public string CompanyName { get; set; }
         public string Username { get; set; }
         public string Endpoint { get; set; }
+        public int? Size { get; set; }
     }
 }
