@@ -4,8 +4,8 @@ namespace KariyerAnalytics.Data.Contract
 {
     public interface IInformationRepository
     {
-        string[] GetCompanies(string endpoint, string username, DateTime after, DateTime before);
-        string[] GetUsers(string endpoint, string companyName, DateTime after, DateTime before);
-        string[] GetEndpoints(string companyName, string username, DateTime after, DateTime before);
+        string[] GetCompanies(string endpoint, string companyName, string username);
+        string[] GetUsers(string endpoint, string companyName, string username);
+        string[] GetEndpoints(string endpoint, string companyName, string username);
     }
 }

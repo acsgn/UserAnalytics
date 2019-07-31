@@ -59,6 +59,16 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
+        public SearchBuilder<Log> CreateSearchBuilder()
+        {
+            return new SearchBuilder<Log>(_IndexName);
+        }
+
+        public CountBuilder<Log> CreateCountBuilder()
+        {
+            return new CountBuilder<Log>(_IndexName);
+        }
+
         public void Dispose()
         {
             GC.Collect();

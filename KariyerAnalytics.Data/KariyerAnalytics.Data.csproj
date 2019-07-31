@@ -56,7 +56,9 @@
     <Compile Include="Builders\CountBuilder.cs" />
     <Compile Include="Builders\QueryBuilder.cs" />
     <Compile Include="Builders\SearchBuilder.cs" />
+    <Compile Include="Consumers\GenericRabbitMQConsumer.cs" />
     <Compile Include="Contexts\RabbitMQContext.cs" />
+    <Compile Include="Consumers\GenericBulkRabbitMQConsumer.cs" />
     <Compile Include="RabbitMQConnectionSettingsSingleton.cs" />
     <Compile Include="ElasticsearchConnectionSettingsSingleton.cs" />
     <Compile Include="Contexts\ElasticsearchContext.cs" />
@@ -85,6 +87,10 @@
     <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
       <Project>{E83991C4-2439-4575-8DA3-C366D869AE9E}</Project>
       <Name>KariyerAnalytics.Data.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
+      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
+      <Name>KariyerAnalytics.Service.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

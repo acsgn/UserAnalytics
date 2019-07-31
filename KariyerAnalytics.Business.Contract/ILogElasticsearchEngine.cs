@@ -1,10 +1,13 @@
-﻿using KariyerAnalytics.Service.Entities;
+﻿using System.Collections.Generic;
+using KariyerAnalytics.Business.Entities;
+using KariyerAnalytics.Service.Entities;
 
 namespace KariyerAnalytics.Business.Contract
 {
     public interface ILogElasticsearchEngine : IEngine
     {
-        void Add(LogRequest logRequest);
+        bool Add(Log log);
+        void AddMany(IEnumerable<LogRequest> logRequests);
         void CreateIndex();
     }
 }

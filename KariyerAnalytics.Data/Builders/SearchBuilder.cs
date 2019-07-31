@@ -6,9 +6,9 @@ namespace KariyerAnalytics.Data
     {
         private SearchRequest<T> _Request;
 
-        public SearchBuilder()
+        public SearchBuilder(string index)
         {
-            _Request = new SearchRequest<T>();
+            _Request = new SearchRequest<T>(index);
         }
 
         public SearchBuilder<T> AddQuery(QueryContainer query)

@@ -33,7 +33,7 @@ namespace KariyerAnalytics.Data.Repositories
                         .Build()
                     .Build();
 
-                var request = new SearchBuilder<Log>()
+                var request = repository.CreateSearchBuilder()
                     .SetSize(0)
                     .AddQuery(query)
                     .AddAggregation(aggregation)
@@ -84,7 +84,7 @@ namespace KariyerAnalytics.Data.Repositories
                         .Build()
                     .Build();
 
-                var request = new SearchBuilder<Log>()
+                var request = repository.CreateSearchBuilder()
                     .SetSize(0)
                     .AddQuery(query)
                     .AddAggregation(aggregation)

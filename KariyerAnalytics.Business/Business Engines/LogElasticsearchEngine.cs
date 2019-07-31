@@ -8,7 +8,7 @@ using System.Linq;
 namespace KariyerAnalytics.Business
 {
     public class LogElasticsearchEngine : ILogElasticsearchEngine
-    {
+    {        
         public void CreateIndex()
         {
             using (var repository = new LogElasticsearchRepository())
@@ -17,22 +17,12 @@ namespace KariyerAnalytics.Business
             }
         }
 
-        public void Add(LogRequest logRequest)
+        public bool Add(Log log)
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var log = new Log()
-                {
-                    CompanyName = logRequest.CompanyName,
-                    Username = logRequest.Username,
-                    URL = logRequest.URL,
-                    Endpoint = logRequest.Endpoint,
-                    Timestamp = logRequest.Timestamp,
-                    IP = logRequest.IP,
-                    ResponseTime = logRequest.ResponseTime
-                };
-
                 repository.Index(log);
+                return true;
             }
         }
 
@@ -41,7 +31,7 @@ namespace KariyerAnalytics.Business
             using (var repository = new LogElasticsearchRepository())
             {
                 var list = (from logRequest in logRequests
-                           select
+                            select
                             new Log()
                             {
                                 CompanyName = logRequest.CompanyName,

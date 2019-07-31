@@ -6,9 +6,9 @@ namespace KariyerAnalytics.Data
     {
         private CountRequest<T> _Request;
 
-        public CountBuilder()
+        public CountBuilder(string index)
         {
-            _Request = new CountRequest<T>();
+            _Request = new CountRequest<T>(index);
         }
 
         public CountBuilder<T> AddQuery(QueryContainer query)

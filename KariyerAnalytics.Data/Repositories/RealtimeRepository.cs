@@ -18,7 +18,7 @@ namespace KariyerAnalytics.Data.Repositories
                         "timestamp")
                     .Build();
                 
-                var request = new CountBuilder<Log>()
+                var request = repository.CreateCountBuilder()
                     .AddQuery(query)
                     .Build();
 
@@ -46,7 +46,7 @@ namespace KariyerAnalytics.Data.Repositories
                         .Build()
                     .Build();
 
-                var request = new SearchBuilder<Log>()
+                var request = repository.CreateSearchBuilder()
                     .SetSize(0)
                     .AddQuery(query)
                     .AddAggregation(aggregation)

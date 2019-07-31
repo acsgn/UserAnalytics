@@ -1,101 +1,75 @@
-﻿using System;
-using System.Linq;
-using KariyerAnalytics.Business.Entities;
+﻿using System.Linq;
 using KariyerAnalytics.Data.Contract;
 
 namespace KariyerAnalytics.Data.Repositories
 {
     public class InformationRepository : IInformationRepository
     {
-        public string[] GetEndpoints(string companyName, string username, DateTime after, DateTime before)
+        public string[] GetEndpoints(string endpoint, string companyName, string username)
         {
             using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
-                    .AddDateRangeQuery(after, before, "timestamp")
                     .AddMatchPhraseQuery(companyName, "companyName")
                     .AddMatchPhraseQuery(username, "username")
+                    .AddPrefixMatchQuery(endpoint, "endpoint")
                     .Build();
-
-                var aggregation = new AggregationBuilder()
-                    .AddContainer()
-                        .AddTermsAggregation("endpoints", "endpoint")
-                        .Build()
-                    .Build();
-
-                var request = new SearchBuilder<Log>()
-                    .SetSize(0)
-                    .AddQuery(query)
-                    .AddAggregation(aggregation)
-                    .Build();
-
-                var result = repository.Search(request);
                 
-                var buckets = result.Aggs.Terms("endpoints").Buckets;
+                var request = repository.CreateSearchBuilder()
+                    .AddQuery(query)
+                    .Build();
 
-                var list = (from b in buckets select b.Key).ToArray();
+                var result = repository.Search(request);
+
+                var buckets = result.Documents;
+
+                var list = (from b in buckets select b.Endpoint).ToArray();
 
                 return list;
             }
         }
-        public string[] GetCompanies(string endpoint, string username, DateTime after, DateTime before)
+        public string[] GetCompanies(string endpoint, string companyName, string username)
         {
             using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
-                    .AddDateRangeQuery(after, before, "timestamp")
-                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                    .AddPrefixMatchQuery(companyName, "companyName")
                     .AddMatchPhraseQuery(username, "username")
+                    .AddMatchPhraseQuery(endpoint, "endpoint")
                     .Build();
 
-                var aggregation = new AggregationBuilder()
-                    .AddContainer()
-                        .AddTermsAggregation("companies", "companyName")
-                        .Build()
-                    .Build();
-
-                var request = new SearchBuilder<Log>()
-                    .SetSize(0)
+                var request = repository.CreateSearchBuilder()
                     .AddQuery(query)
-                    .AddAggregation(aggregation)
                     .Build();
 
                 var result = repository.Search(request);
 
-                var buckets = result.Aggs.Terms("companies").Buckets;
+                var buckets = result.Documents;
 
-                var list = (from b in buckets select b.Key).ToArray();
+                var list = (from b in buckets select b.CompanyName).ToArray();
 
                 return list;
             }
         }
-        public string[] GetUsers(string endpoint, string companyName, DateTime after, DateTime before)
+        public string[] GetUsers(string endpoint, string companyName, string username)
         {
             using (var repository = new LogElasticsearchRepository())
             {
                 var query = new QueryBuilder()
-                    .AddDateRangeQuery(after, before, "timestamp")
                     .AddMatchPhraseQuery(companyName, "companyName")
+                    .AddPrefixMatchQuery(username, "username")
                     .AddMatchPhraseQuery(endpoint, "endpoint")
                     .Build();
 
-                var aggregation = new AggregationBuilder()
-                    .AddContainer()
-                        .AddTermsAggregation("users", "username")
-                        .Build()
-                    .Build();
-
-                var request = new SearchBuilder<Log>()
-                    .SetSize(0)
+                var request = repository.CreateSearchBuilder()
                     .AddQuery(query)
-                    .AddAggregation(aggregation)
                     .Build();
 
                 var result = repository.Search(request);
 
-                var buckets = result.Aggs.Terms("users").Buckets;
+                var buckets = result.Documents;
 
-                var list = (from b in buckets select b.Key).ToArray();
+                var list = (from b in buckets select b.Username).ToArray();
 
                 return list;
             }

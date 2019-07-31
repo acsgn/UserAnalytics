@@ -7,7 +7,7 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class HistogramRepository : IHistogramRepository
     {
-        public HistogramResponse[] GetResponseTimesHistogram(string endpoint, TimeSpan interval, DateTime after, DateTime before)
+        public HistogramResponse[] GetResponseTimesHistogram(string endpoint, TimeSpan interval, DateTime? after, DateTime? before)
         {
             using (var repository = new LogElasticsearchRepository())
             {
@@ -27,7 +27,7 @@ namespace KariyerAnalytics.Data.Repositories
                         .Build()
                     .Build();
 
-                var request = new SearchBuilder<Log>()
+                var request = repository.CreateSearchBuilder()
                     .SetSize(0)
                     .AddQuery(query)
                     .AddAggregation(aggregation)
