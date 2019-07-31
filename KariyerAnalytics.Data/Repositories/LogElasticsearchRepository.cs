@@ -9,18 +9,18 @@ namespace KariyerAnalytics.Data.Repositories
     public class LogElasticsearchRepository : ILogElasticsearchRepository, IDisposable
     {
         private readonly static string _IndexName = "logs";
-        public void Index(Log log)
+        public bool Index(Log log)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                repository.Index(_IndexName, log);
+                return repository.Index(_IndexName, log);
             }
         }
-        public void BulkIndex(IEnumerable<Log> documents)
+        public bool BulkIndex(IEnumerable<Log> documents)
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                repository.BulkIndex(_IndexName, documents);
+                return repository.BulkIndex(_IndexName, documents);
             }
         }
         public ISearchResponse<Log> Search(ISearchRequest searchRequest)

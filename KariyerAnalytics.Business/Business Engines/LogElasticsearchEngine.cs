@@ -19,8 +19,7 @@ namespace KariyerAnalytics.Business
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                repository.Index(log);
-                return true;
+                return repository.Index(log);
             }
         }
 
@@ -28,8 +27,7 @@ namespace KariyerAnalytics.Business
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                repository.BulkIndex(logs);
-                return true;
+                return repository.BulkIndex(logs);
             }
         }
     }

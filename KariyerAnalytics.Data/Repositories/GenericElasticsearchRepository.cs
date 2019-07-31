@@ -8,18 +8,20 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class GenericElasticsearchRepository<T> : IGenericElasticsearchRepository<T>, IDisposable where T : class
     {
-        public async void Index(string indexName, T document)
+        public bool Index(string indexName, T document)
         {
             using (var context = new ElasticsearchContext())
             {
-                await context.GetElasticClient().IndexAsync(document, i => i.Index(indexName).Type<T>());
+                var result = context.GetElasticClient().Index(document, i => i.Index(indexName).Type<T>());
+                return result.Created;
             }
         }
-        public async void BulkIndex(string indexName, IEnumerable<T> documents)
+        public bool BulkIndex(string indexName, IEnumerable<T> documents)
         {
             using (var context = new ElasticsearchContext())
             {
-                await context.GetElasticClient().IndexManyAsync(documents, indexName);
+                var result = context.GetElasticClient().IndexManyAsync(documents, indexName);
+                return result.Created;
             }
         }
 
