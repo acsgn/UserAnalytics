@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
 
@@ -15,18 +16,18 @@ namespace KariyerAnalytics.Data.Repositories
                 repository.Queue(_QueueName, log);
             }
         }
-        public void Dequeue(Func<Log, bool> target)
+        public void Dequeue(Func<Log, bool> func)
         {
             using (var repository = new GenericRabbitMQRepository<Log>())
             {
-                repository.Dequeue(_QueueName, target);
+                repository.Dequeue(_QueueName, func);
             }
         }
-        public void BulkDequeue()
+        public void BulkDequeue(Func<IEnumerable<Log>, bool> func)
         {
             using (var repository = new GenericRabbitMQRepository<Log>())
             {
-                repository.BulkDequeue(_QueueName, _Bulk);
+                repository.BulkDequeue(_QueueName, _Bulk, func);
             }
         }
         public void CreateQueue()

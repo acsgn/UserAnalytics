@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -8,15 +9,15 @@ namespace KariyerAnalytics.Data
 {
     public class GenericBulkRabbitMQConsumer<T> : EventingBasicConsumer where T : class
     {
-        private List<T> _Documents = new List<T>();
+        private List<T> _Documents;
         private readonly int _Bulk;
+        private readonly Func<IEnumerable<T>, bool> _Func;
 
-        public event BulkIndex AddMany;
-        public delegate bool BulkIndex(IEnumerable<T> documents);
-
-        public GenericBulkRabbitMQConsumer(int bulk, IModel model) : base(model)
+        public GenericBulkRabbitMQConsumer(int bulk, Func<IEnumerable<T>, bool> func, IModel model) : base(model)
         {
+            _Documents = new List<T>();
             _Bulk = bulk;
+            _Func = func;
         }
 
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
@@ -28,10 +29,10 @@ namespace KariyerAnalytics.Data
 
             if (_Documents.Count >= _Bulk)
             {
-                var ack = AddMany(_Documents);
+                var ack = _Func(_Documents);
                 while (!ack)
                 {
-                    ack = AddMany(_Documents);
+                    ack = _Func(_Documents);
                 }
                 Model.BasicAck(deliveryTag, true);
                 _Documents.Clear();

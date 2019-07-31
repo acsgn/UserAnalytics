@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using KariyerAnalytics.Data.Contract;
 using Newtonsoft.Json;
@@ -33,11 +34,11 @@ namespace KariyerAnalytics.Data.Repositories
             }
         }
 
-        public void BulkDequeue(string routingKey, int bulk)
+        public void BulkDequeue(string routingKey, int bulk, Func<IEnumerable<T>, bool> func)
         {
             using (var context = new RabbitMQContext())
             {
-                var consumer = new GenericBulkRabbitMQConsumer<T>(bulk, context.GetRabbitMQClient());
+                var consumer = new GenericBulkRabbitMQConsumer<T>(bulk, func, context.GetRabbitMQClient());
                 context.GetRabbitMQClient().BasicConsume(
                     queue: routingKey,
                     consumer: consumer);
