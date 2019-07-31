@@ -39,7 +39,7 @@ namespace KariyerAnalytics.Data
             return this;
         }
 
-        public QueryBuilder AddDateRangeQuery(DateTime? gte, DateTime? lte, string field)
+        public QueryBuilder AddDateRangeQuery(DateTime gte, DateTime lte, string field)
         {
             _FilterQueries.Add(new DateRangeQuery()
             {
@@ -51,6 +51,19 @@ namespace KariyerAnalytics.Data
                 LessThanOrEqualTo = lte
             });
 
+            return this;
+        }
+
+        public QueryBuilder AddPrefixMatchQuery(string term, string field)
+        {
+            _FilterQueries.Add(new PrefixQuery()
+            {
+                Field = new Field
+                {
+                    Name = field
+                },
+                Value = term
+            });
             return this;
         }
 

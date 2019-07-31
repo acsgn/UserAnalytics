@@ -5,7 +5,7 @@ using KariyerAnalytics.Data.Repositories;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
-namespace KariyerAnalytics.DependencyInjection
+namespace KariyerAnalytics
 {
     public static class DILoader
     {

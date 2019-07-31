@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using KariyerAnalytics.DependencyInjection;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 
