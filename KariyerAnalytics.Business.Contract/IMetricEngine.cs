@@ -6,5 +6,6 @@ namespace KariyerAnalytics.Business.Contract
     {
         MetricsResponseDTO[] GetEndpointMetrics(MetricRequest request);
         MetricsResponseDTO[] GetCompanyMetrics(MetricRequest request);
+        MetricsResponseDTO GetSingleMetric(MetricRequest request);
     }
 }

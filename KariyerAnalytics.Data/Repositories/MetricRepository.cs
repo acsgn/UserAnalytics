@@ -107,5 +107,46 @@ namespace KariyerAnalytics.Data.Repositories
                 return list;
             }
         }
+
+        public MetricsResponse GetSingleMetric(string companyName, string username, string endpoint, DateTime? after, DateTime? before)
+        {
+            using (var repository = new LogElasticsearchRepository())
+            {
+                var query = repository.CreateQueryBuilder()
+                    .AddDateRangeQuery(after, before, f => f.Timestamp)
+                    .AddMatchPhraseQuery(endpoint, f => f.Endpoint)
+                    .AddMatchPhraseQuery(companyName, f => f.CompanyName)
+                    .AddMatchPhraseQuery(username, f => f.Username)
+                    .Build();
+
+                var aggregation = repository.CreateAggregationBuilder()
+                    .AddContainer()
+                        .AddMinAggregation("min-response-time", f => f.ResponseTime)
+                        .Build()
+                    .AddContainer()
+                        .AddAverageAggregation("average-response-time", f => f.ResponseTime)
+                        .Build()
+                    .AddContainer()
+                        .AddMaxAggregation("max-response-time", f => f.ResponseTime)
+                        .Build()
+                    .Build();
+
+                var request = repository.CreateSearchBuilder()
+                    .SetSize(0)
+                    .AddQuery(query)
+                    .AddAggregation(aggregation)
+                    .Build();
+
+                var result = repository.Search(request);
+
+                return new MetricsResponse
+                {
+                    NumberOfRequests = result.HitsMetaData.Total,
+                    MinResponseTime = (double)result.Aggs.Min("min-response-time").Value,
+                    AverageResponseTime = (double)result.Aggs.Average("average-response-time").Value,
+                    MaxResponseTime = (double)result.Aggs.Max("max-response-time").Value,
+                };
+            }
+        }
     }
 }

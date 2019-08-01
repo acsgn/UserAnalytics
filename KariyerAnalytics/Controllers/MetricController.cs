@@ -24,5 +24,11 @@ namespace KariyerAnalytics.Controllers
         {
             return _MetricEngine.GetCompanyMetrics(request);
         }
+
+        [HttpGet]
+        public MetricsResponseDTO GetSingleMetric(MetricRequest request)
+        {
+            return _MetricEngine.GetSingleMetric(request);
+        }
     }
 }

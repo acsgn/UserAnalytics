@@ -41,5 +41,18 @@ namespace KariyerAnalytics.Business
                         MaxResponseTime = r.MaxResponseTime
                     }).ToArray();
         }
+
+        public MetricsResponseDTO GetSingleMetric(MetricRequest request)
+        {
+            var result = _MetricRepository.GetSingleMetric(request.CompanyName, request.Username, request.Endpoint, request.After, request.Before);
+            return new MetricsResponseDTO
+            {
+                Key = result.Key,
+                NumberOfRequests = result.NumberOfRequests,
+                MinResponseTime = result.MinResponseTime,
+                AverageResponseTime = result.AverageResponseTime,
+                MaxResponseTime = result.MaxResponseTime
+            };
+        }
     }
 }
