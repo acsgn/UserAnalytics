@@ -4,6 +4,5 @@
     {
         public int SecondsBefore { get; set; }
         public int? Size { get; set; }
-        public string CompanyName { get; set; }
     }
 }
