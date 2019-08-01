@@ -10,6 +10,7 @@ namespace KariyerAnalytics.Tests
     public class RealtimeTests
     {
         private int _SecondsBefore;
+        private int? _Size;
         private string _Endpoint;
 
 
@@ -18,6 +19,7 @@ namespace KariyerAnalytics.Tests
         {
             _SecondsBefore = 5;
             _Endpoint = "";
+            _Size = 10;
         }
 
         [Test]
@@ -42,7 +44,8 @@ namespace KariyerAnalytics.Tests
         {
             var request = new RealtimeRequest()
             {
-                SecondsBefore = _SecondsBefore
+                SecondsBefore = _SecondsBefore,
+                Size = _Size
             };
 
             var entity = new RealtimeUserCountResponse[] {
@@ -53,10 +56,10 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IRealtimeRepository>();
-            mockRepository.GetRealtimeUserCountByEndpoints(_SecondsBefore).Returns(entity);
+            mockRepository.GetEndpointsRealtimeUserCount(_SecondsBefore, _Size).Returns(entity);
 
             var engine = new RealtimeEngine(mockRepository);
-            var response = engine.GetRealtimeUserCountByEndpoints(request);
+            var response = engine.GetEndpointsRealtimeUserCount(request);
 
             Assert.AreEqual(entity[0].UserCount, response[0].UserCount);
             Assert.AreEqual(entity[0].Endpoint, response[0].Endpoint);

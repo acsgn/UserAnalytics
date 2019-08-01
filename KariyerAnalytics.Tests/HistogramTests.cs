@@ -38,7 +38,8 @@ namespace KariyerAnalytics.Tests
             {
                 After = _After,
                 Before = _Before,
-                Interval = _Interval
+                Interval = _Interval,
+                Endpoint = _Endpoint
             };
 
             var entity = new HistogramResponse[] {

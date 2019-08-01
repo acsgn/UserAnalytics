@@ -1,5 +1,4 @@
-﻿using System;
-using KariyerAnalytics.Business;
+﻿using KariyerAnalytics.Business;
 using KariyerAnalytics.Data.Contract;
 using KariyerAnalytics.Service.Entities;
 using NSubstitute;
@@ -9,21 +8,19 @@ namespace KariyerAnalytics.Tests
 {
     public class InformationTests
     {
-        private DateTime _After;
-        private DateTime _Before;
         private string _CompanyName;
         private string _Username;
         private string _Endpoint;
+        private int? _Size;
 
 
         [SetUp]
         public void Setup()
         {
-            _After = DateTime.Now;
-            _Before = DateTime.Now;
             _CompanyName = "";
             _Username = "";
             _Endpoint = "";
+            _Size = 5;
         }
 
         [Test]
@@ -31,8 +28,10 @@ namespace KariyerAnalytics.Tests
         {
             var request = new InformationRequest
             {
-                After = _After,
-                Before = _Before
+                CompanyName = _CompanyName,
+                Username = _Username,
+                Endpoint = _Endpoint,
+                Size = _Size
             };
 
             var entity = new string[] {
@@ -40,7 +39,7 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetCompanies(_After, _Before).Returns(entity);
+            mockRepository.GetCompanies(_Endpoint, _CompanyName, _Username, _Size).Returns(entity);
 
             var engine = new InformationEngine(mockRepository);
             var response = engine.GetCompanies(request);
@@ -49,13 +48,14 @@ namespace KariyerAnalytics.Tests
         }
 
         [Test]
-        public void GetCompanyUsers_HappyPath()
+        public void GetUsers_HappyPath()
         {
             var request = new InformationRequest
             {
-                After = _After,
-                Before = _Before,
-                CompanyName = _CompanyName
+                CompanyName = _CompanyName,
+                Username = _Username,
+                Endpoint = _Endpoint,
+                Size = _Size
             };
 
             var entity = new string[] {
@@ -63,7 +63,7 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetUsers(_Endpoint, _CompanyName, _After, _Before).Returns(entity);
+            mockRepository.GetUsers(_Endpoint, _CompanyName, _Username, _Size).Returns(entity);
 
             var engine = new InformationEngine(mockRepository);
             var response = engine.GetUsers(request);
@@ -77,10 +77,10 @@ namespace KariyerAnalytics.Tests
         {
             var request = new InformationRequest
             {
-                After = _After,
-                Before = _Before,
                 CompanyName = _CompanyName,
-                Username = _Username
+                Username = _Username,
+                Endpoint = _Endpoint,
+                Size = _Size
             };
 
             var entity = new string[] {
@@ -88,7 +88,7 @@ namespace KariyerAnalytics.Tests
             };
 
             var mockRepository = Substitute.For<IInformationRepository>();
-            mockRepository.GetEndpoints(_CompanyName, _Username, _After, _Before).Returns(entity);
+            mockRepository.GetEndpoints(_Endpoint, _CompanyName, _Username, _Size).Returns(entity);
 
             var engine = new InformationEngine(mockRepository);
             var response = engine.GetEndpoints(request);
