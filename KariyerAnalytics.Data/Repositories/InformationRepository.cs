@@ -9,15 +9,15 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var query = new QueryBuilder()
-                    .AddMatchPhraseQuery(companyName, "companyName")
-                    .AddMatchPhraseQuery(username, "username")
-                    .AddPrefixMatchQuery(endpoint, "endpoint")
+                var query = repository.CreateQueryBuilder()
+                    .AddMatchPhraseQuery(companyName, f => f.CompanyName)
+                    .AddMatchPhraseQuery(username, f => f.Username)
+                    .AddPrefixMatchQuery(endpoint, f => f.Endpoint)
                     .Build();
 
-                var aggregation = new AggregationBuilder()
+                var aggregation = repository.CreateAggregationBuilder()
                     .AddContainer()
-                        .AddTermsAggregation("endpoints", "endpoint", size)
+                        .AddTermsAggregation("endpoints", f => f.Endpoint, size)
                         .Build()
                     .Build();
                 
@@ -40,15 +40,15 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var query = new QueryBuilder()
-                    .AddPrefixMatchQuery(companyName, "companyName")
-                    .AddMatchPhraseQuery(username, "username")
-                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                var query = repository.CreateQueryBuilder()
+                    .AddPrefixMatchQuery(companyName, f => f.CompanyName)
+                    .AddMatchPhraseQuery(username, f => f.Username)
+                    .AddMatchPhraseQuery(endpoint, f => f.Endpoint)
                     .Build();
 
-                var aggregation = new AggregationBuilder()
+                var aggregation = repository.CreateAggregationBuilder()
                     .AddContainer()
-                        .AddTermsAggregation("companies", "companyName", size)
+                        .AddTermsAggregation("companies", f => f.CompanyName, size)
                         .Build()
                     .Build();
 
@@ -71,15 +71,15 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var query = new QueryBuilder()
-                    .AddMatchPhraseQuery(companyName, "companyName")
-                    .AddPrefixMatchQuery(username, "username")
-                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                var query = repository.CreateQueryBuilder()
+                    .AddMatchPhraseQuery(companyName, f => f.CompanyName)
+                    .AddPrefixMatchQuery(username, f => f.Username)
+                    .AddMatchPhraseQuery(endpoint, f => f.Endpoint)
                     .Build();
 
-                var aggregation = new AggregationBuilder()
+                var aggregation = repository.CreateAggregationBuilder()
                     .AddContainer()
-                        .AddTermsAggregation("users", "username", size)
+                        .AddTermsAggregation("users", f => f.Username, size)
                         .Build()
                     .Build();
 

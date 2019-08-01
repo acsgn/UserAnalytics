@@ -11,17 +11,17 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var query = new QueryBuilder()
-                    .AddDateRangeQuery(after, before, "timestamp")
-                    .AddMatchPhraseQuery(endpoint, "endpoint")
+                var query = repository.CreateQueryBuilder()
+                    .AddDateRangeQuery(after, before, f => f.CompanyName)
+                    .AddMatchPhraseQuery(endpoint, f => f.Endpoint)
                     .Build();
 
-                var aggregation = new AggregationBuilder()
+                var aggregation = repository.CreateAggregationBuilder()
                     .AddContainer()
-                        .AddDateHistogram("histogram", "timestamp", interval)
+                        .AddDateHistogram("histogram", f => f.Timestamp, interval)
                         .AddSubAggregation()
                             .AddContainer()
-                                .AddAverageAggregation("average-response-time", "responseTime")
+                                .AddAverageAggregation("average-response-time", f => f.ResponseTime)
                                 .Build()
                             .FinishSubAggregation()
                         .Build()

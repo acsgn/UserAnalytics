@@ -61,12 +61,34 @@ namespace KariyerAnalytics.Data.Repositories
 
         public SearchBuilder<Log> CreateSearchBuilder()
         {
-            return new SearchBuilder<Log>(_IndexName);
+            using (var repository = new GenericElasticsearchRepository<Log>())
+            {
+                return repository.CreateSearchBuilder(_IndexName);
+            }
         }
 
         public CountBuilder<Log> CreateCountBuilder()
         {
-            return new CountBuilder<Log>(_IndexName);
+            using (var repository = new GenericElasticsearchRepository<Log>())
+            {
+                return repository.CreateCountBuilder(_IndexName);
+            }
+        }
+
+        public QueryBuilder<Log> CreateQueryBuilder()
+        {
+            using (var repository = new GenericElasticsearchRepository<Log>())
+            {
+                return repository.CreateQueryBuilder();
+            }
+        }
+
+        public AggregationBuilder<Log> CreateAggregationBuilder()
+        {
+            using (var repository = new GenericElasticsearchRepository<Log>())
+            {
+                return repository.CreateAggregationBuilder();
+            }
         }
 
         public void Dispose()

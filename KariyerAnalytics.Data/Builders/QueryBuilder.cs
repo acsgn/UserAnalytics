@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Nest;
 
 namespace KariyerAnalytics.Data
 {
-    public class QueryBuilder
+    public class QueryBuilder<T> where T : class
     {
         private List<QueryContainer> _FilterQueries;
 
@@ -13,40 +14,31 @@ namespace KariyerAnalytics.Data
             _FilterQueries = new List<QueryContainer>();
         }
 
-        public QueryBuilder AddMatchQuery(string term, string field)
+        public QueryBuilder<T> AddMatchQuery(string term, Expression<Func<T, object>> field)
         {
             _FilterQueries.Add(new MatchQuery()
             {
-                Field = new Field()
-                {
-                    Name = field
-                },
+                Field = field,
                 Query = term
             });
             return this;
         }
 
-        public QueryBuilder AddMatchPhraseQuery(string term, string field)
+        public QueryBuilder<T> AddMatchPhraseQuery(string term, Expression<Func<T, object>> field)
         {
             _FilterQueries.Add(new MatchPhraseQuery()
             {
-                Field = new Field()
-                {
-                    Name = field
-                },
+                Field = field,
                 Query = term
             });
             return this;
         }
 
-        public QueryBuilder AddDateRangeQuery(DateTime? gte, DateTime? lte, string field)
+        public QueryBuilder<T> AddDateRangeQuery(DateTime? gte, DateTime? lte, Expression<Func<T, object>> field)
         {
             _FilterQueries.Add(new DateRangeQuery()
             {
-                Field = new Field
-                {
-                    Name = field
-                },
+                Field = field,
                 GreaterThanOrEqualTo = gte,
                 LessThanOrEqualTo = lte
             });
@@ -54,14 +46,11 @@ namespace KariyerAnalytics.Data
             return this;
         }
 
-        public QueryBuilder AddPrefixMatchQuery(string term, string field)
+        public QueryBuilder<T> AddPrefixMatchQuery(string term, Expression<Func<T, object>> field)
         {
             _FilterQueries.Add(new PrefixQuery()
             {
-                Field = new Field
-                {
-                    Name = field
-                },
+                Field = field,
                 Value = term
             });
             return this;

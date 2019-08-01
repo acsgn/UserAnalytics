@@ -3,9 +3,9 @@ using Nest;
 
 namespace KariyerAnalytics.Data
 {
-    public class AggregationBuilder
+    public class AggregationBuilder<T> where T : class
     {
-        private AggregationContainerBuilder _AggregationContainerBuilder;
+        private AggregationContainerBuilder<T> _AggregationContainerBuilder;
 
         public Dictionary<string, AggregationContainer> _AggregationDictionary;
 
@@ -14,18 +14,18 @@ namespace KariyerAnalytics.Data
             _AggregationDictionary = new Dictionary<string, AggregationContainer>();
         }
 
-        public AggregationBuilder(AggregationContainerBuilder aggregationContainerBuilder)
+        public AggregationBuilder(AggregationContainerBuilder<T> aggregationContainerBuilder)
         {
             _AggregationContainerBuilder = aggregationContainerBuilder;
             _AggregationDictionary = new Dictionary<string, AggregationContainer>();
         }
 
-        public AggregationContainerBuilder AddContainer()
+        public AggregationContainerBuilder<T> AddContainer()
         {
-            return new AggregationContainerBuilder(this);
+            return new AggregationContainerBuilder<T>(this);
         }
 
-        public AggregationContainerBuilder FinishSubAggregation()
+        public AggregationContainerBuilder<T> FinishSubAggregation()
         {
             _AggregationContainerBuilder._AggregationContainer.Aggregations = new AggregationDictionary(_AggregationDictionary);
             return _AggregationContainerBuilder;
@@ -37,5 +37,4 @@ namespace KariyerAnalytics.Data
         }
 
     }
-    
 }

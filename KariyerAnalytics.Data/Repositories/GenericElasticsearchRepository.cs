@@ -20,8 +20,8 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var context = new ElasticsearchContext())
             {
-                var result = context.GetElasticClient().IndexManyAsync(documents, indexName);
-                return result.Created;
+                var result = context.GetElasticClient().IndexMany(documents, indexName);
+                return result.Errors;
             }
         }
 
@@ -71,6 +71,26 @@ namespace KariyerAnalytics.Data.Repositories
                     throw new Exception("Error on mapping!");
                 }
             }
+        }
+
+        public SearchBuilder<T> CreateSearchBuilder(string indexName)
+        {
+            return new SearchBuilder<T>(indexName);
+        }
+
+        public CountBuilder<T> CreateCountBuilder(string indexName)
+        {
+            return new CountBuilder<T>(indexName);
+        }
+
+        public QueryBuilder<T> CreateQueryBuilder()
+        {
+            return new QueryBuilder<T>();
+        }
+
+        public AggregationBuilder<T> CreateAggregationBuilder()
+        {
+            return new AggregationBuilder<T>();
         }
 
         public void Dispose()

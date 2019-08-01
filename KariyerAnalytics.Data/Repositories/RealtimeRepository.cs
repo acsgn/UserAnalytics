@@ -11,11 +11,11 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var query = new QueryBuilder()
+                var query = repository.CreateQueryBuilder()
                     .AddDateRangeQuery(
                         DateTime.Now.AddSeconds(-secondsBefore),
                         DateTime.Now,
-                        "timestamp")
+                        f => f.Timestamp)
                     .Build();
                 
                 var request = repository.CreateCountBuilder()
@@ -33,16 +33,16 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new LogElasticsearchRepository())
             {
-                var query = new QueryBuilder()
+                var query = repository.CreateQueryBuilder()
                     .AddDateRangeQuery(
                         DateTime.Now.AddSeconds(-secondsBefore),
                         DateTime.Now,
-                        "timestamp")
+                        f => f.Timestamp)
                     .Build();
 
-                var aggregation = new AggregationBuilder()
+                var aggregation = repository.CreateAggregationBuilder()
                     .AddContainer()
-                        .AddTermsAggregation("endpoints", "endpoint", size)
+                        .AddTermsAggregation("endpoints", f => f.Endpoint, size)
                         .Build()
                     .Build();
 
