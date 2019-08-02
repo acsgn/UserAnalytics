@@ -21,7 +21,7 @@ namespace KariyerAnalytics.Data.Repositories
             using (var context = new ElasticsearchContext())
             {
                 var result = context.GetElasticClient().IndexMany(documents, indexName);
-                return result.Errors;
+                return !result.Errors;
             }
         }
 

@@ -6,6 +6,6 @@
         public string Username { get; set; }
         public string Endpoint { get; set; }
         public int? Size { get; set; }
-        public bool? Ascending { get; set; }
+        public bool Ascending { get; set; }
     }
 }

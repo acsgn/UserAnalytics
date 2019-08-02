@@ -35,7 +35,7 @@ namespace KariyerAnalytics.Data
             {
                 Field = field,
                 Size = size,
-                Order = string.IsNullOrEmpty(orderKey) && !ascending.HasValue ? null : new List<TermsOrder>
+                Order = string.IsNullOrEmpty(orderKey) || !ascending.HasValue ? null : new List<TermsOrder>
                 {
                     new TermsOrder()
                     {
