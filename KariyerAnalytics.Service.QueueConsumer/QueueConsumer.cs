@@ -1,14 +1,23 @@
-﻿using KariyerAnalytics.Business;
+﻿using System.ServiceProcess;
+using KariyerAnalytics.Business;
 using KariyerAnalytics.Data.Repositories;
 
 namespace KariyerAnalytics.Service.QueueConsumer
 {
-    public class QueueConsumer
+    public partial class QueueConsumer : ServiceBase
     {
-        public static void Main(string[] args)
+        public QueueConsumer()
         {
-            System.Diagnostics.Debug.WriteLine("I began");
+            InitializeLifetimeService();
             new LogRabbitMQEngine(new LogRabbitMQRepository()).GetMany(new LogElasticsearchEngine().AddMany);
+        }
+
+        protected override void OnStart(string[] args)
+        {
+        }
+
+        protected override void OnStop()
+        {
         }
     }
 }

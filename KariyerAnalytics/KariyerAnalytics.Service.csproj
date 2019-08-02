@@ -121,6 +121,10 @@
       <Project>{69C23E01-0199-4ECB-941E-8BB0FD4F0684}</Project>
       <Name>KariyerAnalytics.Business.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
+      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
+      <Name>KariyerAnalytics.Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
       <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
       <Name>KariyerAnalytics.Business</Name>
