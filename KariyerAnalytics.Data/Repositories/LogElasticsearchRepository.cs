@@ -48,13 +48,26 @@ namespace KariyerAnalytics.Data.Repositories
         {
             using (var repository = new GenericElasticsearchRepository<Log>())
             {
-                ICreateIndexRequest createIndexRequest = new CreateIndexDescriptor(_IndexName)
+                var createIndexRequest = new CreateIndexDescriptor(_IndexName)
                     .Mappings(m => m
                         .Map<Log>(map => map
                             .AutoMap()
                             .Properties(p => p
                                 .String(s => s
-                                    .Name(n => n.CompanyName)))));
+                                    .Name(n => n.CompanyName)
+                                    .Analyzer("ngram_analyzer"))
+                                .String(s => s
+                                    .Name(n => n.Username)
+                                    .Analyzer("ngram_analyzer"))
+                                .String(s => s
+                                    .Name(n => n.Endpoint)
+                                    .Analyzer("ngram_analyzer"))
+                                .Ip(i => i
+                                    .Name(n => n.IP)))))
+                    .Settings(s => s
+                        .Analysis(f => f.Analyzers(a => a.Custom("ngram_analyzer", c => c.Tokenizer("ngram_tokenizer")))
+                        .Tokenizers(t => t.EdgeNGram("ngram_tokenizer", n => n.MinGram(3).MaxGram(8)))));
+
                 repository.CreateIndex(_IndexName, createIndexRequest);
             }
         }

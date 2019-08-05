@@ -64,6 +64,7 @@ namespace KariyerAnalytics.Data.Repositories
                     throw new Exception("The index is available, unable to create index!");
                 }
 
+                var json = StringHelpers.GetQueryJSonFromRequest(createIndexRequest, context.GetElasticClient());
                 var createIndexResult = context.GetElasticClient().CreateIndex(createIndexRequest);
 
                 if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
