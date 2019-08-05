@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Nest;
+﻿using Nest;
 
 namespace KariyerAnalytics.Data.Contract
 {

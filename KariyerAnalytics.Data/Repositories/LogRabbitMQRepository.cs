@@ -9,33 +9,28 @@ namespace KariyerAnalytics.Data.Repositories
     {
         private readonly static string _QueueName = "logs";
         private readonly static int _Bulk = 100;
+
+        private IGenericRabbitMQRepository<Log> _RabbitMQRepository;
+
+        public LogRabbitMQRepository(IGenericRabbitMQRepository<Log> repository)
+        {
+            _RabbitMQRepository = repository;
+        }
         public void Queue(Log log)
         {
-            using (var repository = new GenericRabbitMQRepository<Log>())
-            {
-                repository.Queue(_QueueName, log);
-            }
+            _RabbitMQRepository.Queue(_QueueName, log);
         }
         public void Dequeue(Func<Log, bool> func)
         {
-            using (var repository = new GenericRabbitMQRepository<Log>())
-            {
-                repository.Dequeue(_QueueName, func);
-            }
+            _RabbitMQRepository.Dequeue(_QueueName, func);
         }
         public void BulkDequeue(Func<IEnumerable<Log>, bool> func)
         {
-            using (var repository = new GenericRabbitMQRepository<Log>())
-            {
-                repository.BulkDequeue(_QueueName, _Bulk, func);
-            }
+            _RabbitMQRepository.BulkDequeue(_QueueName, _Bulk, func);
         }
         public void CreateQueue()
         {
-            using (var repository = new GenericRabbitMQRepository<Log>())
-            {
-                repository.CreateQueue(_QueueName);
-            }
+            _RabbitMQRepository.CreateQueue(_QueueName);
         }
     }
 }

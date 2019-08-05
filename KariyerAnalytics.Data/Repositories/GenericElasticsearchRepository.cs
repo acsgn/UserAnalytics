@@ -1,103 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
-using KariyerAnalytics.Common;
+using System.IO;
 using KariyerAnalytics.Data.Contract;
 using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class GenericElasticsearchRepository<T> : IGenericElasticsearchRepository<T>, IDisposable where T : class
+    public class GenericElasticsearchRepository<T> : IGenericElasticsearchRepository<T> where T : class
     {
+        private IElasticsearchContext _ElasticsearchContext;
+        public GenericElasticsearchRepository(IElasticsearchContext context)
+        {
+            _ElasticsearchContext = context;
+        }
         public bool Index(string indexName, T document)
         {
-            using (var context = new ElasticsearchContext())
-            {
-                var result = context.GetElasticClient().Index(document, i => i.Index(indexName).Type<T>());
-                return result.Created;
-            }
+            var result = _ElasticsearchContext.GetElasticClient().Index(document, i => i.Index(indexName).Type<T>());
+            return result.Created;
         }
         public bool BulkIndex(string indexName, IEnumerable<T> documents)
         {
-            using (var context = new ElasticsearchContext())
-            {
-                var result = context.GetElasticClient().IndexMany(documents, indexName);
-                return !result.Errors;
-            }
+            var result = _ElasticsearchContext.GetElasticClient().IndexMany(documents, indexName);
+            return !result.Errors;
         }
 
         public ISearchResponse<T> Search(ISearchRequest searchRequest)
         {
-            using (var context = new ElasticsearchContext())
-            {
-                var json = StringHelpers.GetQueryJSonFromRequest(searchRequest, context.GetElasticClient());
-                var searchResponse = context.GetElasticClient().Search<T>(searchRequest);
-                return searchResponse;
-            }
+            var json = GetQueryJSonFromRequest(searchRequest, _ElasticsearchContext.GetElasticClient());
+            var searchResponse = _ElasticsearchContext.GetElasticClient().Search<T>(searchRequest);
+            return searchResponse;
         }
 
         public ISuggestResponse Suggest(ISuggestRequest suggestRequest)
         {
-            using (var context = new ElasticsearchContext())
-            {
-                var json = StringHelpers.GetQueryJSonFromRequest(suggestRequest, context.GetElasticClient());
-                var suggestResponse = context.GetElasticClient().Suggest(suggestRequest);
-                return suggestResponse;
-            }
+            var json = GetQueryJSonFromRequest(suggestRequest, _ElasticsearchContext.GetElasticClient());
+            var suggestResponse = _ElasticsearchContext.GetElasticClient().Suggest(suggestRequest);
+            return suggestResponse;
         }
 
         public ICountResponse Count(ICountRequest countRequest)
         {
-            using (var context = new ElasticsearchContext())
-            {
-                var json = StringHelpers.GetQueryJSonFromRequest(countRequest, context.GetElasticClient());
-                var countResponse = context.GetElasticClient().Count<T>(countRequest);
-                return countResponse;
-            }
+            var json = GetQueryJSonFromRequest(countRequest, _ElasticsearchContext.GetElasticClient());
+            var countResponse = _ElasticsearchContext.GetElasticClient().Count<T>(countRequest);
+            return countResponse;
         }
 
         public void CreateIndex(string indexName, ICreateIndexRequest createIndexRequest)
         {
-            using (var context = new ElasticsearchContext())
+            if (_ElasticsearchContext.GetElasticClient().IndexExists(indexName).Exists)
             {
-                if (context.GetElasticClient().IndexExists(indexName).Exists)
-                {
-                    throw new Exception("The index is available, unable to create index!");
-                }
+                throw new Exception("The index is available, unable to create index!");
+            }
 
-                var json = StringHelpers.GetQueryJSonFromRequest(createIndexRequest, context.GetElasticClient());
-                var createIndexResult = context.GetElasticClient().CreateIndex(createIndexRequest);
+            var json = GetQueryJSonFromRequest(createIndexRequest, _ElasticsearchContext.GetElasticClient());
+            var createIndexResult = _ElasticsearchContext.GetElasticClient().CreateIndex(createIndexRequest);
 
-                if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
-                {
-                    throw new Exception("Error on mapping!");
-                }
+            if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
+            {
+                throw new Exception("Error on mapping!");
             }
         }
 
-        public SearchBuilder<T> CreateSearchBuilder(string indexName)
+        public static SearchBuilder<T> CreateSearchBuilder(string indexName)
         {
             return new SearchBuilder<T>(indexName);
         }
 
-        public CountBuilder<T> CreateCountBuilder(string indexName)
+        public static CountBuilder<T> CreateCountBuilder(string indexName)
         {
             return new CountBuilder<T>(indexName);
         }
 
-        public QueryBuilder<T> CreateQueryBuilder()
+        public static QueryBuilder<T> CreateQueryBuilder()
         {
             return new QueryBuilder<T>();
         }
 
-        public AggregationBuilder<T> CreateAggregationBuilder()
+        public static AggregationBuilder<T> CreateAggregationBuilder()
         {
             return new AggregationBuilder<T>();
         }
 
-        public void Dispose()
+        private static string GetQueryJSonFromRequest(IRequest request, ElasticClient elasticClient)
         {
-            GC.Collect();
+            using (var stream = new MemoryStream())
+            {
+                elasticClient.Serializer.Serialize(request, stream);
+                return System.Text.Encoding.UTF8.GetString(stream.ToArray());
+            }
         }
-
     }
 }

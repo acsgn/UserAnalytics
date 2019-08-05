@@ -7,60 +7,50 @@ using RabbitMQ.Client;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class GenericRabbitMQRepository<T> : IGenericRabbitMQRepository<T>, IDisposable where T : class
+    public class GenericRabbitMQRepository<T> : IGenericRabbitMQRepository<T> where T : class
     {
+        private IRabbitMQContext _RabbitMQContext;
+        public GenericRabbitMQRepository(IRabbitMQContext context)
+        {
+            _RabbitMQContext = context;
+        }
         public void Queue(string routingKey, T obj)
         {
-            using (var context = new RabbitMQContext())
-            {
-                var json = JsonConvert.SerializeObject(obj);
-                var body = Encoding.UTF8.GetBytes(json);
+            var json = JsonConvert.SerializeObject(obj);
+            var body = Encoding.UTF8.GetBytes(json);
 
-                context.GetRabbitMQClient().BasicPublish(
+            _RabbitMQContext.GetRabbitMQClient().BasicPublish(
                     exchange: "",
                     routingKey: routingKey,
                     basicProperties: null,
                     body: body);
-            }
         }
         public void Dequeue(string routingKey, Func<T, bool> target)
         {
-            using (var context = new RabbitMQContext())
-            {
-                var consumer = new GenericRabbitMQConsumer<T>(context.GetRabbitMQClient(), target);
-                context.GetRabbitMQClient().BasicConsume(
-                    queue: routingKey,
-                    consumer: consumer);
-            }
+            var client = _RabbitMQContext.GetRabbitMQClient();
+            var consumer = new GenericRabbitMQConsumer<T>(client, target);
+            client.BasicConsume(
+                queue: routingKey,
+                consumer: consumer);
         }
 
         public void BulkDequeue(string routingKey, int bulk, Func<IEnumerable<T>, bool> func)
         {
-            using (var context = new RabbitMQContext())
-            {
-                var consumer = new GenericBulkRabbitMQConsumer<T>(bulk, func, context.GetRabbitMQClient());
-                context.GetRabbitMQClient().BasicConsume(
-                    queue: routingKey,
-                    consumer: consumer);
-            }
+            var client = _RabbitMQContext.GetRabbitMQClient();
+            var consumer = new GenericBulkRabbitMQConsumer<T>(bulk, func, client);
+            client.BasicConsume(
+                queue: routingKey,
+                consumer: consumer);
         }
 
         public void CreateQueue(string routingKey)
         {
-            using (var context = new RabbitMQContext())
-            {
-                context.GetRabbitMQClient().QueueDeclare(
-                    queue: routingKey,
-                    durable: false,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
-            }
-        }
-
-        public void Dispose()
-        {
-            GC.Collect();
+            _RabbitMQContext.GetRabbitMQClient().QueueDeclare(
+                queue: routingKey,
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
         }
     }
 }

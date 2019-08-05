@@ -1,34 +1,31 @@
 ﻿using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data.Repositories;
+using KariyerAnalytics.Data.Contract;
 using System.Collections.Generic;
 
 namespace KariyerAnalytics.Business
 {
     public class LogElasticsearchEngine : ILogElasticsearchEngine
-    {        
+    {
+        private ILogElasticsearchRepository _LogElasticsearchRepository;
+
+        public LogElasticsearchEngine(ILogElasticsearchRepository repository)
+        {
+            _LogElasticsearchRepository = repository;
+        }
         public void CreateIndex()
         {
-            using (var repository = new LogElasticsearchRepository())
-            {
-                repository.CreateIndex();
-            }
+            _LogElasticsearchRepository.CreateIndex();
         }
 
         public bool Add(Log log)
         {
-            using (var repository = new LogElasticsearchRepository())
-            {
-                return repository.Index(log);
-            }
+            return _LogElasticsearchRepository.Index(log);
         }
 
         public bool AddMany(IEnumerable<Log> logs)
         {
-            using (var repository = new LogElasticsearchRepository())
-            {
-                return repository.BulkIndex(logs);
-            }
+            return _LogElasticsearchRepository.BulkIndex(logs);
         }
     }
 }

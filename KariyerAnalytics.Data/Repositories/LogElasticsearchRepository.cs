@@ -1,112 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using KariyerAnalytics.Business.Entities;
 using KariyerAnalytics.Data.Contract;
 using Nest;
 
 namespace KariyerAnalytics.Data.Repositories
 {
-    public class LogElasticsearchRepository : ILogElasticsearchRepository, IDisposable
+    public class LogElasticsearchRepository : ILogElasticsearchRepository
     {
         private readonly static string _IndexName = "logs";
+
+        private IGenericElasticsearchRepository<Log> _ElasticsearchRepository;
+
+        public LogElasticsearchRepository(IGenericElasticsearchRepository<Log> repository)
+        {
+            _ElasticsearchRepository = repository;
+        }
         public bool Index(Log log)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.Index(_IndexName, log);
-            }
+            return _ElasticsearchRepository.Index(_IndexName, log);
         }
         public bool BulkIndex(IEnumerable<Log> documents)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.BulkIndex(_IndexName, documents);
-            }
+            return _ElasticsearchRepository.BulkIndex(_IndexName, documents);
         }
         public ISearchResponse<Log> Search(ISearchRequest searchRequest)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.Search(searchRequest);
-            }
+            return _ElasticsearchRepository.Search(searchRequest);
         }
         public ISuggestResponse Suggest(ISuggestRequest suggestRequest)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.Suggest(suggestRequest);
-            }
+            return _ElasticsearchRepository.Suggest(suggestRequest);
         }
         public ICountResponse Count(ICountRequest countRequest)
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.Count(countRequest);
-            }
+            return _ElasticsearchRepository.Count(countRequest);
         }
         public void CreateIndex()
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                var createIndexRequest = new CreateIndexDescriptor(_IndexName)
-                    .Mappings(m => m
-                        .Map<Log>(map => map
-                            .AutoMap()
-                            .Properties(p => p
-                                .String(s => s
-                                    .Name(n => n.CompanyName)
-                                    .Analyzer("ngram_analyzer"))
-                                .String(s => s
-                                    .Name(n => n.Username)
-                                    .Analyzer("ngram_analyzer"))
-                                .String(s => s
-                                    .Name(n => n.Endpoint)
-                                    .Analyzer("ngram_analyzer"))
-                                .Ip(i => i
-                                    .Name(n => n.IP)))))
-                    .Settings(s => s
-                        .Analysis(f => f.Analyzers(a => a.Custom("ngram_analyzer", c => c.Tokenizer("ngram_tokenizer")))
-                        .Tokenizers(t => t.EdgeNGram("ngram_tokenizer", n => n.MinGram(3).MaxGram(8)))));
+            var createIndexRequest = new CreateIndexDescriptor(_IndexName)
+                .Mappings(m => m
+                    .Map<Log>(map => map
+                        .AutoMap()
+                        .Properties(p => p
+                            .String(s => s
+                                .Name(n => n.CompanyName)
+                                .Analyzer("ngram_analyzer"))
+                            .String(s => s
+                                .Name(n => n.Username)
+                                .Analyzer("ngram_analyzer"))
+                            .String(s => s
+                                .Name(n => n.Endpoint)
+                                .Analyzer("ngram_analyzer"))
+                            .Ip(i => i
+                                .Name(n => n.IP)))))
+                .Settings(s => s
+                    .Analysis(f => f.Analyzers(a => a.Custom("ngram_analyzer", c => c.Tokenizer("ngram_tokenizer")))
+                    .Tokenizers(t => t.EdgeNGram("ngram_tokenizer", n => n.MinGram(3).MaxGram(8)))));
 
-                repository.CreateIndex(_IndexName, createIndexRequest);
-            }
+            _ElasticsearchRepository.CreateIndex(_IndexName, createIndexRequest);
         }
 
-        public SearchBuilder<Log> CreateSearchBuilder()
+        public static SearchBuilder<Log> CreateSearchBuilder()
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.CreateSearchBuilder(_IndexName);
-            }
+            return GenericElasticsearchRepository<Log>.CreateSearchBuilder(_IndexName);
         }
 
-        public CountBuilder<Log> CreateCountBuilder()
+        public static CountBuilder<Log> CreateCountBuilder()
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.CreateCountBuilder(_IndexName);
-            }
+            return GenericElasticsearchRepository<Log>.CreateCountBuilder(_IndexName);
         }
 
-        public QueryBuilder<Log> CreateQueryBuilder()
+        public static QueryBuilder<Log> CreateQueryBuilder()
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.CreateQueryBuilder();
-            }
+            return GenericElasticsearchRepository<Log>.CreateQueryBuilder();
         }
 
-        public AggregationBuilder<Log> CreateAggregationBuilder()
+        public static AggregationBuilder<Log> CreateAggregationBuilder()
         {
-            using (var repository = new GenericElasticsearchRepository<Log>())
-            {
-                return repository.CreateAggregationBuilder();
-            }
-        }
-
-        public void Dispose()
-        {
-            GC.Collect();
+            return GenericElasticsearchRepository<Log>.CreateAggregationBuilder();
         }
     }
 }
