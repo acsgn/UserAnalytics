@@ -9,11 +9,11 @@ namespace KariyerAnalytics.Service.QueueConsumer
         public QueueConsumer()
         {
             InitializeLifetimeService();
-            new LogRabbitMQEngine(new LogRabbitMQRepository()).GetMany(new LogElasticsearchEngine().AddMany);
         }
 
         protected override void OnStart(string[] args)
         {
+            new LogRabbitMQEngine(new LogRabbitMQRepository()).GetMany(new LogElasticsearchEngine().AddMany);
         }
 
         protected override void OnStop()

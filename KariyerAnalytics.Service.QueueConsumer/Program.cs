@@ -6,8 +6,7 @@ namespace KariyerAnalytics.Service.QueueConsumer
     {
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            var ServicesToRun = new ServiceBase[]
             {
                 new QueueConsumer()
             };
