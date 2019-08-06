@@ -53,6 +53,12 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.6.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.6.2\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.6.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.6.2\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
@@ -94,6 +100,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MetricController.cs" />
     <Compile Include="Controllers\RealtimeController.cs" />
+    <Compile Include="DependencyInjection\DILoader.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,10 +129,6 @@
       <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
       <Name>KariyerAnalytics.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Common\KariyerAnalytics.Common.csproj">
-      <Project>{698f8939-5310-41e2-b1f0-9b97d108f476}</Project>
-      <Name>KariyerAnalytics.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
       <Project>{E83991C4-2439-4575-8DA3-C366D869AE9E}</Project>
       <Name>KariyerAnalytics.Data.Contract</Name>
@@ -137,10 +140,6 @@
     <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
       <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Service.QueueConsumer\KariyerAnalytics.Service.QueueConsumer.csproj">
-      <Project>{254BE7FB-64EA-4280-ABD7-41B2D1442E7C}</Project>
-      <Name>KariyerAnalytics.Service.QueueConsumer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

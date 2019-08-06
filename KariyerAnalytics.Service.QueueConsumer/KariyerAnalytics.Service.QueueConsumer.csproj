@@ -66,9 +66,9 @@
       <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Common\KariyerAnalytics.Common.csproj">
-      <Project>{698f8939-5310-41e2-b1f0-9b97d108f476}</Project>
-      <Name>KariyerAnalytics.Common</Name>
+    <ProjectReference Include="..\KariyerAnalytics\KariyerAnalytics.Service.csproj">
+      <Project>{38a07852-aec1-4d45-9d4f-4d317e19d62b}</Project>
+      <Name>KariyerAnalytics.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

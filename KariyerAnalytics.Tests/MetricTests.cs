@@ -18,7 +18,7 @@ namespace KariyerAnalytics.Tests
         private string _Username;
         private string _Endpoint;
         private int? _Size = 10;
-        private bool? _Ascending = false;
+        private bool _Ascending = false;
 
         [SetUp]
         public void Setup()
