@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using KariyerAnalytics.Common.DependencyInjection;
 
 namespace KariyerAnalytics.Service.QueueConsumer
 {

@@ -1,11 +1,11 @@
 using System.Web.Http;
 using WebActivatorEx;
-using KariyerAnalytics;
 using Swashbuckle.Application;
+using KariyerAnalytics.Service;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace KariyerAnalytics
+namespace KariyerAnalytics.Service
 {
     public class SwaggerConfig
     {

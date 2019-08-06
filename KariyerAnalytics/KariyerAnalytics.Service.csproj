@@ -100,7 +100,6 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MetricController.cs" />
     <Compile Include="Controllers\RealtimeController.cs" />
-    <Compile Include="DependencyInjection\DILoader.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -128,6 +127,10 @@
     <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
       <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
       <Name>KariyerAnalytics.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Common.DependencyInjection\KariyerAnalytics.Common.DependencyInjection.csproj">
+      <Project>{2409A556-5E0A-407E-AF2E-A73A9EFD7F6E}</Project>
+      <Name>KariyerAnalytics.Common.DependencyInjection</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
       <Project>{E83991C4-2439-4575-8DA3-C366D869AE9E}</Project>

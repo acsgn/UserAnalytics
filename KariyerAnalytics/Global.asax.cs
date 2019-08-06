@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using KariyerAnalytics.Common.DependencyInjection;
+using KariyerAnalytics.Service;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 

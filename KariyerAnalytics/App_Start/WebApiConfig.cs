@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
 
-namespace KariyerAnalytics
+namespace KariyerAnalytics.Service
 {
     public static class WebApiConfig
     {
