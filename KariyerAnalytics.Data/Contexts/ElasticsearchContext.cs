@@ -1,27 +1,20 @@
-﻿using KariyerAnalytics.Data.Contract;
-using Nest;
+﻿using Nest;
 
 namespace KariyerAnalytics.Data
 {
-    public class ElasticsearchContext : IElasticsearchContext
+    public class ElasticsearchContext
     {
-        private readonly static ElasticsearchConnectionSettings _ConnectionSettings;
+        public static ElasticClient ElasticClient { get; private set; }
 
         static ElasticsearchContext()
         {
-            _ConnectionSettings = new ElasticsearchConnectionSettings();
+            ElasticClient = new ElasticClient(ElasticsearchConnection.ConnectionSettings);
         }
 
-        private readonly ElasticClient _ElasticClient;
-
-        public ElasticsearchContext()
+        public static void CreateChannel()
         {
-            _ElasticClient = new ElasticClient();// _ConnectionSettings.GetDefaultConnectionSettings());
+            ElasticClient = new ElasticClient(ElasticsearchConnection.ConnectionSettings);
         }
 
-        public ElasticClient GetElasticClient()
-        {
-            return _ElasticClient;
-        }
     }
 }

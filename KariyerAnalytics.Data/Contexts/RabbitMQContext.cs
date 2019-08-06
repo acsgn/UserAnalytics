@@ -1,27 +1,21 @@
-﻿using KariyerAnalytics.Data.Contract;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 
 namespace KariyerAnalytics.Data
 {
-    public class RabbitMQContext : IRabbitMQContext
+    public class RabbitMQContext
     {
-        private readonly static ConnectionFactory _ConnectionFactory;
-
+        private static IConnection Connection;
         static RabbitMQContext()
         {
-            _ConnectionFactory = new ConnectionFactory() { HostName = "localhost" };
+            Connection = RabbitMQConnection.CreateConnection();
+            CreateChannel();
         }
 
-        private readonly IConnection _Connection;
-
-        public RabbitMQContext()
+        public static IModel Channel { get; private set; }
+        
+        public static void CreateChannel()
         {
-            _Connection = _ConnectionFactory.CreateConnection();
-        }
-
-        public IModel GetRabbitMQClient()
-        {
-            return _Connection.CreateModel();
+            Channel = Connection.CreateModel();
         }
     }
 }

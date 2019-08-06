@@ -2,12 +2,10 @@
 using KariyerAnalytics.Business;
 using KariyerAnalytics.Business.Contract;
 using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data;
 using KariyerAnalytics.Data.Contract;
 using KariyerAnalytics.Data.Repositories;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
-using SimpleInjector.Lifestyles;
 
 namespace KariyerAnalytics
 {
@@ -19,7 +17,6 @@ namespace KariyerAnalytics
         {
             Container = new Container();
 
-            Container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             Container.Options.DefaultLifestyle = Lifestyle.Singleton;
 
             Container.Register<ILogElasticsearchEngine, LogElasticsearchEngine>();
@@ -38,9 +35,6 @@ namespace KariyerAnalytics
 
             Container.Register<IGenericElasticsearchRepository<Log>, GenericElasticsearchRepository<Log>>();
             Container.Register<IGenericRabbitMQRepository<Log>, GenericRabbitMQRepository<Log>>();
-
-            Container.Register<IElasticsearchContext, ElasticsearchContext>();
-            Container.Register<IRabbitMQContext, RabbitMQContext>();
         }
         
         public static void RegisterWebAPI(HttpConfiguration configuration)

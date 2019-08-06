@@ -8,52 +8,47 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class GenericElasticsearchRepository<T> : IGenericElasticsearchRepository<T> where T : class
     {
-        private IElasticsearchContext _ElasticsearchContext;
-        public GenericElasticsearchRepository(IElasticsearchContext context)
-        {
-            _ElasticsearchContext = context;
-        }
         public bool Index(string indexName, T document)
         {
-            var result = _ElasticsearchContext.GetElasticClient().Index(document, i => i.Index(indexName).Type<T>());
+            var result = ElasticsearchContext.ElasticClient.Index(document, i => i.Index(indexName).Type<T>());
             return result.Created;
         }
         public bool BulkIndex(string indexName, IEnumerable<T> documents)
         {
-            var result = _ElasticsearchContext.GetElasticClient().IndexMany(documents, indexName);
+            var result = ElasticsearchContext.ElasticClient.IndexMany(documents, indexName);
             return !result.Errors;
         }
 
         public ISearchResponse<T> Search(ISearchRequest searchRequest)
         {
-            var json = GetQueryJSonFromRequest(searchRequest, _ElasticsearchContext.GetElasticClient());
-            var searchResponse = _ElasticsearchContext.GetElasticClient().Search<T>(searchRequest);
+            var json = GetQueryJSonFromRequest(searchRequest, ElasticsearchContext.ElasticClient);
+            var searchResponse = ElasticsearchContext.ElasticClient.Search<T>(searchRequest);
             return searchResponse;
         }
 
         public ISuggestResponse Suggest(ISuggestRequest suggestRequest)
         {
-            var json = GetQueryJSonFromRequest(suggestRequest, _ElasticsearchContext.GetElasticClient());
-            var suggestResponse = _ElasticsearchContext.GetElasticClient().Suggest(suggestRequest);
+            var json = GetQueryJSonFromRequest(suggestRequest, ElasticsearchContext.ElasticClient);
+            var suggestResponse = ElasticsearchContext.ElasticClient.Suggest(suggestRequest);
             return suggestResponse;
         }
 
         public ICountResponse Count(ICountRequest countRequest)
         {
-            var json = GetQueryJSonFromRequest(countRequest, _ElasticsearchContext.GetElasticClient());
-            var countResponse = _ElasticsearchContext.GetElasticClient().Count<T>(countRequest);
+            var json = GetQueryJSonFromRequest(countRequest, ElasticsearchContext.ElasticClient);
+            var countResponse = ElasticsearchContext.ElasticClient.Count<T>(countRequest);
             return countResponse;
         }
 
         public void CreateIndex(string indexName, ICreateIndexRequest createIndexRequest)
         {
-            if (_ElasticsearchContext.GetElasticClient().IndexExists(indexName).Exists)
+            if (ElasticsearchContext.ElasticClient.IndexExists(indexName).Exists)
             {
                 throw new Exception("The index is available, unable to create index!");
             }
 
-            var json = GetQueryJSonFromRequest(createIndexRequest, _ElasticsearchContext.GetElasticClient());
-            var createIndexResult = _ElasticsearchContext.GetElasticClient().CreateIndex(createIndexRequest);
+            var json = GetQueryJSonFromRequest(createIndexRequest, ElasticsearchContext.ElasticClient);
+            var createIndexResult = ElasticsearchContext.ElasticClient.CreateIndex(createIndexRequest);
 
             if (!createIndexResult.IsValid || !createIndexResult.Acknowledged)
             {

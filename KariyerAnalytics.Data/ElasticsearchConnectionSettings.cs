@@ -2,12 +2,12 @@
 
 namespace KariyerAnalytics.Data
 {
-    public sealed class ElasticsearchConnectionSettings
+    sealed class ElasticsearchConnection
     {
-        public ConnectionSettings GetDefaultConnectionSettings()
+        public static ConnectionSettings ConnectionSettings { get; }
+        static ElasticsearchConnection()
         {
-            var connectionSettings = new ConnectionSettings();//new Uri(ConfigurationManager.AppSettings["ElasticsearchUri"]));
-            return connectionSettings;
+            ConnectionSettings = new ConnectionSettings();//new Uri(ConfigurationManager.AppSettings["ElasticsearchUri"]));
         }
     }
 }

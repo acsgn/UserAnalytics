@@ -63,9 +63,7 @@
     <Compile Include="ILogElasticsearchRepository.cs" />
     <Compile Include="ILogRabbitMQRepository.cs" />
     <Compile Include="IMetricRepository.cs" />
-    <Compile Include="IRabbitMQContext.cs" />
     <Compile Include="IRealtimeRepository.cs" />
-    <Compile Include="IElasticsearchContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
