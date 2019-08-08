@@ -4,8 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{254BE7FB-64EA-4280-ABD7-41B2D1442E7C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{FACE5DF9-B871-41AD-BE81-81AAC710EEC9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <RootNamespace>KariyerAnalytics.Service.QueueConsumer</RootNamespace>
     <AssemblyName>KariyerAnalytics.Service.QueueConsumer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
@@ -32,13 +32,27 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ReactiveUI, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\reactiveui-core.2.3.2.0\lib\Net4\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Blend, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\reactiveui-xaml.2.3.2.0\lib\Net4\ReactiveUI.Blend.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Xaml, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\reactiveui-xaml.2.3.2.0\lib\Net4\ReactiveUI.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceProcess.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceProcess.Helpers.0.9.1.9\lib\net40\ServiceProcess.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive, Version=1.1.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx_Experimental-Main.1.1.10605\lib\Net4\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=1.1.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx_Experimental-Xaml.1.1.10605\lib\Net4\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,27 +70,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\KariyerAnalytics.Business.Contract.csproj">
-      <Project>{69C23E01-0199-4ECB-941E-8BB0FD4F0684}</Project>
-      <Name>KariyerAnalytics.Business.Contract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
+      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
-      <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
-      <Name>KariyerAnalytics.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Common.DependencyInjection\KariyerAnalytics.Common.DependencyInjection.csproj">
-      <Project>{2409A556-5E0A-407E-AF2E-A73A9EFD7F6E}</Project>
-      <Name>KariyerAnalytics.Common.DependencyInjection</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
-      <Project>{e83991c4-2439-4575-8da3-c366d869ae9e}</Project>
+      <Project>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</Project>
       <Name>KariyerAnalytics.Data.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
+      <Project>{5B8D299A-4D2E-4AA0-B0FE-82B4D8CD9AAA}</Project>
+      <Name>KariyerAnalytics.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

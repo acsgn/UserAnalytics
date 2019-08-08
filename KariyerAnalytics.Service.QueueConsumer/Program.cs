@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using ServiceProcess.Helpers;
 
 namespace KariyerAnalytics.Service.QueueConsumer
 {
@@ -10,7 +11,8 @@ namespace KariyerAnalytics.Service.QueueConsumer
             {
                 new QueueConsumer()
             };
-            ServiceBase.Run(ServicesToRun);
+            //ServiceBase.Run(ServicesToRun);
+            ServicesToRun.LoadServices();
         }
     }
 }

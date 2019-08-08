@@ -9,7 +9,8 @@ namespace KariyerAnalytics.Data
         private static ConnectionFactory _ConnectionFactory;
         static RabbitMQConnection()
         {
-            _ConnectionFactory = new ConnectionFactory() { HostName = "localhost" };
+            var uri = new Uri(ConfigurationManager.ConnectionStrings["RabbitMQ"].ConnectionString);
+            _ConnectionFactory = new ConnectionFactory() { Uri = uri };
         }
 
         public static IConnection CreateConnection()

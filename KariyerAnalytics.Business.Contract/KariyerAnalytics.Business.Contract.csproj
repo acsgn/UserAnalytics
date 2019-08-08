@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{69C23E01-0199-4ECB-941E-8BB0FD4F0684}</ProjectGuid>
+    <ProjectGuid>{7F9A3EC8-B01E-4E72-B183-C3F31760535A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KariyerAnalytics.Business.Contract</RootNamespace>
@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,20 +43,20 @@
   <ItemGroup>
     <Compile Include="IEngine.cs" />
     <Compile Include="IHistogramEngine.cs" />
+    <Compile Include="IInformationEngine.cs" />
+    <Compile Include="ILogElasticsearchEngine.cs" />
     <Compile Include="ILogRabbitMQEngine.cs" />
     <Compile Include="IMetricEngine.cs" />
     <Compile Include="IRealtimeEngine.cs" />
-    <Compile Include="ILogElasticsearchEngine.cs" />
-    <Compile Include="IInformationEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
+      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
-      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
+      <Project>{7C0C3ED7-D35D-4803-A971-825AECE2B553}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>
     </ProjectReference>
   </ItemGroup>

@@ -25,7 +25,7 @@ namespace KariyerAnalytics.Data
             var json = Encoding.UTF8.GetString(body);
             var document = JsonConvert.DeserializeObject<T>(json);
 
-            _Documents.Add(document);
+            //_Documents.Add(document);
 
             if (_Documents.Count >= _Bulk)
             {

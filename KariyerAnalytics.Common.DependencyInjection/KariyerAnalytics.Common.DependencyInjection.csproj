@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2409A556-5E0A-407E-AF2E-A73A9EFD7F6E}</ProjectGuid>
+    <ProjectGuid>{A3843B9F-85CC-4037-9FA6-94FEDC5C7CC5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KariyerAnalytics.Common.DependencyInjection</RootNamespace>
@@ -48,29 +48,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\KariyerAnalytics.Business.Contract\KariyerAnalytics.Business.Contract.csproj">
-      <Project>{69c23e01-0199-4ecb-941e-8bb0fd4f0684}</Project>
+      <Project>{7F9A3EC8-B01E-4E72-B183-C3F31760535A}</Project>
       <Name>KariyerAnalytics.Business.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1f3e6821-ec7f-4c81-b0c1-dca9cad57fc8}</Project>
+      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
-      <Project>{b89c928e-0ffc-44a9-af7b-c988ad19bb5b}</Project>
+      <Project>{b290dc01-8432-4741-8b46-74c27188d44c}</Project>
       <Name>KariyerAnalytics.Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
-      <Project>{e83991c4-2439-4575-8da3-c366d869ae9e}</Project>
+      <Project>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</Project>
       <Name>KariyerAnalytics.Data.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
-      <Project>{c67e743f-5ced-4728-b150-ae83b864ed36}</Project>
+      <Project>{5B8D299A-4D2E-4AA0-B0FE-82B4D8CD9AAA}</Project>
       <Name>KariyerAnalytics.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

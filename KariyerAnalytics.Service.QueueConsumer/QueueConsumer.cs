@@ -1,5 +1,7 @@
 ﻿using System.ServiceProcess;
-using KariyerAnalytics.Common.DependencyInjection;
+using KariyerAnalytics.Business.Entities;
+//using KariyerAnalytics.Common.DependencyInjection;
+using KariyerAnalytics.Data.Repositories;
 
 namespace KariyerAnalytics.Service.QueueConsumer
 {
@@ -8,14 +10,13 @@ namespace KariyerAnalytics.Service.QueueConsumer
         public QueueConsumer()
         {
             InitializeLifetimeService();
-            OnStart(null);
         }
 
         protected override void OnStart(string[] args)
         {
-            var rabbitMQEngine = DILoader.ResolveLogRabbitMQEngine();
-            var elasticsearchEngine = DILoader.ResolveLogElasticsearchEngine();
-            rabbitMQEngine.GetMany(elasticsearchEngine.AddMany);
+            var rabbitMQEngine = new LogRabbitMQRepository(new GenericRabbitMQRepository<Log>());
+            var elasticsearchEngine = new LogElasticsearchRepository(new GenericElasticsearchRepository<Log>());
+            rabbitMQEngine.BulkDequeue(elasticsearchEngine.BulkIndex);
         }
 
         protected override void OnStop()

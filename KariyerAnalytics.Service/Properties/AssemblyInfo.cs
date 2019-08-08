@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("KariyerAnalytics")]
+[assembly: AssemblyTitle("KariyerAnalytics.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("KariyerAnalytics")]
+[assembly: AssemblyProduct("KariyerAnalytics.Service")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("38a07852-aec1-4d45-9d4f-4d317e19d62b")]
+[assembly: Guid("2a38a4c1-d6a6-4122-ad5d-cfa70fb3fd3d")]
 
 // Version information for an assembly consists of the following four values:
 //

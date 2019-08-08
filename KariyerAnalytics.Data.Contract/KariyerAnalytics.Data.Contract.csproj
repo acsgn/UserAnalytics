@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E83991C4-2439-4575-8DA3-C366D869AE9E}</ProjectGuid>
+    <ProjectGuid>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KariyerAnalytics.Data.Contract</RootNamespace>
@@ -34,17 +34,11 @@
     <Reference Include="Elasticsearch.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\Elasticsearch.Net.2.4.7\lib\net45\Elasticsearch.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net40\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
-    </Reference>
     <Reference Include="Nest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\NEST.2.4.7\lib\net45\Nest.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <HintPath>..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,12 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
+      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
-      <Project>{E93726E3-4611-492A-B194-55F15B70C9C4}</Project>
-      <Name>KariyerAnalytics.Service.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

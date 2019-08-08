@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B89C928E-0FFC-44A9-AF7B-C988AD19BB5B}</ProjectGuid>
+    <ProjectGuid>{B290DC01-8432-4741-8B46-74C27188D44C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KariyerAnalytics.Business</RootNamespace>
@@ -31,41 +31,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business Engines\HistogramEngine.cs" />
+    <Compile Include="Business Engines\InformationEngine.cs" />
     <Compile Include="Business Engines\LogElasticsearchEngine.cs" />
     <Compile Include="Business Engines\LogRabbitMQEngine.cs" />
     <Compile Include="Business Engines\MetricEngine.cs" />
     <Compile Include="Business Engines\RealtimeEngine.cs" />
-    <Compile Include="Business Engines\InformationEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KariyerAnalytics.Business.Contract\KariyerAnalytics.Business.Contract.csproj">
-      <Project>{69C23E01-0199-4ECB-941E-8BB0FD4F0684}</Project>
+      <Project>{7f9a3ec8-b01e-4e72-b183-c3f31760535a}</Project>
       <Name>KariyerAnalytics.Business.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
-      <Project>{1F3E6821-EC7F-4C81-B0C1-DCA9CAD57FC8}</Project>
+      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
       <Name>KariyerAnalytics.Business.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
-      <Project>{E83991C4-2439-4575-8DA3-C366D869AE9E}</Project>
+      <Project>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</Project>
       <Name>KariyerAnalytics.Data.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
-      <Project>{C67E743F-5CED-4728-B150-AE83B864ED36}</Project>
-      <Name>KariyerAnalytics.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
-      <Project>{e93726e3-4611-492a-b194-55f15b70c9c4}</Project>
+      <Project>{7C0C3ED7-D35D-4803-A971-825AECE2B553}</Project>
       <Name>KariyerAnalytics.Service.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

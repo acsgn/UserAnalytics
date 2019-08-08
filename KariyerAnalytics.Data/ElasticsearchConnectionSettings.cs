@@ -1,4 +1,6 @@
-﻿using Nest;
+﻿using System;
+using System.Configuration;
+using Nest;
 
 namespace KariyerAnalytics.Data
 {
@@ -7,7 +9,8 @@ namespace KariyerAnalytics.Data
         public static ConnectionSettings ConnectionSettings { get; }
         static ElasticsearchConnection()
         {
-            ConnectionSettings = new ConnectionSettings();//new Uri(ConfigurationManager.AppSettings["ElasticsearchUri"]));
+            var uri = new Uri(ConfigurationManager.ConnectionStrings["Elasticsearch"].ConnectionString);
+            ConnectionSettings = new ConnectionSettings(uri);
         }
     }
 }
