@@ -11,5 +11,7 @@ namespace KariyerAnalytics.Business.Contract
         void Get(Func<Log, bool> func);
         void GetMany(Func<IEnumerable<Log>, bool> func);
         void CreateQueue();
+        void StopConsumer();
+        bool IsWorking();
     }
 }

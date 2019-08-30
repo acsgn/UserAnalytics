@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -9,6 +10,8 @@ namespace KariyerAnalytics.Data
 {
     public class GenericBulkRabbitMQConsumer<T> : EventingBasicConsumer where T : class
     {
+        private static readonly int _DelayBetweenTries = 2000;
+
         private List<T> _Documents;
         private readonly int _Bulk;
         private readonly Func<IEnumerable<T>, bool> _Func;
@@ -32,6 +35,7 @@ namespace KariyerAnalytics.Data
                 var ack = _Func(_Documents);
                 while (!ack)
                 {
+                    Task.Delay(_DelayBetweenTries).Wait();
                     ack = _Func(_Documents);
                 }
                 Model.BasicAck(deliveryTag, true);

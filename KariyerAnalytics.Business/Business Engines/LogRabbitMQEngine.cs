@@ -46,5 +46,15 @@ namespace KariyerAnalytics.Business
         {
             _Repository.CreateQueue();
         }
+
+        public void StopConsumer()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsWorking()
+        {
+            return _Repository.CheckConnection();
+        }
     }
 }

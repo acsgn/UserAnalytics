@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQConnection.cs" />
     <Compile Include="Repositories\GenericElasticsearchRepository.cs" />
+    <Compile Include="Repositories\GenericRabbitMQRecovery.cs" />
     <Compile Include="Repositories\GenericRabbitMQRepository.cs" />
     <Compile Include="Repositories\HistogramRepository.cs" />
     <Compile Include="Repositories\InformationRepository.cs" />

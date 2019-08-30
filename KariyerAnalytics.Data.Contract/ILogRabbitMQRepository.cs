@@ -10,5 +10,6 @@ namespace KariyerAnalytics.Data.Contract
         void Dequeue(Func<Log, bool> func);
         void BulkDequeue(Func<IEnumerable<Log>, bool> func);
         void Queue(Log log);
+        bool CheckConnection();
     }
 }

@@ -18,7 +18,11 @@ namespace KariyerAnalytics.Data.Repositories
         }
         public void Queue(Log log)
         {
-            _RabbitMQRepository.Queue(_QueueName, log);
+            var result = _RabbitMQRepository.Queue(_QueueName, log);
+            if (!result)
+            {
+                GenericRabbitMQRecovery<Log>.Insert(_QueueName, log);
+            }
         }
         public void Dequeue(Func<Log, bool> func)
         {
@@ -31,6 +35,11 @@ namespace KariyerAnalytics.Data.Repositories
         public void CreateQueue()
         {
             _RabbitMQRepository.CreateQueue(_QueueName);
+        }
+
+        public bool CheckConnection()
+        {
+            return _RabbitMQRepository.CheckConnection();
         }
     }
 }

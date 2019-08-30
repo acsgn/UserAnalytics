@@ -9,15 +9,20 @@ namespace KariyerAnalytics.Data.Repositories
 {
     public class GenericRabbitMQRepository<T> : IGenericRabbitMQRepository<T> where T : class
     {
-        public void Queue(string routingKey, T obj)
+        public bool Queue(string routingKey, T obj)
         {
-            var json = JsonConvert.SerializeObject(obj);
-            var body = Encoding.UTF8.GetBytes(json);
-            RabbitMQContext.Channel.BasicPublish(
-                    exchange: "",
-                    routingKey: routingKey,
-                    basicProperties: null,
-                    body: body);
+            if (RabbitMQContext.Channel.IsOpen)
+            {
+                var json = JsonConvert.SerializeObject(obj);
+                var body = Encoding.UTF8.GetBytes(json);
+                RabbitMQContext.Channel.BasicPublish(
+                        exchange: "",
+                        routingKey: routingKey,
+                        basicProperties: null,
+                        body: body);
+                return true;
+            }
+            else return false;
         }
         public void Dequeue(string routingKey, Func<T, bool> target)
         {
@@ -43,6 +48,11 @@ namespace KariyerAnalytics.Data.Repositories
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
+        }
+
+        public bool CheckConnection()
+        {
+            return RabbitMQContext.Channel.IsOpen;
         }
     }
 }
