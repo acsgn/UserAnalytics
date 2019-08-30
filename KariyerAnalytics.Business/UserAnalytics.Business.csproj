@@ -7,8 +7,8 @@
     <ProjectGuid>{B290DC01-8432-4741-8B46-74C27188D44C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KariyerAnalytics.Business</RootNamespace>
-    <AssemblyName>KariyerAnalytics.Business</AssemblyName>
+    <RootNamespace>UserAnalytics.Business</RootNamespace>
+    <AssemblyName>UserAnalytics.Business</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

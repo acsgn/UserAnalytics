@@ -7,8 +7,8 @@
     <ProjectGuid>{7F9A3EC8-B01E-4E72-B183-C3F31760535A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KariyerAnalytics.Business.Contract</RootNamespace>
-    <AssemblyName>KariyerAnalytics.Business.Contract</AssemblyName>
+    <RootNamespace>UserAnalytics.Business.Contract</RootNamespace>
+    <AssemblyName>UserAnalytics.Business.Contract</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -9,8 +9,8 @@
     <ProjectGuid>{4F6FCEAC-BAF4-4647-AF09-B820F8D29175}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KariyerAnalytics.Unittests</RootNamespace>
-    <AssemblyName>KariyerAnalytics.Unittests</AssemblyName>
+    <RootNamespace>UserAnalytics.Unittests</RootNamespace>
+    <AssemblyName>UserAnalytics.Unittests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

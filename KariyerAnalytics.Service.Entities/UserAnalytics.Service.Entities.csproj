@@ -7,8 +7,8 @@
     <ProjectGuid>{7C0C3ED7-D35D-4803-A971-825AECE2B553}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KariyerAnalytics.Service.Entities</RootNamespace>
-    <AssemblyName>KariyerAnalytics.Service.Entities</AssemblyName>
+    <RootNamespace>UserAnalytics.Service.Entities</RootNamespace>
+    <AssemblyName>UserAnalytics.Service.Entities</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

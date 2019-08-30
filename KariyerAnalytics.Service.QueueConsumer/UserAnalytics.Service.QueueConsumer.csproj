@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FACE5DF9-B871-41AD-BE81-81AAC710EEC9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>KariyerAnalytics.Service.QueueConsumer</RootNamespace>
-    <AssemblyName>KariyerAnalytics.Service.QueueConsumer</AssemblyName>
+    <RootNamespace>UserAnalytics.Service.QueueConsumer</RootNamespace>
+    <AssemblyName>UserAnalytics.Service.QueueConsumer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
