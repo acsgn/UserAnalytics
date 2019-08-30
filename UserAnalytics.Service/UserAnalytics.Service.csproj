@@ -117,15 +117,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
+    <ProjectReference Include="..\UserAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
       <Project>{7F9A3EC8-B01E-4E72-B183-C3F31760535A}</Project>
       <Name>UserAnalytics.Business.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Common.DependencyInjection\UserAnalytics.Common.DependencyInjection.csproj">
+    <ProjectReference Include="..\UserAnalytics.Common.DependencyInjection\UserAnalytics.Common.DependencyInjection.csproj">
       <Project>{A3843B9F-85CC-4037-9FA6-94FEDC5C7CC5}</Project>
       <Name>UserAnalytics.Common.DependencyInjection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
+    <ProjectReference Include="..\UserAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
       <Project>{7C0C3ED7-D35D-4803-A971-825AECE2B553}</Project>
       <Name>UserAnalytics.Service.Entities</Name>
     </ProjectReference>

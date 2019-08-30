@@ -73,15 +73,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
+    <ProjectReference Include="..\UserAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
       <Project>{7F9A3EC8-B01E-4E72-B183-C3F31760535A}</Project>
       <Name>UserAnalytics.Business.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
+    <ProjectReference Include="..\UserAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
       <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
       <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Common.DependencyInjection\UserAnalytics.Common.DependencyInjection.csproj">
+    <ProjectReference Include="..\UserAnalytics.Common.DependencyInjection\UserAnalytics.Common.DependencyInjection.csproj">
       <Project>{A3843B9F-85CC-4037-9FA6-94FEDC5C7CC5}</Project>
       <Name>UserAnalytics.Common.DependencyInjection</Name>
     </ProjectReference>

@@ -51,12 +51,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
-      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
+    <ProjectReference Include="..\UserAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
+      <Project>{32dfd092-b944-4d61-8e27-bd62b76e5929}</Project>
       <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
-      <Project>{7C0C3ED7-D35D-4803-A971-825AECE2B553}</Project>
+    <ProjectReference Include="..\UserAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
+      <Project>{7c0c3ed7-d35d-4803-a971-825aece2b553}</Project>
       <Name>UserAnalytics.Service.Entities</Name>
     </ProjectReference>
   </ItemGroup>

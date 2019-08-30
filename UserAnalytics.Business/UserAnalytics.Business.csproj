@@ -50,23 +50,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
+    <ProjectReference Include="..\UserAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
       <Project>{7f9a3ec8-b01e-4e72-b183-c3f31760535a}</Project>
       <Name>UserAnalytics.Business.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
-      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
+    <ProjectReference Include="..\UserAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
+      <Project>{32dfd092-b944-4d61-8e27-bd62b76e5929}</Project>
       <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\UserAnalytics.Data.Contract.csproj">
-      <Project>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</Project>
+    <ProjectReference Include="..\UserAnalytics.Data.Contract\UserAnalytics.Data.Contract.csproj">
+      <Project>{8ab51c28-59b7-4336-899b-68ba4a272c0a}</Project>
       <Name>UserAnalytics.Data.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
-      <Project>{7C0C3ED7-D35D-4803-A971-825AECE2B553}</Project>
+    <ProjectReference Include="..\UserAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
+      <Project>{7c0c3ed7-d35d-4803-a971-825aece2b553}</Project>
       <Name>UserAnalytics.Service.Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

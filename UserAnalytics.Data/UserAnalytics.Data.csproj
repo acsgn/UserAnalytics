@@ -83,11 +83,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
-      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
+    <ProjectReference Include="..\UserAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
+      <Project>{32dfd092-b944-4d61-8e27-bd62b76e5929}</Project>
       <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\UserAnalytics.Data.Contract.csproj">
+    <ProjectReference Include="..\UserAnalytics.Data.Contract\UserAnalytics.Data.Contract.csproj">
       <Project>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</Project>
       <Name>UserAnalytics.Data.Contract</Name>
     </ProjectReference>

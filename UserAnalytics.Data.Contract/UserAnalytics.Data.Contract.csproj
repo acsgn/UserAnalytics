@@ -64,8 +64,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
-      <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
+    <ProjectReference Include="..\UserAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
+      <Project>{32dfd092-b944-4d61-8e27-bd62b76e5929}</Project>
       <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
   </ItemGroup>
