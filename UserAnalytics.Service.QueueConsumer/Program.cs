@@ -11,8 +11,13 @@ namespace UserAnalytics.Service.QueueConsumer
             {
                 new QueueConsumer()
             };
-            //ServiceBase.Run(ServicesToRun);
+
+#if DEBUG
             ServicesToRun.LoadServices();
+#else
+            ServiceBase.Run(ServicesToRun);
+#endif
+
         }
     }
 }

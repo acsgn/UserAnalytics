@@ -8,8 +8,6 @@ namespace UserAnalytics.Service.QueueConsumer
 {
     public partial class QueueConsumer : ServiceBase
     {
-        private volatile bool _Running;
-
         private ILogRabbitMQEngine _RabbitMQEngine;
         private ILogElasticsearchEngine _ElasticsearchEngine;
 
@@ -34,7 +32,8 @@ namespace UserAnalytics.Service.QueueConsumer
         protected override void OnStop()
         {
             //_RabbitMQEngine.StopConsumer();
-            _Running = false;
+
+            _Timer.Stop();
         }
 
         private void _Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -46,9 +45,8 @@ namespace UserAnalytics.Service.QueueConsumer
                 {
                     _RabbitMQEngine.GetMany(_ElasticsearchEngine.AddMany);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine("Connection lost");
                 }
             }
             _Timer.Start();
