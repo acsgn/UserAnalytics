@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Nest;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     public class AggregationContainerBuilder<T> where T : class
     {

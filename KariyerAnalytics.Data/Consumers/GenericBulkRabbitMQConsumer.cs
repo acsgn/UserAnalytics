@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     public class GenericBulkRabbitMQConsumer<T> : EventingBasicConsumer where T : class
     {

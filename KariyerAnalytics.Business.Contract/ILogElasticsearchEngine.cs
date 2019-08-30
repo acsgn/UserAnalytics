@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using KariyerAnalytics.Business.Entities;
+using UserAnalytics.Business.Entities;
 
-namespace KariyerAnalytics.Business.Contract
+namespace UserAnalytics.Business.Contract
 {
     public interface ILogElasticsearchEngine : IEngine
     {

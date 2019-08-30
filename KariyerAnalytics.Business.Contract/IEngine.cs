@@ -1,4 +1,4 @@
-﻿namespace KariyerAnalytics.Business.Contract
+﻿namespace UserAnalytics.Business.Contract
 {
     public interface IEngine
     {

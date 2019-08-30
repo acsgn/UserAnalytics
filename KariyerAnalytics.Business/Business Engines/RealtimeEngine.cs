@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Data.Contract;
-using KariyerAnalytics.Service.Entities;
+using UserAnalytics.Business.Contract;
+using UserAnalytics.Data.Contract;
+using UserAnalytics.Service.Entities;
 
-namespace KariyerAnalytics.Business
+namespace UserAnalytics.Business
 {
     public class RealtimeEngine : IRealtimeEngine
     {

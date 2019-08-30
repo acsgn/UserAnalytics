@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nest;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     public class AggregationBuilder<T> where T : class
     {

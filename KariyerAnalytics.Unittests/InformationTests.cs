@@ -1,10 +1,10 @@
-﻿using KariyerAnalytics.Business;
-using KariyerAnalytics.Data.Contract;
-using KariyerAnalytics.Service.Entities;
+﻿using UserAnalytics.Business;
+using UserAnalytics.Data.Contract;
+using UserAnalytics.Service.Entities;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace KariyerAnalytics.Tests
+namespace UserAnalytics.Tests
 {
     public class InformationTests
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KariyerAnalytics.Data.Contract
+namespace UserAnalytics.Data.Contract
 {
     public interface IGenericRabbitMQRepository<T> where T : class
     {

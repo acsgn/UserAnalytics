@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using KariyerAnalytics.Data.Contract;
+using UserAnalytics.Data.Contract;
 using Nest;
 
-namespace KariyerAnalytics.Data.Repositories
+namespace UserAnalytics.Data.Repositories
 {
     public class GenericElasticsearchRepository<T> : IGenericElasticsearchRepository<T> where T : class
     {

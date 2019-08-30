@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using KariyerAnalytics.Business.Entities;
+using UserAnalytics.Business.Entities;
 
-namespace KariyerAnalytics.Data.Contract
+namespace UserAnalytics.Data.Contract
 {
     public interface ILogRabbitMQRepository
     {

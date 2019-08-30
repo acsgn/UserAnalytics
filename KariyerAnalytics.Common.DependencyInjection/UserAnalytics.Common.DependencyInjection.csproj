@@ -51,25 +51,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\KariyerAnalytics.Business.Contract.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Business.Contract\UserAnalytics.Business.Contract.csproj">
       <Project>{7F9A3EC8-B01E-4E72-B183-C3F31760535A}</Project>
-      <Name>KariyerAnalytics.Business.Contract</Name>
+      <Name>UserAnalytics.Business.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
       <Project>{32DFD092-B944-4D61-8E27-BD62B76E5929}</Project>
-      <Name>KariyerAnalytics.Business.Entities</Name>
+      <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Business\UserAnalytics.Business.csproj">
       <Project>{b290dc01-8432-4741-8b46-74c27188d44c}</Project>
-      <Name>KariyerAnalytics.Business</Name>
+      <Name>UserAnalytics.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\UserAnalytics.Data.Contract.csproj">
       <Project>{8AB51C28-59B7-4336-899B-68BA4A272C0A}</Project>
-      <Name>KariyerAnalytics.Data.Contract</Name>
+      <Name>UserAnalytics.Data.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Data\KariyerAnalytics.Data.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Data\UserAnalytics.Data.csproj">
       <Project>{5B8D299A-4D2E-4AA0-B0FE-82B4D8CD9AAA}</Project>
-      <Name>KariyerAnalytics.Data</Name>
+      <Name>UserAnalytics.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

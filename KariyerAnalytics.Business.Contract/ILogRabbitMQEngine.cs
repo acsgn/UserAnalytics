@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Service.Entities;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Service.Entities;
 
-namespace KariyerAnalytics.Business.Contract
+namespace UserAnalytics.Business.Contract
 {
     public interface ILogRabbitMQEngine
     {

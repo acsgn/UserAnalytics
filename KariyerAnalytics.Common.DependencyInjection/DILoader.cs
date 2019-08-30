@@ -1,11 +1,11 @@
-﻿using KariyerAnalytics.Business;
-using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data.Contract;
-using KariyerAnalytics.Data.Repositories;
+﻿using UserAnalytics.Business;
+using UserAnalytics.Business.Contract;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Data.Contract;
+using UserAnalytics.Data.Repositories;
 using SimpleInjector;
 
-namespace KariyerAnalytics.Common.DependencyInjection
+namespace UserAnalytics.Common.DependencyInjection
 {
     public static class DILoader
     {

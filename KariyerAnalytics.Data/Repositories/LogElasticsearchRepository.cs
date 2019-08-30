@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data.Contract;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Data.Contract;
 using Nest;
 
-namespace KariyerAnalytics.Data.Repositories
+namespace UserAnalytics.Data.Repositories
 {
     public class LogElasticsearchRepository : ILogElasticsearchRepository
     {

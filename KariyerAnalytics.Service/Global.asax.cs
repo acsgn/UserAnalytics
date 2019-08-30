@@ -1,10 +1,10 @@
 ﻿using System.Web.Http;
-using KariyerAnalytics.Common.DependencyInjection;
-using KariyerAnalytics.Service;
+using UserAnalytics.Common.DependencyInjection;
+using UserAnalytics.Service;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 
-namespace KariyerAnalytics
+namespace UserAnalytics
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

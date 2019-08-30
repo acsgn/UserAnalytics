@@ -1,7 +1,7 @@
 ﻿using System.ServiceProcess;
 using ServiceProcess.Helpers;
 
-namespace KariyerAnalytics.Service.QueueConsumer
+namespace UserAnalytics.Service.QueueConsumer
 {
     static class Program
     {

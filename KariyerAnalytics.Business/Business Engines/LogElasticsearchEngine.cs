@@ -1,9 +1,9 @@
-﻿using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data.Contract;
+﻿using UserAnalytics.Business.Contract;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Data.Contract;
 using System.Collections.Generic;
 
-namespace KariyerAnalytics.Business
+namespace UserAnalytics.Business
 {
     public class LogElasticsearchEngine : ILogElasticsearchEngine
     {

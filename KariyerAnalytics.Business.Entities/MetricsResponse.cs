@@ -1,4 +1,4 @@
-﻿namespace KariyerAnalytics.Business.Entities
+﻿namespace UserAnalytics.Business.Entities
 {
     public class MetricsResponse
     {

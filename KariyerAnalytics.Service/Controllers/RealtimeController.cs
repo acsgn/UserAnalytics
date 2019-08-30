@@ -1,8 +1,8 @@
 ﻿using System.Web.Http;
-using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Business.Contract;
+using UserAnalytics.Service.Entities;
+using UserAnalytics.Business.Contract;
 
-namespace KariyerAnalytics.Controllers
+namespace UserAnalytics.Controllers
 {
     public class RealtimeController : ApiController
     {

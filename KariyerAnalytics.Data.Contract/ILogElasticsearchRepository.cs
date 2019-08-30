@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using KariyerAnalytics.Business.Entities;
+using UserAnalytics.Business.Entities;
 using Nest;
 
-namespace KariyerAnalytics.Data.Contract
+namespace UserAnalytics.Data.Contract
 {
     public interface ILogElasticsearchRepository
     {

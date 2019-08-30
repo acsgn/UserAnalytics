@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data.Contract;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Data.Contract;
 
-namespace KariyerAnalytics.Data.Repositories
+namespace UserAnalytics.Data.Repositories
 {
     public class RealtimeRepository : IRealtimeRepository
     {

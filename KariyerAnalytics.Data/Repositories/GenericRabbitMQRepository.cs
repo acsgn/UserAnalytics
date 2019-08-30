@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using KariyerAnalytics.Data.Contract;
+using UserAnalytics.Data.Contract;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace KariyerAnalytics.Data.Repositories
+namespace UserAnalytics.Data.Repositories
 {
     public class GenericRabbitMQRepository<T> : IGenericRabbitMQRepository<T> where T : class
     {

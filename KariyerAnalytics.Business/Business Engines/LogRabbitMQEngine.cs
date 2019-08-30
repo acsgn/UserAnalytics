@@ -1,11 +1,11 @@
-﻿using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data.Contract;
+﻿using UserAnalytics.Business.Contract;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Service.Entities;
+using UserAnalytics.Data.Contract;
 using System;
 using System.Collections.Generic;
 
-namespace KariyerAnalytics.Business
+namespace UserAnalytics.Business
 {
     public class LogRabbitMQEngine : ILogRabbitMQEngine
     {

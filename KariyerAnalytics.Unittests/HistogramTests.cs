@@ -1,12 +1,12 @@
 ﻿using System;
-using KariyerAnalytics.Business;
-using KariyerAnalytics.Business.Entities;
-using KariyerAnalytics.Data.Contract;
-using KariyerAnalytics.Service.Entities;
+using UserAnalytics.Business;
+using UserAnalytics.Business.Entities;
+using UserAnalytics.Data.Contract;
+using UserAnalytics.Service.Entities;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace KariyerAnalytics.Tests
+namespace UserAnalytics.Tests
 {
     public class HistogramTests
     {

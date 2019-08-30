@@ -1,4 +1,4 @@
-﻿namespace KariyerAnalytics.Data.Contract
+﻿namespace UserAnalytics.Data.Contract
 {
     public interface IInformationRepository
     {

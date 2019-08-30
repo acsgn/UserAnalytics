@@ -1,4 +1,4 @@
-﻿namespace KariyerAnalytics.Service.Entities
+﻿namespace UserAnalytics.Service.Entities
 {
     public class InformationRequest
     {

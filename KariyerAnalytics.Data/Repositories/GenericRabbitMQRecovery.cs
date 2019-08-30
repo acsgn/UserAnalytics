@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using KariyerAnalytics.Data.Repositories;
+using UserAnalytics.Data.Repositories;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     public class GenericRabbitMQRecovery<T> where T: class
     {

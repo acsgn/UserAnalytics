@@ -2,7 +2,7 @@
 using System.Configuration;
 using RabbitMQ.Client;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     sealed class RabbitMQConnection
     {

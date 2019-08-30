@@ -1,6 +1,6 @@
 ﻿using Nest;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     public class CountBuilder<T> where T : class
     {

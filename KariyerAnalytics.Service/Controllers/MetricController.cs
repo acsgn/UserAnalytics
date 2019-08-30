@@ -1,8 +1,8 @@
 ﻿using System.Web.Http;
-using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Service.Entities;
+using UserAnalytics.Business.Contract;
+using UserAnalytics.Service.Entities;
 
-namespace KariyerAnalytics.Controllers
+namespace UserAnalytics.Controllers
 {
     public class MetricController : ApiController
     {

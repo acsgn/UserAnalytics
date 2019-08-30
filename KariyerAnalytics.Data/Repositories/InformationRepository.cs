@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using KariyerAnalytics.Data.Contract;
+using UserAnalytics.Data.Contract;
 
-namespace KariyerAnalytics.Data.Repositories
+namespace UserAnalytics.Data.Repositories
 {
     public class InformationRepository : IInformationRepository
     {

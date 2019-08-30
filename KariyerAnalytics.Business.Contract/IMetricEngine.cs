@@ -1,6 +1,6 @@
-﻿using KariyerAnalytics.Service.Entities;
+﻿using UserAnalytics.Service.Entities;
 
-namespace KariyerAnalytics.Business.Contract
+namespace UserAnalytics.Business.Contract
 {
     public interface IMetricEngine : IEngine
     {

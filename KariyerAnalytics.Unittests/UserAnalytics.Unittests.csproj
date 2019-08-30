@@ -72,21 +72,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\KariyerAnalytics.Business.Entities.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Business.Entities\UserAnalytics.Business.Entities.csproj">
       <Project>{32dfd092-b944-4d61-8e27-bd62b76e5929}</Project>
-      <Name>KariyerAnalytics.Business.Entities</Name>
+      <Name>UserAnalytics.Business.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Business\KariyerAnalytics.Business.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Business\UserAnalytics.Business.csproj">
       <Project>{b290dc01-8432-4741-8b46-74c27188d44c}</Project>
-      <Name>KariyerAnalytics.Business</Name>
+      <Name>UserAnalytics.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\KariyerAnalytics.Data.Contract.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Data.Contract\UserAnalytics.Data.Contract.csproj">
       <Project>{8ab51c28-59b7-4336-899b-68ba4a272c0a}</Project>
-      <Name>KariyerAnalytics.Data.Contract</Name>
+      <Name>UserAnalytics.Data.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\KariyerAnalytics.Service.Entities.csproj">
+    <ProjectReference Include="..\KariyerAnalytics.Service.Entities\UserAnalytics.Service.Entities.csproj">
       <Project>{7c0c3ed7-d35d-4803-a971-825aece2b553}</Project>
-      <Name>KariyerAnalytics.Service.Entities</Name>
+      <Name>UserAnalytics.Service.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

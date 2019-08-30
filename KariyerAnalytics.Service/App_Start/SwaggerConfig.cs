@@ -1,11 +1,11 @@
-using System.Web.Http;
-using WebActivatorEx;
-using KariyerAnalytics.Service;
 using Swashbuckle.Application;
+using System.Web.Http;
+using UserAnalytics.Service;
+using WebActivatorEx;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace KariyerAnalytics.Service
+namespace UserAnalytics.Service
 {
     public class SwaggerConfig
     {
@@ -32,7 +32,7 @@ namespace KariyerAnalytics.Service
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "KariyerAnalytics.Service");
+                        c.SingleApiVersion("v1", "UserAnalytics.Service");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
@@ -61,7 +61,7 @@ namespace KariyerAnalytics.Service
                         //c.BasicAuth("basic")
                         //    .Description("Basic HTTP Authentication");
                         //
-						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
+                        // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
                         //    .Description("API Key Authentication")
                         //    .Name("apiKey")

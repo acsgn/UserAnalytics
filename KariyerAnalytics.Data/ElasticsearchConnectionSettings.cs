@@ -2,7 +2,7 @@
 using System.Configuration;
 using Nest;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     sealed class ElasticsearchConnection
     {

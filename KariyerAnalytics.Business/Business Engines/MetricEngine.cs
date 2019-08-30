@@ -1,9 +1,9 @@
-﻿using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Service.Entities;
-using KariyerAnalytics.Data.Contract;
+﻿using UserAnalytics.Business.Contract;
+using UserAnalytics.Service.Entities;
+using UserAnalytics.Data.Contract;
 using System.Linq;
 
-namespace KariyerAnalytics.Business
+namespace UserAnalytics.Business
 {
     public class MetricEngine : IMetricEngine
     {

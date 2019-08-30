@@ -1,6 +1,6 @@
 ﻿using RabbitMQ.Client;
 
-namespace KariyerAnalytics.Data
+namespace UserAnalytics.Data
 {
     public class RabbitMQContext
     {

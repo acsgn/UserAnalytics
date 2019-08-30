@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nest;
 
-namespace KariyerAnalytics.Data.Contract
+namespace UserAnalytics.Data.Contract
 {
     public interface IGenericElasticsearchRepository<T> where T : class
     {

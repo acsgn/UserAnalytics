@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ServiceProcess;
 using System.Timers;
-using KariyerAnalytics.Business.Contract;
-using KariyerAnalytics.Common.DependencyInjection;
+using UserAnalytics.Business.Contract;
+using UserAnalytics.Common.DependencyInjection;
 
-namespace KariyerAnalytics.Service.QueueConsumer
+namespace UserAnalytics.Service.QueueConsumer
 {
     public partial class QueueConsumer : ServiceBase
     {
