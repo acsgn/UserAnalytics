@@ -10,5 +10,6 @@ namespace UserAnalytics.Data.Contract
         void BulkDequeue(string routingKey, int bulk, Func<IEnumerable<T>, bool> func);
         void CreateQueue(string routingKey);
         bool CheckConnection();
+        void StopConsumer();
     }
 }

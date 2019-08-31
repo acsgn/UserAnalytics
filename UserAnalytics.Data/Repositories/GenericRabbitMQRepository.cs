@@ -9,6 +9,7 @@ namespace UserAnalytics.Data.Repositories
 {
     public class GenericRabbitMQRepository<T> : IGenericRabbitMQRepository<T> where T : class
     {
+        private string _ConsumerTag;
         public bool Queue(string routingKey, T obj)
         {
             if (RabbitMQContext.Channel.IsOpen)
@@ -27,7 +28,7 @@ namespace UserAnalytics.Data.Repositories
         public void Dequeue(string routingKey, Func<T, bool> target)
         {
             var consumer = new GenericRabbitMQConsumer<T>(RabbitMQContext.Channel, target);
-            RabbitMQContext.Channel.BasicConsume(
+            _ConsumerTag = RabbitMQContext.Channel.BasicConsume(
                 queue: routingKey,
                 consumer: consumer);
         }
@@ -35,7 +36,7 @@ namespace UserAnalytics.Data.Repositories
         public void BulkDequeue(string routingKey, int bulk, Func<IEnumerable<T>, bool> func)
         {
             var consumer = new GenericBulkRabbitMQConsumer<T>(bulk, func, RabbitMQContext.Channel);
-            RabbitMQContext.Channel.BasicConsume(
+            _ConsumerTag = RabbitMQContext.Channel.BasicConsume(
                 queue: routingKey,
                 consumer: consumer);
         }
@@ -53,6 +54,14 @@ namespace UserAnalytics.Data.Repositories
         public bool CheckConnection()
         {
             return RabbitMQContext.Channel.IsOpen;
+        }
+
+        public void StopConsumer()
+        {
+            if(_ConsumerTag != null)
+            {
+                RabbitMQContext.Channel.BasicCancel(_ConsumerTag);
+            }
         }
     }
 }

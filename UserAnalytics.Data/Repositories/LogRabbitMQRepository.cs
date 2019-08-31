@@ -41,5 +41,10 @@ namespace UserAnalytics.Data.Repositories
         {
             return _RabbitMQRepository.CheckConnection();
         }
+
+        public void StopConsumer()
+        {
+            _RabbitMQRepository.StopConsumer();
+        }
     }
 }

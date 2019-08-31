@@ -49,7 +49,7 @@ namespace UserAnalytics.Business
 
         public void StopConsumer()
         {
-            throw new NotImplementedException();
+            _Repository.StopConsumer();
         }
 
         public bool IsWorking()

@@ -31,7 +31,7 @@ namespace UserAnalytics.Service.QueueConsumer
 
         protected override void OnStop()
         {
-            //_RabbitMQEngine.StopConsumer();
+            _RabbitMQEngine.StopConsumer();
 
             _Timer.Stop();
         }
