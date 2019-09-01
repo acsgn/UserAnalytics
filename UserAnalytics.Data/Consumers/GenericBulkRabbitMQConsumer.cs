@@ -26,9 +26,9 @@ namespace UserAnalytics.Data
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
         {
             var json = Encoding.UTF8.GetString(body);
-            //var document = JsonConvert.DeserializeObject<T>(json);
+            var document = JsonConvert.DeserializeObject<T>(json);
 
-            //_Documents.Add(document);
+            _Documents.Add(document);
 
             if (_Documents.Count >= _Bulk)
             {

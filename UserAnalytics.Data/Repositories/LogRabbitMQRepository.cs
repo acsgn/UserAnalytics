@@ -8,7 +8,7 @@ namespace UserAnalytics.Data.Repositories
     public class LogRabbitMQRepository : ILogRabbitMQRepository
     {
         private readonly static string _QueueName = "logs";
-        private readonly static int _Bulk = 100;
+        private readonly static int _Bulk = 100; //Should be tweaked with a performance benchmark
 
         private IGenericRabbitMQRepository<Log> _RabbitMQRepository;
 

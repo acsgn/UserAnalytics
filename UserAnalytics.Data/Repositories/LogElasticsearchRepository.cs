@@ -50,9 +50,7 @@ namespace UserAnalytics.Data.Repositories
                                 .Analyzer("ngram_analyzer"))
                             .String(s => s
                                 .Name(n => n.Endpoint)
-                                .Analyzer("ngram_analyzer"))
-                            .Ip(i => i
-                                .Name(n => n.IP)))))
+                                .Analyzer("ngram_analyzer")))))
                 .Settings(s => s
                     .Analysis(f => f.Analyzers(a => a.Custom("ngram_analyzer", c => c.Tokenizer("ngram_tokenizer")))
                     .Tokenizers(t => t.EdgeNGram("ngram_tokenizer", n => n.MinGram(3).MaxGram(8)))));
